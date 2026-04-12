@@ -1,5 +1,6 @@
 export function generateBookmarkletCode(trackerUrl: string): string {
   // This JS runs on the PoE challenges page in the user's browser
+  // It scrapes challenge data from the DOM and POSTs it to our API
   const code = `
 (function(){
   var els = document.querySelectorAll('.achievement.clearfix');
@@ -16,17 +17,11 @@ export function generateBookmarkletCode(trackerUrl: string): string {
   }
 
   var challenges = [];
-  var allAchievements = document.querySelectorAll('.achievement.clearfix, .achievement.clearfix.incomplete');
-
   document.querySelectorAll('.achievement.clearfix').forEach(function(el, index) {
     var isIncomplete = el.classList.contains('incomplete');
-    var nameEl = el.querySelector('h2:first-of-type');
     var detailEl = el.querySelector('.completion-detail');
     var detailSpan = detailEl ? detailEl.querySelector('span') : null;
     var completed = detailSpan ? parseInt(detailSpan.textContent.trim()) || 0 : 0;
-    var requiredText = detailEl ? detailEl.textContent : '';
-    var slashParts = requiredText.split('/');
-    var required = slashParts.length > 1 ? parseInt(slashParts[1].trim()) || 0 : 0;
 
     var subtasks = [];
     el.querySelectorAll('.items li').forEach(function(li, si) {
@@ -48,20 +43,27 @@ export function generateBookmarkletCode(trackerUrl: string): string {
     });
   });
 
-  var progress = {
-    leagueId: leagueId,
-    accountName: accountName,
-    challenges: challenges,
-    lastSynced: new Date().toISOString()
-  };
+  var url = '${trackerUrl}/api/import';
+  var body = JSON.stringify({ leagueId: leagueId, accountName: accountName, challenges: challenges });
 
-  var encoded = encodeURIComponent(JSON.stringify(progress));
-  window.open('${trackerUrl}#import=' + encoded, '_blank');
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: body
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      alert('Imported ' + data.imported + ' challenges to ' + data.user + '!');
+    } else {
+      alert('Import failed: ' + (data.error || 'Unknown error') + '\\n\\nMake sure you are signed in at ${trackerUrl}');
+    }
+  })
+  .catch(function(err) {
+    alert('Could not reach tracker. Is it running?\\n\\n' + err.message);
+  });
 })()`.trim();
 
   return `javascript:${encodeURIComponent(code)}`;
-}
-
-export function getBookmarkletDisplayCode(): string {
-  return "Drag this link to your bookmarks bar, then click it on your PoE challenges page.";
 }
