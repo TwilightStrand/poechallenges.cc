@@ -1,6 +1,6 @@
 export function generateBookmarkletCode(trackerUrl: string): string {
-  // This JS runs on the PoE challenges page in the user's browser
-  // It scrapes challenge data from the DOM and POSTs it to our API
+  // Scrapes challenge data from PoE page, tries direct POST,
+  // falls back to opening the tracker with data in URL hash
   const code = `
 (function(){
   var els = document.querySelectorAll('.achievement.clearfix');
@@ -43,25 +43,29 @@ export function generateBookmarkletCode(trackerUrl: string): string {
     });
   });
 
-  var url = '${trackerUrl}/api/import';
-  var body = JSON.stringify({ leagueId: leagueId, accountName: accountName, challenges: challenges });
+  var progress = { leagueId: leagueId, accountName: accountName, challenges: challenges };
 
-  fetch(url, {
+  // Try direct POST first (works for browser extension / same-site)
+  fetch('${trackerUrl}/api/import', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
-    body: body
+    body: JSON.stringify(progress)
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
     if (data.ok) {
-      alert('Imported ' + data.imported + ' challenges to ' + data.user + '!');
+      alert('Synced ' + data.imported + ' challenges!');
     } else {
-      alert('Import failed: ' + (data.error || 'Unknown error') + '\\n\\nMake sure you are signed in at ${trackerUrl}');
+      // Auth failed (cross-origin cookies blocked) — open tracker with data
+      var encoded = encodeURIComponent(JSON.stringify(progress));
+      window.open('${trackerUrl}#import=' + encoded, '_blank');
     }
   })
-  .catch(function(err) {
-    alert('Could not reach tracker. Is it running?\\n\\n' + err.message);
+  .catch(function() {
+    // Network error — fall back to URL
+    var encoded = encodeURIComponent(JSON.stringify(progress));
+    window.open('${trackerUrl}#import=' + encoded, '_blank');
   });
 })()`.trim();
 
