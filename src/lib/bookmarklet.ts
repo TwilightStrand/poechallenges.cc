@@ -9,12 +9,9 @@ export function generateBookmarkletCode(trackerUrl: string): string {
   var seasonSel = document.querySelector('select[name="season"]');
   var leagueId = seasonSel ? seasonSel.value.toLowerCase() : 'unknown';
 
-  var profileLink = document.querySelector('.profile-link');
-  var accountName = '';
-  if (profileLink) {
-    var m = profileLink.className.match(/\\b(\\S+)\\s+completed/);
-    accountName = m ? m[1] : '';
-  }
+  // Extract account name from URL: /account/view-profile/{name}/challenges
+  var urlMatch = window.location.pathname.match(/\\/view-profile\\/([^\\/]+)/);
+  var accountName = urlMatch ? decodeURIComponent(urlMatch[1]) : '';
 
   var challenges = [];
   document.querySelectorAll('.achievement.clearfix').forEach(function(el, index) {
