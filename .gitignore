@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+.next/
+
+# build
+dist/
+out/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# test scraper files
+test-scrape*.mjs
+test-camoufox*.py
+
+# debug
+npm-debug.log*

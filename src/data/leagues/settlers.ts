@@ -1,0 +1,773 @@
+import type { League } from "@/schemas";
+
+export const settlersLeague: League = {
+  id: "settlers",
+  name: "Settlers of Kalguur",
+  version: "3.25",
+  startDate: "2024-07-26",
+  rewards: [
+    { at: 12, reward: "Settlers Weapon Effect", type: "armor" },
+    { at: 24, reward: "Settlers Body Armour", type: "armor" },
+    { at: 36, reward: "Settlers Wings", type: "armor" },
+    { at: 40, reward: "Settlers Trophy", type: "trophy" },
+  ],
+  challenges: [
+    {
+      id: 1,
+      name: "Beginner's Basics",
+      description: "Complete each of the following tasks.",
+      type: "all",
+      required: 4,
+      subtasks: [
+        { id: "1-1", name: "Equip a Magic Flask" },
+        { id: "1-2", name: "Use an Orb of Alchemy" },
+        { id: "1-3", name: "Kill a Rare Monster" },
+        { id: "1-4", name: "Fully clear the Fetid Pool" },
+      ],
+    },
+    {
+      id: 2,
+      name: "Starting Settlements",
+      description:
+        "Complete each of the following Settlers of Kalguur encounters.",
+      type: "all",
+      required: 4,
+      subtasks: [
+        { id: "2-1", name: "Enter Kingsmarch" },
+        { id: "2-2", name: "Hire Workers", counterTarget: 3 },
+        {
+          id: "2-3",
+          name: "Have at least 1,000 Gold in the Kingsmarch Treasury at once",
+        },
+        { id: "2-4", name: "Establish Kingsmarch Jobs", counterTarget: 4 },
+      ],
+    },
+    {
+      id: 3,
+      name: "Peddler's Produce I",
+      description:
+        "Complete vendor recipes to receive each of the following items. A vendor recipe is when you trade a specific combination of items to a vendor, not when you buy items from their purchase screen.",
+      type: "all",
+      required: 4,
+      subtasks: [
+        { id: "3-1", name: "Ruby, Topaz or Sapphire Ring" },
+        { id: "3-2", name: "Agate, Turquoise or Citrine Amulet" },
+        { id: "3-3", name: "Onyx Amulet" },
+        {
+          id: "3-4",
+          name: "Magic Boots with 10% increased Movement Speed",
+        },
+      ],
+    },
+    {
+      id: 4,
+      name: "Act Adversaries I",
+      description: "Defeat each of the following Act Bosses.",
+      type: "all",
+      required: 5,
+      subtasks: [
+        { id: "4-1", name: "Act 1: Merveil, the Twisted" },
+        { id: "4-2", name: "Act 2: Vaal Oversoul" },
+        { id: "4-3", name: "Act 3: Dominus, Ascendant" },
+        { id: "4-4", name: "Act 4: Malachai, The Nightmare" },
+        { id: "4-5", name: "Act 5: Kitava, the Insatiable" },
+      ],
+    },
+    {
+      id: 5,
+      name: "Antagonistic Acts",
+      description:
+        "Complete each of the following League Mechanic encounters.",
+      type: "all",
+      required: 4,
+      subtasks: [
+        { id: "5-1", name: "Defeat a monster holding an Essence" },
+        { id: "5-2", name: "Complete a Legion Encounter" },
+        { id: "5-3", name: "Open a Strongbox" },
+        { id: "5-4", name: "Complete a Ritual" },
+      ],
+    },
+    {
+      id: 6,
+      name: "Basic Beginnings",
+      description:
+        "Complete each of the following Settlers of Kalguur encounters.",
+      type: "all",
+      required: 5,
+      subtasks: [
+        { id: "6-1", name: "Complete a Shipment" },
+        {
+          id: "6-2",
+          name: "Have a total of 1,000 of any Bar in your Kingsmarch Stockpile at once",
+        },
+        {
+          id: "6-3",
+          name: "Have a total of 1,000 of any Crop in your Kingsmarch Stockpile at once",
+        },
+        { id: "6-4", name: "Disenchant an item" },
+        { id: "6-5", name: "Use any Runesmithing Craft" },
+      ],
+    },
+    {
+      id: 7,
+      name: "Act Adversaries II",
+      description: "Defeat each of the following Act Bosses.",
+      type: "all",
+      required: 5,
+      subtasks: [
+        { id: "7-1", name: "Act 6: Tsoagoth, The Brine King" },
+        { id: "7-2", name: "Act 7: Arakaali, Spinner of Shadows" },
+        {
+          id: "7-3",
+          name: "Act 8: Lunaris, Eternal Moon and Solaris, Eternal Sun",
+        },
+        { id: "7-4", name: "Act 9: The Depraved Trinity" },
+        { id: "7-5", name: "Act 10: Kitava, the Insatiable" },
+      ],
+    },
+    {
+      id: 8,
+      name: "Powerful Prey",
+      description: "Complete each of the following Quests.",
+      type: "all",
+      required: 4,
+      subtasks: [
+        { id: "8-1", name: "The Great White Beast" },
+        { id: "8-2", name: "Sever the Right Hand" },
+        { id: "8-3", name: "The Gemling Legion" },
+        { id: "8-4", name: "Fastis Fortuna" },
+      ],
+    },
+    {
+      id: 9,
+      name: "Atlas Augmentations",
+      description:
+        "Complete any three of the following League Mechanic encounters the specified number of times.",
+      type: "pick",
+      required: 3,
+      subtasks: [
+        { id: "9-1", name: "Defeat Essence Monsters", counterTarget: 30 },
+        { id: "9-2", name: "Open Strongboxes", counterTarget: 30 },
+        { id: "9-3", name: "Activate Shrines", counterTarget: 30 },
+        { id: "9-4", name: "Defeat Harbingers", counterTarget: 30 },
+        { id: "9-5", name: "Defeat Possessed Monsters", counterTarget: 30 },
+        { id: "9-6", name: "Defeat Rogue Exiles", counterTarget: 30 },
+        {
+          id: "9-7",
+          name: "Defeat Rare Beyond Monsters",
+          counterTarget: 30,
+        },
+      ],
+    },
+    {
+      id: 10,
+      name: "Meaningful Mechanics",
+      description:
+        "Complete any four of the following League Mechanic encounters the specified number of times.",
+      type: "pick",
+      required: 4,
+      subtasks: [
+        { id: "10-1", name: "Complete Breaches", counterTarget: 30 },
+        { id: "10-2", name: "Complete Abysses", counterTarget: 30 },
+        { id: "10-3", name: "Complete Expeditions", counterTarget: 30 },
+        { id: "10-4", name: "Complete Harvest Plots", counterTarget: 100 },
+        {
+          id: "10-5",
+          name: "Complete Legion Encounters",
+          counterTarget: 30,
+        },
+        { id: "10-6", name: "Open Smuggler's Caches", counterTarget: 30 },
+        {
+          id: "10-7",
+          name: "Pass through Mirrors of Delirium",
+          counterTarget: 30,
+        },
+        {
+          id: "10-8",
+          name: "Complete Ultimatum Waves",
+          counterTarget: 200,
+        },
+        { id: "10-9", name: "Complete Blights", counterTarget: 30 },
+        { id: "10-10", name: "Complete Rituals", counterTarget: 100 },
+      ],
+    },
+    {
+      id: 11,
+      name: "Proven Professionals",
+      description:
+        "Complete any two of the following Master Mission encounters in Tier 11 or higher Maps the specified number of times.",
+      type: "pick",
+      required: 2,
+      subtasks: [
+        { id: "11-1", name: "Niko Missions", counterTarget: 30 },
+        { id: "11-2", name: "Einhar Missions", counterTarget: 30 },
+        { id: "11-3", name: "Jun Missions", counterTarget: 30 },
+        { id: "11-4", name: "Alva Missions", counterTarget: 30 },
+      ],
+    },
+    {
+      id: 12,
+      name: "Refined Reagents",
+      description:
+        "Have each of the following Kingsmarch resources in your Stockpile the specified number of times.",
+      type: "all",
+      required: 11,
+      subtasks: [
+        { id: "12-1", name: "Wheat", counterTarget: 1000 },
+        { id: "12-2", name: "Corn", counterTarget: 1000 },
+        { id: "12-3", name: "Pumpkin", counterTarget: 1000 },
+        { id: "12-4", name: "Orgourd", counterTarget: 1000 },
+        { id: "12-5", name: "Blue Zanthimum", counterTarget: 1000 },
+        { id: "12-6", name: "Crimson Iron Bars", counterTarget: 1000 },
+        { id: "12-7", name: "Orichalcum Bars", counterTarget: 1000 },
+        { id: "12-8", name: "Petrified Amber Bars", counterTarget: 1000 },
+        { id: "12-9", name: "Bismuth Bars", counterTarget: 1000 },
+        { id: "12-10", name: "Verisium Bars", counterTarget: 1000 },
+        { id: "12-11", name: "Thaumaturgic Dust", counterTarget: 20000 },
+      ],
+    },
+    {
+      id: 13,
+      name: "Crafty Currency",
+      description: "Use each of the following Currency items.",
+      type: "all",
+      required: 15,
+      subtasks: [
+        { id: "13-1", name: "Orb of Transmutation" },
+        { id: "13-2", name: "Orb of Augmentation" },
+        { id: "13-3", name: "Orb of Alteration" },
+        { id: "13-4", name: "Orb of Chance" },
+        { id: "13-5", name: "Orb of Alchemy" },
+        { id: "13-6", name: "Orb of Scouring" },
+        { id: "13-7", name: "Orb of Fusing" },
+        { id: "13-8", name: "Jeweller's Orb" },
+        { id: "13-9", name: "Chromatic Orb" },
+        { id: "13-10", name: "Orb of Annulment" },
+        { id: "13-11", name: "Regal Orb" },
+        { id: "13-12", name: "Chaos Orb" },
+        { id: "13-13", name: "Exalted Orb" },
+        { id: "13-14", name: "Blessed Orb" },
+        { id: "13-15", name: "Divine Orb" },
+      ],
+    },
+    {
+      id: 14,
+      name: "Overwhelming Opposition",
+      description: "Defeat 500 Map Bosses.",
+      type: "counter",
+      required: 500,
+      subtasks: [],
+    },
+    {
+      id: 15,
+      name: "Potent Pantheon",
+      description: "Upgrade each of the following Pantheon Power types.",
+      type: "all",
+      required: 2,
+      subtasks: [
+        { id: "15-1", name: "Minor Pantheon Power" },
+        { id: "15-2", name: "Major Pantheon Power" },
+      ],
+    },
+    {
+      id: 16,
+      name: "Unbelievable Undertakings",
+      description:
+        "Complete any four of the following encounters while the area level is 81 or higher if possible the specified number of times.",
+      type: "pick",
+      required: 4,
+      subtasks: [
+        { id: "16-1", name: "Breachstones", counterTarget: 5 },
+        { id: "16-2", name: "Abyssal Depths", counterTarget: 5 },
+        {
+          id: "16-3",
+          name: "Logbooks with at least 10 Remnants active",
+          counterTarget: 5,
+        },
+        { id: "16-4", name: "Tier 4 Harvest Seeds", counterTarget: 5 },
+        {
+          id: "16-5",
+          name: "Domains of Timeless Conflict with at least 25 rewards",
+          counterTarget: 3,
+        },
+        {
+          id: "16-6",
+          name: "Blueprints with 4 revealed wings",
+          counterTarget: 5,
+        },
+        { id: "16-7", name: "Simulacrum Waves", counterTarget: 60 },
+        { id: "16-8", name: "Trialmaster fights", counterTarget: 3 },
+        {
+          id: "16-9",
+          name: "Blighted or Blight Ravaged Maps",
+          counterTarget: 5,
+        },
+        {
+          id: "16-10",
+          name: "All Rituals in Maps with at least one Blood-filled Vessel applied",
+          counterTarget: 15,
+        },
+      ],
+    },
+    {
+      id: 17,
+      name: "Sublime Starlight",
+      description: "Use each of the following Runes on an item.",
+      type: "all",
+      required: 10,
+      subtasks: [
+        { id: "17-1", name: "Sun Rune" },
+        { id: "17-2", name: "Bound Rune" },
+        { id: "17-3", name: "Life Rune" },
+        { id: "17-4", name: "War Rune" },
+        { id: "17-5", name: "River Rune" },
+        { id: "17-6", name: "Bounty Rune" },
+        { id: "17-7", name: "Journey Rune" },
+        { id: "17-8", name: "Mountain Rune" },
+        { id: "17-9", name: "Time Rune" },
+        { id: "17-10", name: "Power Rune" },
+      ],
+    },
+    {
+      id: 18,
+      name: "Achieve Ascension",
+      description: "Complete each of the following Ascendancy tasks.",
+      type: "all",
+      required: 4,
+      subtasks: [
+        {
+          id: "18-1",
+          name: "Use the Ascendancy Device in the Labyrinth",
+        },
+        {
+          id: "18-2",
+          name: "Use the Ascendancy Device in the Cruel Labyrinth",
+        },
+        {
+          id: "18-3",
+          name: "Use the Ascendancy Device in the Merciless Labyrinth",
+        },
+        {
+          id: "18-4",
+          name: "Use the Ascendancy Device in the Eternal Labyrinth",
+        },
+      ],
+    },
+    {
+      id: 19,
+      name: "Divined Destiny",
+      description:
+        "Complete any three of the following Divination Card tasks.",
+      type: "pick",
+      required: 3,
+      subtasks: [
+        {
+          id: "19-1",
+          name: "Open Diviner's Strongboxes",
+          counterTarget: 5,
+        },
+        {
+          id: "19-2",
+          name: "Turn in sets of Divination Cards",
+          counterTarget: 50,
+        },
+        {
+          id: "19-3",
+          name: "Complete Rare Tier 11 or higher Maps with at least one Divination Scarab applied",
+          counterTarget: 25,
+        },
+        { id: "19-4", name: "Scry a Map" },
+      ],
+    },
+    {
+      id: 20,
+      name: "Peddler's Produce II",
+      description:
+        "Complete vendor recipes to receive each of the following items. A vendor recipe is when you trade a specific combination of items to a vendor, not when you buy items from their purchase screen.",
+      type: "all",
+      required: 4,
+      subtasks: [
+        { id: "20-1", name: "Prismatic Ring" },
+        { id: "20-2", name: "Orb of Fusing" },
+        { id: "20-3", name: "Regal Orb" },
+        { id: "20-4", name: "Grasping Mail or Loreweave" },
+      ],
+    },
+    {
+      id: 21,
+      name: "Chaotic Creations",
+      description:
+        "Use a Chaos Orb on any five of the following item base types with Item Level 83 or higher.",
+      type: "pick",
+      required: 5,
+      subtasks: [
+        { id: "21-1", name: "Experimented Base Type" },
+        { id: "21-2", name: "Ritual Base Type" },
+        { id: "21-3", name: "Atlas Base Type" },
+        { id: "21-4", name: "Abyss Base Type" },
+        { id: "21-5", name: "Expedition Base Type" },
+        { id: "21-6", name: "Rogue Equipment" },
+        { id: "21-7", name: "Cluster Jewel" },
+      ],
+    },
+    {
+      id: 22,
+      name: "Gilded Goals",
+      description:
+        "Have at least 250,000 Gold in the Kingsmarch Treasury at once.",
+      type: "counter",
+      required: 1,
+      subtasks: [],
+    },
+    {
+      id: 23,
+      name: "Remarkable Realms",
+      description: "Complete each of the following Unique Maps.",
+      type: "all",
+      required: 17,
+      subtasks: [
+        { id: "23-1", name: "Vaults of Atziri" },
+        { id: "23-2", name: "Maelstr\u00F6m of Chaos" },
+        { id: "23-3", name: "The Coward's Trial" },
+        { id: "23-4", name: "Acton's Nightmare" },
+        { id: "23-5", name: "Poorjoy's Asylum" },
+        { id: "23-6", name: "Mao Kun" },
+        { id: "23-7", name: "Oba's Cursed Trove" },
+        { id: "23-8", name: "Olmec's Sanctum" },
+        { id: "23-9", name: "Death and Taxes" },
+        { id: "23-10", name: "Whakawairua Tuahu" },
+        { id: "23-11", name: "The Vinktar Square" },
+        { id: "23-12", name: "Caer Blaidd, Wolfpack's Den" },
+        { id: "23-13", name: "The Putrid Cloister" },
+        { id: "23-14", name: "Hallowed Ground" },
+        { id: "23-15", name: "The Twilight Temple" },
+        { id: "23-16", name: "Pillars of Arun" },
+        { id: "23-17", name: "Doryani's Machinarium" },
+      ],
+    },
+    {
+      id: 24,
+      name: "Sanctified Scarabs I",
+      description:
+        "Complete Maps with a total of 500 Scarabs applied while the Maps are Rare and at least Tier 14.",
+      type: "counter",
+      required: 500,
+      subtasks: [],
+    },
+    {
+      id: 25,
+      name: "Gleaming Gems",
+      description: "Complete each of the following Gem tasks.",
+      type: "all",
+      required: 4,
+      subtasks: [
+        { id: "25-1", name: "Level Gems to level 20", counterTarget: 10 },
+        { id: "25-2", name: "Use Gemcutter's Prisms", counterTarget: 40 },
+        {
+          id: "25-3",
+          name: "Turn in a Divination Card set rewarding a Level 21 and/or 23% Quality Gem",
+        },
+        {
+          id: "25-4",
+          name: "Use the Divine Font in the Endgame Labyrinth",
+          counterTarget: 10,
+        },
+      ],
+    },
+    {
+      id: 26,
+      name: "Cross Contamination",
+      description:
+        "Complete any four of the following past league content encounters.",
+      type: "pick",
+      required: 4,
+      subtasks: [
+        { id: "26-1", name: "Defeat a Harbinger while in a Breach" },
+        {
+          id: "26-2",
+          name: "Defeat a Unique Map Boss that is Possessed while in a Ritual",
+        },
+        {
+          id: "26-3",
+          name: "Defeat a Breachlord while affected by a Shrine",
+        },
+        {
+          id: "26-4",
+          name: "Defeat a Blight Boss while Delirious",
+        },
+        {
+          id: "26-5",
+          name: "Defeat a Delirium or Beyond Boss while in the Sacred Grove",
+        },
+        {
+          id: "26-6",
+          name: "Defeat a Possessed Syndicate Member",
+        },
+      ],
+    },
+    {
+      id: 27,
+      name: "Ambitious Assignments",
+      description:
+        "Complete each of the following Settlers of Kalguur encounters.",
+      type: "all",
+      required: 6,
+      subtasks: [
+        {
+          id: "27-1",
+          name: "Have at least 10,000 Blue Zanthimum in Kingsmarch Stockpile at once",
+        },
+        {
+          id: "27-2",
+          name: "Have at least 5,000 Verisium Bars in Kingsmarch Stockpile at once",
+        },
+        { id: "27-3", name: "Complete Port Quotas", counterTarget: 30 },
+        { id: "27-4", name: "Disenchant Unique items", counterTarget: 30 },
+        {
+          id: "27-5",
+          name: "Claim rewards from Maps successfully completed by Atlas Runners",
+          counterTarget: 150,
+        },
+        {
+          id: "27-6",
+          name: "Use Recombinator resulting in Item Level 75+",
+          counterTarget: 15,
+        },
+      ],
+    },
+    {
+      id: 28,
+      name: "Magnificent Mastery",
+      description:
+        "Complete any one of the following Master encounters.",
+      type: "pick",
+      required: 1,
+      subtasks: [
+        {
+          id: "28-1",
+          name: "Reach Depth Level 400 in the Azurite Mine",
+        },
+        { id: "28-2", name: "Capture Red Beasts", counterTarget: 400 },
+        {
+          id: "28-3",
+          name: "Complete Betrayal Safehouses",
+          counterTarget: 40,
+        },
+        {
+          id: "28-4",
+          name: "Upgrade Incursion rooms to Tier 3",
+          counterTarget: 200,
+        },
+      ],
+    },
+    {
+      id: 29,
+      name: "Sanctified Scarabs II",
+      description:
+        "Complete 75 Rare Tier 16 or higher Maps with at least four Scarabs applied and at least 80% Item Quantity.",
+      type: "counter",
+      required: 75,
+      subtasks: [],
+    },
+    {
+      id: 30,
+      name: "Arduous Atlas",
+      description:
+        "Complete Maps with a total of 4,000 explicit modifiers.",
+      type: "counter",
+      required: 4000,
+      subtasks: [],
+    },
+    {
+      id: 31,
+      name: "Monstrous Memories",
+      description:
+        "Defeat 100 Rare monsters with at least 3 Modifiers in Atlas Memories.",
+      type: "counter",
+      required: 100,
+      subtasks: [],
+    },
+    {
+      id: 32,
+      name: "Tremendous Township",
+      description: "Fully upgrade all of Kingsmarch.",
+      type: "counter",
+      required: 1,
+      subtasks: [],
+    },
+    {
+      id: 33,
+      name: "Agitated Adversaries",
+      description:
+        "Defeat any three of the following Bosses in the specified ways.",
+      type: "pick",
+      required: 3,
+      subtasks: [
+        {
+          id: "33-1",
+          name: "The King in the Mists without taking damage from Ritual of Meditation or Ritual of Dance",
+        },
+        {
+          id: "33-2",
+          name: "Lycia, Herald of the Scourge without being affected by Heretic's Ire",
+        },
+        {
+          id: "33-3",
+          name: "Izaro in the Empowered Endgame Labyrinth without being hit by Ornamental Cascade",
+        },
+        {
+          id: "33-4",
+          name: "Syndicate Mastermind without taking damage from a sculpture",
+        },
+        {
+          id: "33-5",
+          name: "Aul, the Crystal King after destroying all Crystalline Cocoons",
+        },
+      ],
+    },
+    {
+      id: 34,
+      name: "Extravagant Equipment",
+      description:
+        "Use any six of the following Currency items.",
+      type: "pick",
+      required: 6,
+      subtasks: [
+        { id: "34-1", name: "Sacred Orb" },
+        { id: "34-2", name: "Tailoring or Tempering Orb" },
+        { id: "34-3", name: "Conqueror Exalted Orb" },
+        { id: "34-4", name: "Veiled Orb" },
+        { id: "34-5", name: "Awakener's Orb" },
+        { id: "34-6", name: "Fracturing Orb" },
+        { id: "34-7", name: "Hinekora's Lock" },
+        { id: "34-8", name: "Mirror of Kalandra" },
+        { id: "34-9", name: "Orb of Dominance" },
+        { id: "34-10", name: "Tainted Divine Teardrop" },
+        { id: "34-11", name: "Orb of Conflict" },
+        { id: "34-12", name: "Reflecting Mist" },
+      ],
+    },
+    {
+      id: 35,
+      name: "Inciting Invitations",
+      description:
+        "Reach a total of 3,000% Item Quantity from completing Invitations.",
+      type: "counter",
+      required: 3000,
+      subtasks: [],
+    },
+    {
+      id: 36,
+      name: "Realised Realms",
+      description: "Complete each of the following Atlas encounters.",
+      type: "all",
+      required: 2,
+      subtasks: [
+        { id: "36-1", name: "Unlock the 6 Slot Map Device" },
+        { id: "36-2", name: "Use Maven Chisels", counterTarget: 10 },
+      ],
+    },
+    {
+      id: 37,
+      name: "Challenging Competitors",
+      description:
+        "Defeat any four of the following Kalguur Bosses at level 83 or higher in the specified ways.",
+      type: "pick",
+      required: 4,
+      subtasks: [
+        {
+          id: "37-1",
+          name: "Admiral Valerius without being hit by Anchor Smash",
+        },
+        {
+          id: "37-2",
+          name: "Admiral Valerius without exceeding 5 stacks of Soaked to the Bone",
+        },
+        {
+          id: "37-3",
+          name: "Sasan, Bandit Lord without being hit by Circle of Flame",
+        },
+        {
+          id: "37-4",
+          name: "Sasan, Bandit Lord without being hit by Hail of Arrows",
+        },
+        {
+          id: "37-5",
+          name: "The Black Knight without being hit by falling rocks",
+        },
+        {
+          id: "37-6",
+          name: "The Black Knight without being affected by Verisium Laser",
+        },
+      ],
+    },
+    {
+      id: 38,
+      name: "Nightmarish Nemeses",
+      description:
+        "Complete each of the following Tier 17 Nightmare Maps while they have at least 250% Item Quantity.",
+      type: "all",
+      required: 5,
+      subtasks: [
+        { id: "38-1", name: "Sanctuary Map" },
+        { id: "38-2", name: "Citadel Map" },
+        { id: "38-3", name: "Fortress Map" },
+        { id: "38-4", name: "Abomination Map" },
+        { id: "38-5", name: "Ziggurat Map" },
+      ],
+    },
+    {
+      id: 39,
+      name: "Ultimate Usurpers",
+      description:
+        "Defeat any four of the following Pinnacle Boss Encounters while the area is level 85.",
+      type: "pick",
+      required: 4,
+      subtasks: [
+        { id: "39-1", name: "Sirus, Awakener of Worlds" },
+        { id: "39-2", name: "The Elder" },
+        { id: "39-3", name: "The Maven" },
+        { id: "39-4", name: "The Searing Exarch" },
+        { id: "39-5", name: "The Eater of Worlds" },
+        { id: "39-6", name: "High Templar Venarius" },
+        { id: "39-7", name: "The Shaper" },
+      ],
+    },
+    {
+      id: 40,
+      name: "Gear Grinding Goals",
+      description:
+        "Complete any four of the following encounters the specified number of times.",
+      type: "pick",
+      required: 4,
+      subtasks: [
+        { id: "40-1", name: "Reach Level 100" },
+        {
+          id: "40-2",
+          name: "Cleanse Darkshrines in the Endgame Labyrinth",
+          counterTarget: 300,
+        },
+        {
+          id: "40-3",
+          name: "Activate Eldritch Altars or defeat Witnessed Map Bosses",
+          counterTarget: 400,
+        },
+        {
+          id: "40-4",
+          name: "Defeat Level 83+ Rare monsters with at least 4 Modifiers",
+          counterTarget: 250,
+        },
+        {
+          id: "40-5",
+          name: "Complete Tier 17 Maps",
+          counterTarget: 50,
+        },
+        {
+          id: "40-6",
+          name: "Claim rewards from Rare Tier 14+ Maps successfully completed by Atlas Runners",
+          counterTarget: 200,
+        },
+      ],
+    },
+  ],
+};

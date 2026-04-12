@@ -1,0 +1,172 @@
+"use client";
+
+import { useState, useCallback, useEffect, useRef } from "react";
+import type { League, PlayerProgress, ChallengeProgress } from "@/schemas";
+import {
+  loadProgress,
+  saveProgress,
+  createDefaultProgress,
+  recalculateChallenge,
+} from "@/lib/progress-store";
+import { mergeProgress } from "@/lib/merge-progress";
+
+export function useProgress(league: League, isLoggedIn: boolean) {
+  const [progress, setProgress] = useState<PlayerProgress>(() =>
+    createDefaultProgress(league),
+  );
+  const [isLoaded, setIsLoaded] = useState(false);
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  // Load progress: from API if logged in, localStorage otherwise
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetch(`/api/progress?league=${encodeURIComponent(league.id)}`)
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.progress) {
+            setProgress(data.progress as PlayerProgress);
+            // Also cache in localStorage as offline fallback
+            saveProgress(data.progress as PlayerProgress);
+          } else {
+            // No server data, try localStorage
+            setProgress(loadProgress(league));
+          }
+          setIsLoaded(true);
+        })
+        .catch(() => {
+          // API failed, fall back to localStorage
+          setProgress(loadProgress(league));
+          setIsLoaded(true);
+        });
+    } else {
+      setProgress(loadProgress(league));
+      setIsLoaded(true);
+    }
+  }, [league, isLoggedIn]);
+
+  // Debounced save — writes to localStorage always, API if logged in
+  const debouncedSave = useCallback(
+    (newProgress: PlayerProgress) => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+      saveTimeoutRef.current = setTimeout(() => {
+        // Always save to localStorage (offline fallback)
+        saveProgress(newProgress);
+
+        // Also save to API if logged in
+        if (isLoggedIn) {
+          fetch("/api/progress", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              leagueId: newProgress.leagueId,
+              challengeData: newProgress,
+            }),
+          }).catch(() => {
+            // Silent fail — localStorage has the data
+          });
+        }
+      }, 300);
+    },
+    [isLoggedIn],
+  );
+
+  const updateProgress = useCallback(
+    (updater: (prev: PlayerProgress) => PlayerProgress) => {
+      setProgress((prev) => {
+        const next = updater(prev);
+        debouncedSave(next);
+        return next;
+      });
+    },
+    [debouncedSave],
+  );
+
+  const toggleSubtask = useCallback(
+    (challengeId: number, subtaskId: string) => {
+      updateProgress((prev) => {
+        const challenges = prev.challenges.map((cp) => {
+          if (cp.challengeId !== challengeId) return cp;
+
+          const updatedSubtasks = cp.subtasks.map((s) => {
+            if (s.id !== subtaskId) return s;
+            return { ...s, completed: !s.completed };
+          });
+
+          const updated = { ...cp, subtasks: updatedSubtasks };
+          return recalculateChallenge(updated, league);
+        });
+
+        return { ...prev, challenges };
+      });
+    },
+    [league, updateProgress],
+  );
+
+  const updateCounter = useCallback(
+    (challengeId: number, value: number) => {
+      updateProgress((prev) => {
+        const challenges = prev.challenges.map((cp) => {
+          if (cp.challengeId !== challengeId) return cp;
+          const updated = { ...cp, completed: value };
+          return recalculateChallenge(updated, league);
+        });
+        return { ...prev, challenges };
+      });
+    },
+    [league, updateProgress],
+  );
+
+  const importProgress = useCallback(
+    (incoming: PlayerProgress) => {
+      updateProgress((prev) => mergeProgress(prev, incoming));
+    },
+    [updateProgress],
+  );
+
+  const resetAll = useCallback(() => {
+    const fresh = createDefaultProgress(league);
+    setProgress(fresh);
+    saveProgress(fresh);
+    if (isLoggedIn) {
+      fetch("/api/progress", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          leagueId: league.id,
+          challengeData: fresh,
+        }),
+      }).catch(() => {});
+    }
+  }, [league, isLoggedIn]);
+
+  const completedCount = progress.challenges.filter(
+    (c) => c.isComplete,
+  ).length;
+
+  const getProgress = useCallback(
+    (challengeId: number): ChallengeProgress => {
+      return (
+        progress.challenges.find((c) => c.challengeId === challengeId) ?? {
+          challengeId,
+          completed: 0,
+          isComplete: false,
+          subtasks: [],
+        }
+      );
+    },
+    [progress],
+  );
+
+  return {
+    progress,
+    isLoaded,
+    toggleSubtask,
+    updateCounter,
+    importProgress,
+    resetAll,
+    completedCount,
+    getProgress,
+  };
+}

@@ -1,0 +1,77 @@
+import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { eq, and } from "drizzle-orm";
+import { validateSession, SESSION_COOKIE_NAME } from "@/lib/auth";
+import { db } from "@/db";
+import { userProgress } from "@/db/schema";
+
+export async function GET(request: NextRequest) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+  if (!token) {
+    return NextResponse.json({ progress: null });
+  }
+
+  const session = await validateSession(token);
+  if (!session) {
+    return NextResponse.json({ progress: null });
+  }
+
+  const league = request.nextUrl.searchParams.get("league");
+  if (!league) {
+    return NextResponse.json({ error: "Missing league param" }, { status: 400 });
+  }
+
+  const result = await db
+    .select()
+    .from(userProgress)
+    .where(
+      and(
+        eq(userProgress.userId, session.user.id),
+        eq(userProgress.leagueId, league),
+      ),
+    )
+    .limit(1);
+
+  return NextResponse.json({
+    progress: result[0]?.challengeData ?? null,
+  });
+}
+
+export async function PUT(request: NextRequest) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+  if (!token) {
+    return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+  }
+
+  const session = await validateSession(token);
+  if (!session) {
+    return NextResponse.json({ error: "Invalid session" }, { status: 401 });
+  }
+
+  const body = await request.json();
+  const { leagueId, challengeData } = body;
+
+  if (!leagueId || !challengeData) {
+    return NextResponse.json({ error: "Missing leagueId or challengeData" }, { status: 400 });
+  }
+
+  await db
+    .insert(userProgress)
+    .values({
+      userId: session.user.id,
+      leagueId,
+      challengeData,
+      lastSynced: new Date(),
+    })
+    .onConflictDoUpdate({
+      target: [userProgress.userId, userProgress.leagueId],
+      set: {
+        challengeData,
+        lastSynced: new Date(),
+      },
+    });
+
+  return NextResponse.json({ ok: true });
+}
