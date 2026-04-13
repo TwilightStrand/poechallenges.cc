@@ -14,6 +14,7 @@ import { FilterBar } from "./FilterBar";
 import { ChallengeList } from "./ChallengeList";
 import { BookmarkletInfo } from "./BookmarkletInfo";
 import { ImportModal } from "./ImportModal";
+import { Footer } from "./Footer";
 
 interface ChallengeTrackerProps {
   leagues: Record<string, League>;
@@ -170,6 +171,10 @@ export function ChallengeTracker({
             isLoggedIn={isLoggedIn}
           />
         </div>
+
+        <div className="poe-separator" />
+
+        <Footer />
       </div>
 
       {filteredChallenges.length === 0 && (
