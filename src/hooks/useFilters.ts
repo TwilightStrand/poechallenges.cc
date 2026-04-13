@@ -25,7 +25,7 @@ export interface FilteredChallenge {
 
 export function useFilters() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [showCompleted, setShowCompleted] = useState(true);
+  const [showCompleted, setShowCompleted] = useState(false);
   const [sortBy, setSortBy] = useState<SortBy>("default");
 
   const toggleCompleted = useCallback(() => {
