@@ -3,9 +3,15 @@
 ## Quick Start
 ```bash
 docker compose up -d db          # Postgres on :5433
-npm run dev                      # Next.js on :3000
-npm run db:push                  # Create/update tables
+pnpm dev                         # Next.js on :3000
+pnpm db:push                     # Create/update tables
 ```
+
+## Package manager
+Uses **pnpm**. `pnpm-workspace.yaml` sets `minimumReleaseAge: 2880` (2 days)
+so newly-published versions aren't installed until they've had time to be
+scrutinized — a mitigation against supply-chain compromise. Existing
+`pnpm-lock.yaml` pins are always honored regardless of the setting.
 
 ## Stack
 - Next.js 16 (Turbopack), React 19.2, TypeScript strict
@@ -44,7 +50,9 @@ Dev mode: `/api/auth/dev-login?account=Name` creates a fake session.
 3. Create `src/data/guides/{league}.ts` (follow mirage.ts format)
 4. Add to both index files
 
-## CSS TODO
-Planned refactor: move component-specific CSS from `globals.css` into
-co-located `.module.css` files. Keep only theme tokens + body base +
-scrollbar in globals.
+## CSS Layout
+Component-specific styles live in co-located `.module.css` files next to
+the component. `globals.css` is limited to `@theme` tokens, body base
+styling (background, noise, vignette), native `<option>` dark theme, and
+scrollbar styling. Tailwind utilities are preferred; modules are for
+gradients, pseudo-elements, and other things utilities don't express well.

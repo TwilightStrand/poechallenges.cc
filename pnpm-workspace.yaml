@@ -1,0 +1,5 @@
+# Delay installing newly-published versions by 2 days (value is in minutes).
+# Reduces exposure to compromised packages that usually get yanked within the
+# first hour. Applies at resolution time — existing pnpm-lock.yaml pins are
+# always respected.
+minimumReleaseAge: 2880

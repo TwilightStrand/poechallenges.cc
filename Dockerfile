@@ -1,17 +1,20 @@
 FROM node:24-alpine AS base
 
+# Enable Corepack so pnpm resolves from packageManager in package.json
+RUN corepack enable
+
 WORKDIR /app
 
 # Dependencies
 FROM base AS deps
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile
 
 # Build
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 # Production
 FROM base AS runner
