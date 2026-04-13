@@ -68,7 +68,7 @@ export function ChallengeDetail({
     <div className="px-4 pb-4 pt-2 space-y-4">
       {/* Description */}
       {challenge.description && (
-        <p className="text-sm text-poe-text-dim leading-relaxed">
+        <p className="text-sm poe-description leading-relaxed">
           {challenge.description}
         </p>
       )}
@@ -111,12 +111,13 @@ export function ChallengeDetail({
         <p className="text-xs text-poe-text-dim">Fetching prices...</p>
       )}
 
-      {/* Subtasks */}
+      {/* Subtasks — 2-col grid matching in-game panel */}
       {challenge.subtasks.length > 0 && (
-        <div className="space-y-0.5">
+        <div>
           <h4 className="text-xs font-semibold uppercase tracking-wider text-poe-gold-light mb-2">
             Subtasks ({progress.completed}/{challenge.required})
           </h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-0.5">
           {challenge.subtasks.map((subtask) => {
             const price = prices.get(subtask.id);
             const isRecommended = cheapest.has(subtask.id);
@@ -135,6 +136,7 @@ export function ChallengeDetail({
               />
             );
           })}
+          </div>
         </div>
       )}
 

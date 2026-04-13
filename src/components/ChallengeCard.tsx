@@ -63,26 +63,22 @@ export function ChallengeCard({
           </div>
         )}
 
-        <span className="text-xs text-poe-text-dim whitespace-nowrap shrink-0">
+        <span
+          className={`text-sm font-medium whitespace-nowrap shrink-0 ${isComplete ? "text-[#5a9e58]" : "text-[#c04040]"}`}
+        >
           {progress.completed}/{challenge.required}
         </span>
 
-        {/* Chevron */}
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          className={`shrink-0 text-poe-text-dim transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}
-        >
-          <path
-            d="M6 9l6 6 6-6"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        {/* Status icon — green ✓ if complete, red × if incomplete */}
+        {isComplete ? (
+          <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="shrink-0 text-[#5a9e58]">
+            <path d="M2 7.5L5.5 11L12 3.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        ) : (
+          <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="shrink-0 text-[#c04040]">
+            <path d="M3 3L11 11M11 3L3 11" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+          </svg>
+        )}
       </button>
 
       {/* Progress bar */}

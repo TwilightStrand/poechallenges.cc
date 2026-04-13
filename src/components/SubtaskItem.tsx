@@ -58,54 +58,56 @@ export function SubtaskItem({
     }
   };
 
+  const textColor = completed ? "poe-subtask-done" : "poe-subtask-todo";
+
   return (
     <div
       className={`
-        flex flex-col gap-1 w-full py-1.5 px-2 rounded transition-colors group
-        ${recommended && !completed ? "bg-poe-gold/8 border border-poe-gold/20" : ""}
+        flex flex-col gap-0.5 py-1 px-2 rounded transition-colors
+        ${recommended && !completed ? "bg-poe-gold/8 border border-poe-gold/20" : "hover:bg-poe-bg-card-hover/50"}
       `}
     >
       <div className="flex items-center gap-2">
-        {/* Checkbox + name area */}
+        {/* Name + counter, clickable */}
         <button
           type="button"
           onClick={onToggle}
-          className="flex items-center gap-2 flex-1 min-w-0 text-left"
+          className={`flex-1 min-w-0 text-left text-sm ${textColor}`}
         >
-          <span
-            className={`
-              shrink-0 w-4 h-4 rounded-sm border-2 flex items-center justify-center transition-colors
-              ${completed ? "border-poe-gold bg-poe-gold" : "border-poe-gold/50 bg-transparent group-hover:border-poe-gold"}
-            `}
-          >
-            {completed && (
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5l2.5 2.5L8 3" stroke="#0c0b0a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            )}
-          </span>
-
-          <span className={`text-sm truncate transition-colors ${completed ? "line-through text-poe-text-dim" : "text-poe-text"}`}>
-            {subtask.name}
-            {hasCounter && (
-              <span className="ml-1 text-poe-text-dim">({counterValue}/{subtask.counterTarget})</span>
-            )}
-          </span>
+          <span>{subtask.name}</span>
+          {hasCounter && (
+            <span className="ml-1 opacity-75">
+              ({counterValue}/{subtask.counterTarget})
+            </span>
+          )}
+          {completed && (
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 14 14"
+              fill="none"
+              className="inline-block ml-1.5 -mt-0.5"
+            >
+              <path
+                d="M2 7.5L5.5 11L12 3.5"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          )}
         </button>
 
         {/* Right side: price + report + trade */}
-        <div className="shrink-0 flex items-center gap-2">
+        <div className="shrink-0 flex items-center gap-1.5">
           {price && !completed && (
             <span className="flex items-center gap-1 text-xs">
               {recommended && <span className="text-poe-green font-medium">Best</span>}
               <span className="text-poe-gold-light">{Math.round(price.totalCost)}c</span>
-              <span className="text-poe-text-dim hidden sm:inline">
-                ({Number(price.chaosValue.toFixed(1))}c x{price.quantity})
-              </span>
             </span>
           )}
 
-          {/* Report price button (logged in + tradeable + not completed) */}
           {isLoggedIn && tradeLink && !completed && (
             <button
               onClick={(e) => { e.stopPropagation(); setShowReport((p) => !p); }}
@@ -125,7 +127,7 @@ export function SubtaskItem({
               className="text-poe-text-dim hover:text-poe-gold transition-colors"
               title={`${tradeLink.type === "exchange" ? "Buy on" : "Search on"} PoE Trade`}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
                 <polyline points="15 3 21 3 21 9" />
                 <line x1="10" y1="14" x2="21" y2="3" />
@@ -135,9 +137,8 @@ export function SubtaskItem({
         </div>
       </div>
 
-      {/* Price report inline form */}
       {showReport && (
-        <div className="flex items-center gap-2 ml-6" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
           <input
             type="number"
             min="0"
@@ -145,13 +146,13 @@ export function SubtaskItem({
             placeholder="chaos per unit"
             value={reportValue}
             onChange={(e) => setReportValue(e.target.value)}
-            className="w-28 px-2 py-1 text-xs bg-poe-bg-input border border-poe-border-subtle rounded text-poe-text focus:outline-none focus:border-poe-border"
+            className="w-24 px-2 py-0.5 text-xs bg-poe-bg-input border border-poe-border-subtle rounded text-poe-text focus:outline-none focus:border-poe-border"
             autoFocus
           />
           <button
             onClick={handleReport}
             disabled={reporting || !reportValue}
-            className="text-xs px-2 py-1 rounded bg-poe-gold/20 border border-poe-gold/30 text-poe-gold-light hover:bg-poe-gold/30 disabled:opacity-50 transition-colors"
+            className="text-xs px-2 py-0.5 rounded bg-poe-gold/20 border border-poe-gold/30 text-poe-gold-light hover:bg-poe-gold/30 disabled:opacity-50 transition-colors"
           >
             {reporting ? "..." : "Submit"}
           </button>

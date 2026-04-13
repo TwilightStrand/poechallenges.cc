@@ -246,6 +246,11 @@ select option {
   border: 1px solid #2a2318;
 }
 
+/* ── Subtask text colors matching in-game panel ── */
+.poe-subtask-done { color: #5a9e58; }
+.poe-subtask-todo { color: #8a7d6a; }
+.poe-description { color: #b8836a; }  /* rust/copper */
+
 /* ── Glow for completed items ── */
 .challenge-complete-glow {
   text-shadow: 0 0 8px rgba(72, 168, 66, 0.2);
