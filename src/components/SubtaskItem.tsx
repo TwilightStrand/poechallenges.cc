@@ -111,9 +111,9 @@ export function SubtaskItem({
             <button
               onClick={(e) => { e.stopPropagation(); setShowReport((p) => !p); }}
               className="text-[10px] px-1.5 py-0.5 rounded border border-poe-border-subtle text-poe-text-dim hover:text-poe-gold-light hover:border-poe-border transition-colors"
-              title="Report what you paid"
+              title="Set real price"
             >
-              I paid
+              Set price
             </button>
           )}
 

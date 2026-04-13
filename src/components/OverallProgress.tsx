@@ -6,85 +6,109 @@ interface OverallProgressProps {
   rewards: Reward[];
 }
 
+const rewardTypeLabel: Record<Reward["type"], string> = {
+  armor: "MTX",
+  trophy: "Trophy",
+};
+
+function RewardIcon({ type }: { type: Reward["type"] }) {
+  if (type === "trophy") {
+    // Trophy / crown
+    return (
+      <svg viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3">
+        <path d="M3 2h10v3a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V2zm3 8h4v2H6v-2zm-2 3h8v1H4v-1z" />
+      </svg>
+    );
+  }
+  // MTX / armor chest
+  return (
+    <svg viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3">
+      <path d="M2 7h12v7H2V7zm1-4h10l1 3H2l1-3zm5 5h2v2H8V8z" />
+    </svg>
+  );
+}
+
 export function OverallProgress({
   completedCount,
   totalCount,
   rewards,
 }: OverallProgressProps) {
-  // Find the next reward to earn
-  const nextReward = rewards.find((r) => r.at > completedCount);
-  const bannerText = nextReward
-    ? `You will earn ${nextReward.reward} as you complete challenges.`
-    : "All challenge rewards earned — congratulations!";
+  const rewardMap = new Map<number, Reward>();
+  for (const r of rewards) rewardMap.set(r.at, r);
 
-  const percentage = totalCount > 0 ? Math.min((completedCount / totalCount) * 100, 100) : 0;
+  const nextReward = rewards.find((r) => r.at > completedCount);
 
   return (
     <div className="px-6 py-4">
-      <div className="flex items-start gap-3">
-        {/* Reward icon placeholder — small chest/trophy-style SVG */}
-        <div className="shrink-0 mt-0.5">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <defs>
-              <linearGradient id="chest-gold" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#d8a850" />
-                <stop offset="100%" stopColor="#8b6a28" />
-              </linearGradient>
-            </defs>
-            <rect x="4" y="12" width="24" height="16" rx="1" fill="url(#chest-gold)" stroke="#3a2a10" strokeWidth="1" />
-            <path d="M4 16 Q16 6, 28 16" fill="url(#chest-gold)" stroke="#3a2a10" strokeWidth="1" />
-            <rect x="14" y="18" width="4" height="3" fill="#3a2a10" />
-            <circle cx="16" cy="19.5" r="0.8" fill="#d8a850" />
-          </svg>
-        </div>
+      <div className="flex items-baseline justify-between mb-1">
+        <h2 className="font-heading text-poe-text-dim text-sm tracking-widest uppercase">
+          Challenges Completed
+        </h2>
+        <span className="font-heading">
+          <span className="text-poe-gold-bright text-2xl">{completedCount}</span>
+          <span className="text-poe-text-dim text-lg"> / {totalCount}</span>
+        </span>
+      </div>
 
-        <div className="flex-1 min-w-0">
-          <p className="text-sm text-poe-text-bright leading-tight mb-2">
-            {bannerText}
-          </p>
+      {nextReward && (
+        <p className="text-xs text-poe-text-dim mb-3">
+          Next reward at{" "}
+          <span className="text-poe-gold-light">{nextReward.at}</span>:{" "}
+          <span className="text-poe-text">{nextReward.reward}</span>
+          <span className="text-poe-text-dim"> ({nextReward.at - completedCount} to go)</span>
+        </p>
+      )}
 
-          {/* Inline progress bar with reward tick markers */}
-          <div className="flex items-center gap-3">
-            <div className="flex-1 relative">
-              <div className="poe-progress-frame poe-progress-frame-lg h-4">
-                <div
-                  className="poe-progress-bar h-full"
-                  style={{ width: `${percentage}%` }}
-                />
+      {/* 40-tick progress bar */}
+      <div className="relative flex items-stretch gap-[2px] h-8 bg-poe-bg-darkest border border-poe-border rounded-sm p-1">
+        {Array.from({ length: totalCount }).map((_, i) => {
+          const position = i + 1;
+          const completed = position <= completedCount;
+          const reward = rewardMap.get(position);
+          const isReward = reward !== undefined;
+
+          return (
+            <div
+              key={position}
+              className="relative flex-1 group"
+              title={isReward ? `${position}: ${reward.reward}` : `Challenge ${position}`}
+            >
+              {/* Tick background */}
+              <div
+                className={`
+                  h-full rounded-[2px] flex items-center justify-center transition-colors
+                  ${
+                    isReward
+                      ? completed
+                        ? "bg-gradient-to-b from-[#5aa858] to-[#2a6a28] text-poe-bg-darkest shadow-[0_0_6px_rgba(72,168,66,0.5)]"
+                        : "bg-gradient-to-b from-[#3a3226] to-[#1e1a14] text-poe-gold-light"
+                      : completed
+                        ? "bg-gradient-to-b from-[#c07028] to-[#6a3410]"
+                        : "bg-[#15120e]"
+                  }
+                `}
+              >
+                {isReward && <RewardIcon type={reward.type} />}
               </div>
 
-              {/* Reward milestone tick marks */}
-              {rewards.map((reward) => {
-                const position = (reward.at / totalCount) * 100;
-                const reached = completedCount >= reward.at;
-                return (
-                  <div
-                    key={reward.at}
-                    className="absolute top-0 bottom-0 w-0.5 group"
-                    style={{ left: `${position}%` }}
-                    title={`${reward.at} — ${reward.reward}`}
-                  >
-                    <div
-                      className={`h-full w-full ${reached ? "bg-poe-green" : "bg-poe-gold-bright/60"}`}
-                    />
-                    {/* Tooltip on hover */}
-                    <div className="absolute top-full mt-1 left-1/2 -translate-x-1/2 hidden group-hover:block z-10 whitespace-nowrap">
-                      <div className="bg-poe-bg-darkest border border-poe-border rounded px-2 py-1 text-xs text-poe-text shadow-lg">
-                        <span className="text-poe-gold mr-1">{reward.at}</span>
-                        {reward.reward}
+              {/* Hover tooltip */}
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 hidden group-hover:block z-20 whitespace-nowrap pointer-events-none">
+                <div className="bg-poe-bg-darkest border border-poe-border rounded px-2 py-1 text-xs shadow-lg">
+                  {isReward ? (
+                    <>
+                      <div className="text-poe-gold mb-0.5">
+                        [{rewardTypeLabel[reward.type]}] at {position}
                       </div>
-                    </div>
-                  </div>
-                );
-              })}
+                      <div className="text-poe-text-bright">{reward.reward}</div>
+                    </>
+                  ) : (
+                    <span className="text-poe-text-dim">Challenge {position}</span>
+                  )}
+                </div>
+              </div>
             </div>
-
-            <span className="shrink-0 font-heading text-poe-gold-bright text-lg">
-              {completedCount}
-              <span className="text-poe-text-dim text-sm">/{totalCount}</span>
-            </span>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );

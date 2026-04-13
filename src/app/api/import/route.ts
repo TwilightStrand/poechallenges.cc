@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { validateSession, SESSION_COOKIE_NAME } from "@/lib/auth";
 import { db } from "@/db";
-import { userProgress } from "@/db/schema";
+import { userProgress, progressSnapshots } from "@/db/schema";
 
 function corsHeaders(origin: string | null) {
   // Allow requests from PoE website + our own domain
@@ -78,6 +78,19 @@ export async function POST(request: NextRequest) {
         lastSynced: new Date(),
       },
     });
+
+  // Append-only snapshot for future history/graph features
+  const completedCount = challenges.filter(
+    (c: { isComplete?: boolean }) => c.isComplete,
+  ).length;
+
+  await db.insert(progressSnapshots).values({
+    userId: session.user.id,
+    leagueId,
+    challengeData: progressData,
+    completedCount,
+    source: "import",
+  });
 
   return NextResponse.json(
     { ok: true, imported: challenges.length, user: session.user.displayName },

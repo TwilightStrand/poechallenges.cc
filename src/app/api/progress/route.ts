@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { eq, and } from "drizzle-orm";
 import { validateSession, SESSION_COOKIE_NAME } from "@/lib/auth";
 import { db } from "@/db";
-import { userProgress } from "@/db/schema";
+import { userProgress, progressSnapshots } from "@/db/schema";
 
 export async function GET(request: NextRequest) {
   const cookieStore = await cookies();
@@ -72,6 +72,22 @@ export async function PUT(request: NextRequest) {
         lastSynced: new Date(),
       },
     });
+
+  // Append-only snapshot for future history/graph features
+  const challenges = Array.isArray(challengeData?.challenges)
+    ? challengeData.challenges
+    : [];
+  const completedCount = challenges.filter(
+    (c: { isComplete?: boolean }) => c.isComplete,
+  ).length;
+
+  await db.insert(progressSnapshots).values({
+    userId: session.user.id,
+    leagueId,
+    challengeData,
+    completedCount,
+    source: "manual",
+  });
 
   return NextResponse.json({ ok: true });
 }

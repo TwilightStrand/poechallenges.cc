@@ -59,6 +59,32 @@ export const userProgress = pgTable(
   ],
 );
 
+// Historical snapshots — append-only log of all progress states.
+// Enables future features: progress graphs, "completed on X" timestamps,
+// counter-over-time charts (e.g. Tyrannical Tiers), stats/streaks, etc.
+// Not queried by the UI yet — data capture only.
+export const progressSnapshots = pgTable(
+  "progress_snapshots",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("user_id")
+      .references(() => users.id, { onDelete: "cascade" })
+      .notNull(),
+    leagueId: text("league_id").notNull(),
+    challengeData: jsonb("challenge_data").notNull(),
+    completedCount: integer("completed_count").notNull(),
+    source: text("source").notNull(), // "import" | "manual" | "reset"
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("progress_snapshots_timeline_idx").on(
+      table.userId,
+      table.leagueId,
+      table.createdAt,
+    ),
+  ],
+);
+
 export const reportedPrices = pgTable(
   "reported_prices",
   {
