@@ -6,6 +6,7 @@ import type { Challenge, ChallengeGuide, ChallengeProgress, SubtaskProgress } fr
 import { SubtaskItem } from "./SubtaskItem";
 import { usePrices } from "@/hooks/usePrices";
 import { getTradeLink } from "@/lib/trade-links";
+import styles from "./ChallengeDetail.module.css";
 
 interface ChallengeDetailProps {
   challenge: Challenge;
@@ -68,7 +69,7 @@ export function ChallengeDetail({
     <div className="px-4 pb-4 pt-2 space-y-4">
       {/* Description */}
       {challenge.description && (
-        <p className="text-sm poe-description leading-relaxed">
+        <p className={`${styles.description} text-sm leading-relaxed`}>
           {challenge.description}
         </p>
       )}
@@ -151,7 +152,7 @@ export function ChallengeDetail({
               Estimated time: ~{guide.estimatedHours}h
             </p>
           )}
-          <div className="guide-content text-sm text-poe-text">
+          <div className={`${styles.guideContent} text-sm text-poe-text`}>
             <Markdown>{guide.tips}</Markdown>
           </div>
           {guide.videoUrl && (

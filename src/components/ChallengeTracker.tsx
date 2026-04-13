@@ -15,6 +15,7 @@ import { ChallengeList } from "./ChallengeList";
 import { BookmarkletInfo } from "./BookmarkletInfo";
 import { ImportModal } from "./ImportModal";
 import { Footer } from "./Footer";
+import styles from "./ChallengeTracker.module.css";
 
 interface ChallengeTrackerProps {
   leagues: Record<string, League>;
@@ -128,7 +129,7 @@ export function ChallengeTracker({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
-      <div className="poe-panel rounded-lg overflow-hidden">
+      <div className={`${styles.panel} rounded-lg overflow-hidden`}>
         <Header
           currentLeagueId={currentLeagueId}
           leagues={availableLeagues}
@@ -146,7 +147,7 @@ export function ChallengeTracker({
           rewards={currentLeague.rewards}
         />
 
-        <div className="poe-separator" />
+        <div className={styles.separator} />
 
         <div className="px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <FilterBar
@@ -160,7 +161,7 @@ export function ChallengeTracker({
           <BookmarkletInfo />
         </div>
 
-        <div className="poe-separator" />
+        <div className={styles.separator} />
 
         <div className="p-2 space-y-0.5">
           <ChallengeList
@@ -172,7 +173,7 @@ export function ChallengeTracker({
           />
         </div>
 
-        <div className="poe-separator" />
+        <div className={styles.separator} />
 
         <Footer />
       </div>

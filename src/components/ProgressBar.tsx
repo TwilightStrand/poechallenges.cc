@@ -1,3 +1,5 @@
+import styles from "./ProgressBar.module.css";
+
 interface ProgressBarProps {
   current: number;
   total: number;
@@ -32,9 +34,9 @@ export function ProgressBar({
           <span>{Math.round(percentage)}%</span>
         </div>
       )}
-      <div className={`poe-progress-frame ${size === "lg" ? "poe-progress-frame-lg" : ""} ${sizeClasses[size]}`}>
+      <div className={`${styles.frame} ${size === "lg" ? styles.frameLg : ""} ${sizeClasses[size]}`}>
         <div
-          className={`poe-progress-bar ${isComplete ? "poe-progress-bar-complete" : ""}`}
+          className={`${styles.bar} ${isComplete ? styles.barComplete : ""}`}
           style={{ width: `${percentage}%` }}
         />
       </div>

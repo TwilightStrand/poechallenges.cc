@@ -7,6 +7,7 @@ import { DifficultyBadge } from "./DifficultyBadge";
 import { CategoryBadge } from "./CategoryBadge";
 import { ProgressBar } from "./ProgressBar";
 import { ChallengeDetail } from "./ChallengeDetail";
+import styles from "./ChallengeCard.module.css";
 
 interface ChallengeCardProps {
   challenge: Challenge;
@@ -38,7 +39,7 @@ export function ChallengeCard({
   }, [expanded, progress]);
 
   const isComplete = progress.isComplete;
-  const cardClasses = `challenge-card rounded-lg overflow-hidden ${isComplete ? "challenge-card-complete" : ""}`;
+  const cardClasses = `${styles.card} rounded-lg overflow-hidden ${isComplete ? styles.complete : ""}`;
 
   return (
     <div className={cardClasses}>

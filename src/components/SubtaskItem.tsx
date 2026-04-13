@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Subtask, SubtaskProgress } from "@/schemas";
 import type { PriceInfo } from "@/lib/price-lookup";
 import type { TradeLink } from "@/lib/trade-links";
+import styles from "./SubtaskItem.module.css";
 
 interface SubtaskItemProps {
   subtask: Subtask;
@@ -58,7 +59,7 @@ export function SubtaskItem({
     }
   };
 
-  const textColor = completed ? "poe-subtask-done" : "poe-subtask-todo";
+  const textColor = completed ? styles.done : styles.todo;
 
   return (
     <div

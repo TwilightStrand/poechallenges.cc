@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import styles from "./Header.module.css";
 
 interface User {
   id: number;
@@ -34,9 +35,9 @@ export function Header({
   const hasPoe = user?.providers.includes("pathofexile") ?? false;
 
   return (
-    <header className="poe-header px-6 py-5 rounded-t-lg">
+    <header className={`${styles.header} px-6 py-5 rounded-t-lg`}>
       <div className="flex items-center justify-between gap-4">
-        <h1 className="font-heading text-2xl tracking-wider text-poe-gold-light poe-title-glow uppercase">
+        <h1 className={`${styles.titleGlow} font-heading text-2xl tracking-wider text-poe-gold-light uppercase`}>
           Challenge Tracker
         </h1>
 
