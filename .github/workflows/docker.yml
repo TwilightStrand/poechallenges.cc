@@ -38,3 +38,14 @@ jobs:
             ghcr.io/saturate/poechallenges:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      # The package is public, so a .dockerignore regression would publish
+      # .env to the world the moment this job finishes. Fail the build first.
+      - name: Fail if an env file got baked into the image
+        run: |
+          docker create --name check ghcr.io/saturate/poechallenges:${{ github.sha }}
+          if docker export check | tar -t | grep -E '(^|/)\.env'; then
+            echo "::error::env file present in image layers"
+            exit 1
+          fi
+          echo "no env files in image layers"

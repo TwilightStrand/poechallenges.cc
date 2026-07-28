@@ -7,7 +7,6 @@ node_modules
 .github
 .env
 .env.*
-!.env.example
 
 Dockerfile
 .dockerignore
