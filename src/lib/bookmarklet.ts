@@ -1,7 +1,7 @@
 export function generateBookmarkletCode(trackerUrl: string): string {
-  // Scrapes challenge data from PoE page, tries direct POST,
-  // falls back to opening the tracker with data in URL hash
-  const code = `
+	// Scrapes challenge data from PoE page, tries direct POST,
+	// falls back to opening the tracker with data in URL hash
+	const code = `
 (function(){
   var els = document.querySelectorAll('.achievement.clearfix');
   if (!els.length) { alert('No challenges found. Open your PoE challenges page first.'); return; }
@@ -66,5 +66,5 @@ export function generateBookmarkletCode(trackerUrl: string): string {
   });
 })()`.trim();
 
-  return `javascript:${encodeURIComponent(code)}`;
+	return `javascript:${encodeURIComponent(code)}`;
 }

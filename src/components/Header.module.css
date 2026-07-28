@@ -1,22 +1,31 @@
 .header {
-  background: linear-gradient(180deg, #1a1710 0%, #12100c 100%);
-  border-bottom: 1px solid #3a3226;
-  box-shadow:
-    0 1px 0 0 #1e1a14,
-    0 4px 12px rgba(0, 0, 0, 0.4);
-  position: relative;
+	background: linear-gradient(180deg, #1a1710 0%, #12100c 100%);
+	border-bottom: 1px solid #3a3226;
+	box-shadow:
+		0 1px 0 0 #1e1a14,
+		0 4px 12px rgba(0, 0, 0, 0.4);
+	position: relative;
 }
 
 .header::after {
-  content: "";
-  position: absolute;
-  bottom: -1px;
-  left: 5%;
-  right: 5%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #4a3a20 30%, #6b5328 50%, #4a3a20 70%, transparent);
+	content: "";
+	position: absolute;
+	bottom: -1px;
+	left: 5%;
+	right: 5%;
+	height: 1px;
+	background: linear-gradient(
+		90deg,
+		transparent,
+		#4a3a20 30%,
+		#6b5328 50%,
+		#4a3a20 70%,
+		transparent
+	);
 }
 
 .titleGlow {
-  text-shadow: 0 0 20px rgba(175, 96, 37, 0.3), 0 0 40px rgba(175, 96, 37, 0.1);
+	text-shadow:
+		0 0 20px rgba(175, 96, 37, 0.3),
+		0 0 40px rgba(175, 96, 37, 0.1);
 }

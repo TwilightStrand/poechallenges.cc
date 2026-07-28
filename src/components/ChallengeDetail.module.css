@@ -1,57 +1,57 @@
 .description {
-  /* rust/copper — matches in-game description text */
-  color: #b8836a;
+	/* rust/copper — matches in-game description text */
+	color: #b8836a;
 }
 
 /* Markdown-rendered content: children are raw HTML elements,
    so descendant selectors need :global. */
 .guideContent {
-  border-left: 2px solid #2a2318;
-  padding-left: 1rem;
+	border-left: 2px solid #2a2318;
+	padding-left: 1rem;
 }
 
 .guideContent :global(h1),
 .guideContent :global(h2),
 .guideContent :global(h3) {
-  font-family: var(--font-heading);
-  color: var(--color-poe-gold-light);
-  margin-top: 0.75rem;
-  margin-bottom: 0.375rem;
+	font-family: var(--font-heading);
+	color: var(--color-poe-gold-light);
+	margin-top: 0.75rem;
+	margin-bottom: 0.375rem;
 }
 
 .guideContent :global(p) {
-  margin-bottom: 0.5rem;
-  line-height: 1.6;
+	margin-bottom: 0.5rem;
+	line-height: 1.6;
 }
 
 .guideContent :global(ul),
 .guideContent :global(ol) {
-  margin-left: 1.25rem;
-  margin-bottom: 0.5rem;
+	margin-left: 1.25rem;
+	margin-bottom: 0.5rem;
 }
 
 .guideContent :global(li) {
-  margin-bottom: 0.2rem;
+	margin-bottom: 0.2rem;
 }
 
 .guideContent :global(strong) {
-  color: var(--color-poe-text-bright);
+	color: var(--color-poe-text-bright);
 }
 
 .guideContent :global(a) {
-  color: var(--color-poe-gold);
-  text-decoration: underline;
+	color: var(--color-poe-gold);
+	text-decoration: underline;
 }
 
 .guideContent :global(a):hover {
-  color: var(--color-poe-gold-bright);
+	color: var(--color-poe-gold-bright);
 }
 
 .guideContent :global(code) {
-  background: #0f0e0c;
-  padding: 0.1rem 0.3rem;
-  border-radius: 2px;
-  font-size: 0.85em;
-  color: var(--color-poe-gold-light);
-  border: 1px solid #2a2318;
+	background: #0f0e0c;
+	padding: 0.1rem 0.3rem;
+	border-radius: 2px;
+	font-size: 0.85em;
+	color: var(--color-poe-gold-light);
+	border: 1px solid #2a2318;
 }

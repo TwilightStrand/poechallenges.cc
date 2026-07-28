@@ -2,205 +2,313 @@
 // Each entry: { type: poe.ninja API type, search: name to match }
 
 export interface PriceInfo {
-  name: string;
-  chaosValue: number;
-  icon?: string;
-  totalCost: number; // chaosValue * quantity needed
-  quantity: number;
+	name: string;
+	chaosValue: number;
+	icon?: string;
+	totalCost: number; // chaosValue * quantity needed
+	quantity: number;
 }
 
 interface NinjaLine {
-  currencyTypeName?: string;
-  name?: string;
-  chaosEquivalent?: number;
-  chaosValue?: number;
-  icon?: string;
-  receive?: { value: number };
+	currencyTypeName?: string;
+	name?: string;
+	chaosEquivalent?: number;
+	chaosValue?: number;
+	icon?: string;
+	receive?: { value: number };
 }
 
 interface NinjaResponse {
-  lines: NinjaLine[];
+	lines: NinjaLine[];
 }
 
 async function fetchNinja(
-  league: string,
-  endpoint: string,
-  type: string,
+	league: string,
+	endpoint: string,
+	type: string,
 ): Promise<NinjaLine[]> {
-  try {
-    const url = `/api/prices?league=${encodeURIComponent(league)}&endpoint=${encodeURIComponent(endpoint)}&type=${encodeURIComponent(type)}`;
-    const res = await fetch(url);
-    if (!res.ok) return [];
-    const data: NinjaResponse = await res.json();
-    return data.lines ?? [];
-  } catch {
-    return [];
-  }
+	try {
+		const url = `/api/prices?league=${encodeURIComponent(league)}&endpoint=${encodeURIComponent(endpoint)}&type=${encodeURIComponent(type)}`;
+		const res = await fetch(url);
+		if (!res.ok) return [];
+		const data: NinjaResponse = await res.json();
+		return data.lines ?? [];
+	} catch {
+		return [];
+	}
 }
 
 function findPrice(
-  lines: NinjaLine[],
-  search: string,
+	lines: NinjaLine[],
+	search: string,
 ): { chaos: number; icon?: string } | null {
-  const lower = search.toLowerCase();
+	const lower = search.toLowerCase();
 
-  // Try exact match first
-  const exact = lines.find(
-    (l) =>
-      (l.currencyTypeName ?? l.name ?? "").toLowerCase() === lower,
-  );
-  if (exact) {
-    return {
-      chaos: exact.chaosEquivalent ?? exact.chaosValue ?? 0,
-      icon: exact.icon,
-    };
-  }
+	// Try exact match first
+	const exact = lines.find(
+		(l) => (l.currencyTypeName ?? l.name ?? "").toLowerCase() === lower,
+	);
+	if (exact) {
+		return {
+			chaos: exact.chaosEquivalent ?? exact.chaosValue ?? 0,
+			icon: exact.icon,
+		};
+	}
 
-  // Try partial match
-  const partial = lines.find(
-    (l) =>
-      (l.currencyTypeName ?? l.name ?? "").toLowerCase().includes(lower),
-  );
-  if (partial) {
-    return {
-      chaos: partial.chaosEquivalent ?? partial.chaosValue ?? 0,
-      icon: partial.icon,
-    };
-  }
+	// Try partial match
+	const partial = lines.find((l) =>
+		(l.currencyTypeName ?? l.name ?? "").toLowerCase().includes(lower),
+	);
+	if (partial) {
+		return {
+			chaos: partial.chaosEquivalent ?? partial.chaosValue ?? 0,
+			icon: partial.icon,
+		};
+	}
 
-  return null;
+	return null;
 }
 
 export interface SubtaskPriceMapping {
-  subtaskId: string;
-  searches: { endpoint: string; type: string; name: string }[];
-  quantity: number; // how many you need to use/buy
+	subtaskId: string;
+	searches: { endpoint: string; type: string; name: string }[];
+	quantity: number; // how many you need to use/buy
 }
 
 // Price mappings for Mirage league "Coveted Currency" challenge (id: 22)
 export const covetedCurrencyPrices: SubtaskPriceMapping[] = [
-  { subtaskId: "22-1", searches: [{ endpoint: "currencyoverview", type: "Currency", name: "Coin of Knowledge" }], quantity: 5 },
-  { subtaskId: "22-2", searches: [{ endpoint: "currencyoverview", type: "Currency", name: "Coin of Power" }], quantity: 5 },
-  { subtaskId: "22-3", searches: [{ endpoint: "currencyoverview", type: "Currency", name: "Coin of Skill" }], quantity: 5 },
-  { subtaskId: "22-4", searches: [{ endpoint: "currencyoverview", type: "Currency", name: "Coin of Restoration" }], quantity: 5 },
-  { subtaskId: "22-5", searches: [{ endpoint: "currencyoverview", type: "Currency", name: "Coin of Desecration" }], quantity: 5 },
-  { subtaskId: "22-6", searches: [{ endpoint: "currencyoverview", type: "Currency", name: "Volatile Vaal Orb" }], quantity: 5 },
-  { subtaskId: "22-7", searches: [
-    { endpoint: "currencyoverview", type: "Currency", name: "Sinistral Catalyst" },
-    { endpoint: "currencyoverview", type: "Currency", name: "Dextral Catalyst" },
-  ], quantity: 20 },
-  { subtaskId: "22-8", searches: [{ endpoint: "currencyoverview", type: "Currency", name: "Crystallised Rancour" }], quantity: 3 },
-  { subtaskId: "22-9", searches: [{ endpoint: "itemoverview", type: "Essence", name: "Essence of Desolation" }], quantity: 3 },
-  { subtaskId: "22-10", searches: [
-    { endpoint: "itemoverview", type: "Incubator", name: "Honoured Incubator" },
-    { endpoint: "itemoverview", type: "Incubator", name: "Sacred Incubator" },
-    { endpoint: "itemoverview", type: "Incubator", name: "Miraged Incubator" },
-  ], quantity: 10 },
-  { subtaskId: "22-11", searches: [{ endpoint: "currencyoverview", type: "Currency", name: "Refracting Fog" }], quantity: 5 },
+	{
+		subtaskId: "22-1",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Coin of Knowledge",
+			},
+		],
+		quantity: 5,
+	},
+	{
+		subtaskId: "22-2",
+		searches: [
+			{ endpoint: "currencyoverview", type: "Currency", name: "Coin of Power" },
+		],
+		quantity: 5,
+	},
+	{
+		subtaskId: "22-3",
+		searches: [
+			{ endpoint: "currencyoverview", type: "Currency", name: "Coin of Skill" },
+		],
+		quantity: 5,
+	},
+	{
+		subtaskId: "22-4",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Coin of Restoration",
+			},
+		],
+		quantity: 5,
+	},
+	{
+		subtaskId: "22-5",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Coin of Desecration",
+			},
+		],
+		quantity: 5,
+	},
+	{
+		subtaskId: "22-6",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Volatile Vaal Orb",
+			},
+		],
+		quantity: 5,
+	},
+	{
+		subtaskId: "22-7",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Sinistral Catalyst",
+			},
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Dextral Catalyst",
+			},
+		],
+		quantity: 20,
+	},
+	{
+		subtaskId: "22-8",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Crystallised Rancour",
+			},
+		],
+		quantity: 3,
+	},
+	{
+		subtaskId: "22-9",
+		searches: [
+			{
+				endpoint: "itemoverview",
+				type: "Essence",
+				name: "Essence of Desolation",
+			},
+		],
+		quantity: 3,
+	},
+	{
+		subtaskId: "22-10",
+		searches: [
+			{
+				endpoint: "itemoverview",
+				type: "Incubator",
+				name: "Honoured Incubator",
+			},
+			{ endpoint: "itemoverview", type: "Incubator", name: "Sacred Incubator" },
+			{
+				endpoint: "itemoverview",
+				type: "Incubator",
+				name: "Miraged Incubator",
+			},
+		],
+		quantity: 10,
+	},
+	{
+		subtaskId: "22-11",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Refracting Fog",
+			},
+		],
+		quantity: 5,
+	},
 ];
 
 // Manual price overrides — verified in-game prices that differ from poe.ninja
 // These take priority until crowdsourced DB is running
 // Format: subtaskId → chaos per unit
 const PRICE_OVERRIDES: Record<string, number> = {
-  "22-1": 79,   // Coin of Knowledge — not on poe.ninja
-  "22-2": 185,  // Coin of Power — not on poe.ninja
-  "22-9": 34,   // Essence of Desolation
-  "22-10": 79,  // Miraged Incubator (cheapest of Honoured/Sacred/Miraged)
-  "22-11": 175, // Refracting Fog
+	"22-1": 79, // Coin of Knowledge — not on poe.ninja
+	"22-2": 185, // Coin of Power — not on poe.ninja
+	"22-9": 34, // Essence of Desolation
+	"22-10": 79, // Miraged Incubator (cheapest of Honoured/Sacred/Miraged)
+	"22-11": 175, // Refracting Fog
 };
 
 // Override for multi-search subtasks where we pick the cheapest
 // For Sinistral/Dextral Catalyst (22-7), Sinistral is 30c, Dextral is 106c
 // The system picks the cheapest, so Sinistral at 30c wins
-const MULTI_SEARCH_OVERRIDES: Record<string, { name: string; chaos: number }> = {
-  "22-7": { name: "Sinistral Catalyst", chaos: 30 },
-};
+const MULTI_SEARCH_OVERRIDES: Record<string, { name: string; chaos: number }> =
+	{
+		"22-7": { name: "Sinistral Catalyst", chaos: 30 },
+	};
 
 export async function fetchSubtaskPrices(
-  league: string,
-  mappings: SubtaskPriceMapping[],
+	league: string,
+	mappings: SubtaskPriceMapping[],
 ): Promise<Map<string, PriceInfo>> {
-  // Collect unique API calls needed
-  const apiCalls = new Map<string, Promise<NinjaLine[]>>();
+	// Collect unique API calls needed
+	const apiCalls = new Map<string, Promise<NinjaLine[]>>();
 
-  for (const mapping of mappings) {
-    for (const search of mapping.searches) {
-      const key = `${search.endpoint}:${search.type}`;
-      if (!apiCalls.has(key)) {
-        apiCalls.set(key, fetchNinja(league, search.endpoint, search.type));
-      }
-    }
-  }
+	for (const mapping of mappings) {
+		for (const search of mapping.searches) {
+			const key = `${search.endpoint}:${search.type}`;
+			if (!apiCalls.has(key)) {
+				apiCalls.set(key, fetchNinja(league, search.endpoint, search.type));
+			}
+		}
+	}
 
-  // Await all in parallel
-  const results = new Map<string, NinjaLine[]>();
-  const entries = [...apiCalls.entries()];
-  const resolved = await Promise.all(entries.map(([, p]) => p));
-  entries.forEach(([key], i) => {
-    results.set(key, resolved[i]!);
-  });
+	// Await all in parallel
+	const results = new Map<string, NinjaLine[]>();
+	const entries = [...apiCalls.entries()];
+	const resolved = await Promise.all(entries.map(([, p]) => p));
+	entries.forEach(([key], i) => {
+		results.set(key, resolved[i]!);
+	});
 
-  // Look up prices for each subtask
-  const prices = new Map<string, PriceInfo>();
+	// Look up prices for each subtask
+	const prices = new Map<string, PriceInfo>();
 
-  for (const mapping of mappings) {
-    let bestPrice = Infinity;
-    let bestName = "";
-    let bestIcon: string | undefined;
+	for (const mapping of mappings) {
+		let bestPrice = Infinity;
+		let bestName = "";
+		let bestIcon: string | undefined;
 
-    for (const search of mapping.searches) {
-      const key = `${search.endpoint}:${search.type}`;
-      const lines = results.get(key) ?? [];
-      const found = findPrice(lines, search.name);
-      if (found && found.chaos < bestPrice) {
-        bestPrice = found.chaos;
-        bestName = search.name;
-        bestIcon = found.icon;
-      }
-    }
+		for (const search of mapping.searches) {
+			const key = `${search.endpoint}:${search.type}`;
+			const lines = results.get(key) ?? [];
+			const found = findPrice(lines, search.name);
+			if (found && found.chaos < bestPrice) {
+				bestPrice = found.chaos;
+				bestName = search.name;
+				bestIcon = found.icon;
+			}
+		}
 
-    if (bestPrice < Infinity) {
-      // Apply manual overrides if they exist
-      const override = PRICE_OVERRIDES[mapping.subtaskId];
-      const multiOverride = MULTI_SEARCH_OVERRIDES[mapping.subtaskId];
-      if (multiOverride) {
-        bestName = multiOverride.name;
-        bestPrice = multiOverride.chaos;
-      }
-      const finalPrice = override ?? bestPrice;
+		if (bestPrice < Infinity) {
+			// Apply manual overrides if they exist
+			const override = PRICE_OVERRIDES[mapping.subtaskId];
+			const multiOverride = MULTI_SEARCH_OVERRIDES[mapping.subtaskId];
+			if (multiOverride) {
+				bestName = multiOverride.name;
+				bestPrice = multiOverride.chaos;
+			}
+			const finalPrice = override ?? bestPrice;
 
-      prices.set(mapping.subtaskId, {
-        name: bestName,
-        chaosValue: finalPrice,
-        icon: bestIcon,
-        totalCost: finalPrice * mapping.quantity,
-        quantity: mapping.quantity,
-      });
-    }
-  }
+			prices.set(mapping.subtaskId, {
+				name: bestName,
+				chaosValue: finalPrice,
+				icon: bestIcon,
+				totalCost: finalPrice * mapping.quantity,
+				quantity: mapping.quantity,
+			});
+		}
+	}
 
-  return prices;
+	return prices;
 }
 
 // Given a pick-N challenge, find the cheapest N subtasks to complete
 export function findCheapestCombination(
-  prices: Map<string, PriceInfo>,
-  subtaskIds: string[],
-  completedIds: Set<string>,
-  required: number,
+	prices: Map<string, PriceInfo>,
+	subtaskIds: string[],
+	completedIds: Set<string>,
+	required: number,
 ): { subtaskId: string; price: PriceInfo }[] {
-  const alreadyDone = subtaskIds.filter((id) => completedIds.has(id));
-  const remaining = required - alreadyDone.length;
+	const alreadyDone = subtaskIds.filter((id) => completedIds.has(id));
+	const remaining = required - alreadyDone.length;
 
-  if (remaining <= 0) return [];
+	if (remaining <= 0) return [];
 
-  // Sort uncompleted subtasks by total cost
-  const uncompleted = subtaskIds
-    .filter((id) => !completedIds.has(id))
-    .map((id) => ({ subtaskId: id, price: prices.get(id) }))
-    .filter((x): x is { subtaskId: string; price: PriceInfo } => x.price !== undefined)
-    .sort((a, b) => a.price.totalCost - b.price.totalCost);
+	// Sort uncompleted subtasks by total cost
+	const uncompleted = subtaskIds
+		.filter((id) => !completedIds.has(id))
+		.map((id) => ({ subtaskId: id, price: prices.get(id) }))
+		.filter(
+			(x): x is { subtaskId: string; price: PriceInfo } =>
+				x.price !== undefined,
+		)
+		.sort((a, b) => a.price.totalCost - b.price.totalCost);
 
-  return uncompleted.slice(0, remaining);
+	return uncompleted.slice(0, remaining);
 }
