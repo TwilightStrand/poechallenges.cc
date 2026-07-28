@@ -1,0 +1,2 @@
+# Keeps public/ in git so the Dockerfile's `COPY /app/public` resolves.
+# Static assets (favicon, og image) belong here.

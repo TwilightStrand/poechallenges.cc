@@ -1,0 +1,17 @@
+# Without this file, `COPY . .` in the builder stage bakes .env into an image
+# layer and overwrites the Linux node_modules from the deps stage with whatever
+# the host platform installed.
+node_modules
+.next
+.git
+.github
+.env
+.env.*
+!.env.example
+
+Dockerfile
+.dockerignore
+docker-compose.yml
+tsconfig.tsbuildinfo
+*.md
+.claude
