@@ -15,6 +15,9 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN pnpm run build
+# Bundled separately from the Next build: the runner stage has only the
+# standalone output, so the migrator ships as one self-contained file.
+RUN pnpm run db:migrator
 
 # Production
 FROM base AS runner
@@ -26,6 +29,11 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# The initContainer runs `node dist/migrate.mjs`, which reads the SQL and
+# journal from ./drizzle at runtime, so both have to be in the image.
+COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nextjs:nodejs /app/drizzle ./drizzle
 
 USER nextjs
 EXPOSE 3000
