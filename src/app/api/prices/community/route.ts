@@ -1,6 +1,6 @@
 import { and, eq, gte, sql } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
-import { db } from "@/db";
+import { getDb } from "@/db";
 import { reportedPrices } from "@/db/schema";
 
 export async function GET(request: NextRequest) {
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
 	const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
 	// Get all reports from last 7 days for this item
-	const reports = await db
+	const reports = await getDb()
 		.select({
 			priceChaos: reportedPrices.priceChaos,
 			quantity: reportedPrices.quantity,

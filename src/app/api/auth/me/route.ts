@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { db } from "@/db";
+import { getDb } from "@/db";
 import { oauthAccounts } from "@/db/schema";
 import { SESSION_COOKIE_NAME, validateSession } from "@/lib/auth";
 
@@ -19,7 +19,7 @@ export async function GET() {
 	}
 
 	// Fetch linked providers
-	const linked = await db
+	const linked = await getDb()
 		.select({ provider: oauthAccounts.provider })
 		.from(oauthAccounts)
 		.where(eq(oauthAccounts.userId, result.user.id));

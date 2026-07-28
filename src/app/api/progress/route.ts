@@ -1,7 +1,7 @@
 import { and, eq } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
-import { db } from "@/db";
+import { getDb } from "@/db";
 import { progressSnapshots, userProgress } from "@/db/schema";
 import { SESSION_COOKIE_NAME, validateSession } from "@/lib/auth";
 
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
 		);
 	}
 
-	const result = await db
+	const result = await getDb()
 		.select()
 		.from(userProgress)
 		.where(
@@ -63,7 +63,7 @@ export async function PUT(request: NextRequest) {
 		);
 	}
 
-	await db
+	await getDb()
 		.insert(userProgress)
 		.values({
 			userId: session.user.id,
@@ -87,7 +87,7 @@ export async function PUT(request: NextRequest) {
 		(c: { isComplete?: boolean }) => c.isComplete,
 	).length;
 
-	await db.insert(progressSnapshots).values({
+	await getDb().insert(progressSnapshots).values({
 		userId: session.user.id,
 		leagueId,
 		challengeData,

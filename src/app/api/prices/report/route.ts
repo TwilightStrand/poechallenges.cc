@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
-import { db } from "@/db";
+import { getDb } from "@/db";
 import { reportedPrices } from "@/db/schema";
 import { SESSION_COOKIE_NAME, validateSession } from "@/lib/auth";
 
@@ -30,13 +30,15 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json({ error: "Invalid price" }, { status: 400 });
 	}
 
-	await db.insert(reportedPrices).values({
-		userId: session.user.id,
-		leagueId,
-		itemName,
-		priceChaos: String(priceChaos),
-		quantity: quantity ?? 1,
-	});
+	await getDb()
+		.insert(reportedPrices)
+		.values({
+			userId: session.user.id,
+			leagueId,
+			itemName,
+			priceChaos: String(priceChaos),
+			quantity: quantity ?? 1,
+		});
 
 	return NextResponse.json({ ok: true });
 }

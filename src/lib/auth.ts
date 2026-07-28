@@ -7,7 +7,7 @@ import {
 	OAuth2Client,
 } from "arctic";
 import { eq } from "drizzle-orm";
-import { db } from "@/db";
+import { getDb } from "@/db";
 import { oauthAccounts, sessions, users } from "@/db/schema";
 
 // ── OAuth Clients ──
@@ -51,7 +51,7 @@ export async function createSession(userId: number) {
 	const sessionId = hashSessionToken(token);
 	const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
 
-	await db.insert(sessions).values({
+	await getDb().insert(sessions).values({
 		id: sessionId,
 		userId,
 		expiresAt,
@@ -63,7 +63,7 @@ export async function createSession(userId: number) {
 export async function validateSession(token: string) {
 	const sessionId = hashSessionToken(token);
 
-	const result = await db
+	const result = await getDb()
 		.select({
 			session: sessions,
 			user: users,
@@ -78,7 +78,7 @@ export async function validateSession(token: string) {
 
 	// Check expiry
 	if (row.session.expiresAt < new Date()) {
-		await db.delete(sessions).where(eq(sessions.id, sessionId));
+		await getDb().delete(sessions).where(eq(sessions.id, sessionId));
 		return null;
 	}
 
@@ -86,7 +86,7 @@ export async function validateSession(token: string) {
 	const halfLife = SESSION_DURATION_MS / 2;
 	if (row.session.expiresAt.getTime() - Date.now() < halfLife) {
 		const newExpiry = new Date(Date.now() + SESSION_DURATION_MS);
-		await db
+		await getDb()
 			.update(sessions)
 			.set({ expiresAt: newExpiry })
 			.where(eq(sessions.id, sessionId));
@@ -96,7 +96,7 @@ export async function validateSession(token: string) {
 }
 
 export async function invalidateSession(sessionId: string) {
-	await db.delete(sessions).where(eq(sessions.id, sessionId));
+	await getDb().delete(sessions).where(eq(sessions.id, sessionId));
 }
 
 // ── User Management ──
@@ -107,7 +107,7 @@ export async function findOrCreateUser(
 	displayName: string,
 ) {
 	// Check if oauth account exists
-	const existing = await db
+	const existing = await getDb()
 		.select({ user: users })
 		.from(oauthAccounts)
 		.innerJoin(users, eq(oauthAccounts.userId, users.id))
@@ -121,7 +121,7 @@ export async function findOrCreateUser(
 
 	if (existing.length > 0 && existing[0]) {
 		// Update last login
-		await db
+		await getDb()
 			.update(users)
 			.set({ lastLoginAt: new Date() })
 			.where(eq(users.id, existing[0].user.id));
@@ -129,14 +129,14 @@ export async function findOrCreateUser(
 	}
 
 	// Create new user + link oauth account
-	const [newUser] = await db
+	const [newUser] = await getDb()
 		.insert(users)
 		.values({ displayName, lastLoginAt: new Date() })
 		.returning();
 
 	if (!newUser) throw new Error("Failed to create user");
 
-	await db.insert(oauthAccounts).values({
+	await getDb().insert(oauthAccounts).values({
 		provider,
 		providerAccountId,
 		userId: newUser.id,
@@ -150,7 +150,7 @@ export async function linkOAuthAccount(
 	provider: string,
 	providerAccountId: string,
 ) {
-	await db
+	await getDb()
 		.insert(oauthAccounts)
 		.values({ provider, providerAccountId, userId })
 		.onConflictDoNothing();
