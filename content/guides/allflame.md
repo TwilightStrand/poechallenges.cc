@@ -1,6 +1,6 @@
 ---
 contributors: Saturate
-lastUpdated: 2026-07-28
+lastUpdated: 2026-07-29
 ---
 
 Curse of the Allflame runs on one loop: monsters in your maps guard Cursed Treasure that drops **Charts**. You take Charts to **The Sovereign**, descend in the Bathysphere, and clear a seafloor area lit by **Allflame Lanterns**. The first lantern is placed for you; to see further you walk to the edge of the light and place the next one. Lanterns are finite, and placing your last one starts the area collapsing, so you fight your way back up.

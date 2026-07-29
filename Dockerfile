@@ -12,6 +12,14 @@ RUN pnpm install --frozen-lockfile
 
 # Build
 FROM base AS builder
+
+# Stamped into the footer so the running site says which commit it is. There is
+# no .git in the build context, so CI has to pass these in.
+ARG GIT_SHA=dev
+ARG BUILD_TIME=
+ENV NEXT_PUBLIC_GIT_SHA=$GIT_SHA
+ENV NEXT_PUBLIC_BUILD_TIME=$BUILD_TIME
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN pnpm run build

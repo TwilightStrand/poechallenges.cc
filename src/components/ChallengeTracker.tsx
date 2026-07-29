@@ -147,7 +147,10 @@ export function ChallengeTracker({
 					rewards={currentLeague.rewards}
 				/>
 
-				<GuideCredit contributors={currentGuide?.contributors ?? []} />
+				<GuideCredit
+					contributors={currentGuide?.contributors ?? []}
+					lastUpdated={currentGuide?.lastUpdated}
+				/>
 
 				<div className={styles.separator} />
 

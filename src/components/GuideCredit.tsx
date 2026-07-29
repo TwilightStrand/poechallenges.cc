@@ -1,13 +1,14 @@
 interface GuideCreditProps {
 	contributors: string[];
+	lastUpdated?: string;
 }
 
-export function GuideCredit({ contributors }: GuideCreditProps) {
-	if (contributors.length === 0) return null;
+export function GuideCredit({ contributors, lastUpdated }: GuideCreditProps) {
+	if (contributors.length === 0 && !lastUpdated) return null;
 
 	return (
 		<p className="px-6 pb-3 text-center text-poe-text-dim text-xs">
-			Guide by{" "}
+			{contributors.length > 0 ? "Guide by " : null}
 			{contributors.map((handle, i) => (
 				<span key={handle}>
 					{i > 0 && ", "}
@@ -21,6 +22,7 @@ export function GuideCredit({ contributors }: GuideCreditProps) {
 					</a>
 				</span>
 			))}
+			{lastUpdated ? ` · guide updated ${lastUpdated}` : null}
 		</p>
 	);
 }
