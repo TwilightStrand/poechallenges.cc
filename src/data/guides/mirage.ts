@@ -47,7 +47,7 @@ export const mirageGuide: LeagueGuide = {
 			challengeId: 7,
 			difficulty: "very-easy",
 			category: "early-game",
-			tips: "Defeat each act boss from Act 6 through Act 10. Like challenge 4, these are mandatory for campaign completion. Kitava (Act 10) applies a permanent resistance penalty, so cap your resists beforehand.",
+			tips: "Defeat each act boss from Act 6 through Act 10. Like **Act Adversaries I**, these are mandatory for campaign completion. Kitava (Act 10) applies a permanent resistance penalty, so cap your resists beforehand.",
 		},
 		{
 			challengeId: 8,

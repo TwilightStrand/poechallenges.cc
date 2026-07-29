@@ -47,7 +47,7 @@ export const keepersGuide: LeagueGuide = {
 			challengeId: 7,
 			difficulty: "easy",
 			category: "early-game",
-			tips: "Defeat each act boss from Act 6 through Act 10. Like challenge 4, these are mandatory for campaign completion. Kitava (Act 10) applies a permanent resistance penalty, so cap your resists beforehand.",
+			tips: "Defeat each act boss from Act 6 through Act 10. Like **Act Adversaries I**, these are mandatory for campaign completion. Kitava (Act 10) applies a permanent resistance penalty, so cap your resists beforehand.",
 		},
 		{
 			challengeId: 8,
@@ -259,7 +259,7 @@ export const keepersGuide: LeagueGuide = {
 			challengeId: 40,
 			difficulty: "very-hard",
 			category: "grind",
-			tips: "Complete 4 of 6 extreme grind tasks:\n- **Reach level 100**: use pure breachstones or 5-way legion carries for safe XP.\n- **Argus kills** (100x): run Uber Lab daily with easy layouts from poelab.com.\n- **Pinnacle Bosses** (75x): expensive but overlaps with challenge 39.\n- **Explicit mods in T14+** (1000x): natural from mapping.\n- **Invitation mods** (100x): run cheap invitations repeatedly.\n- **Wombgifts** (100x): sustained Hive farming.\n\nPrioritise tasks that overlap with other remaining challenges.",
+			tips: "Complete 4 of 6 extreme grind tasks:\n- **Reach level 100**: use pure breachstones or 5-way legion carries for safe XP.\n- **Argus kills** (100x): run Uber Lab daily with easy layouts from poelab.com.\n- **Pinnacle Bosses** (75x): expensive but overlaps with **Oppressive Opponents**.\n- **Explicit mods in T14+** (1000x): natural from mapping.\n- **Invitation mods** (100x): run cheap invitations repeatedly.\n- **Wombgifts** (100x): sustained Hive farming.\n\nPrioritise tasks that overlap with other remaining challenges.",
 			calculator: [
 				{ label: "Argus kills remaining", divisor: 1 },
 				{ label: "Pinnacle boss kills remaining", divisor: 1 },
