@@ -182,6 +182,7 @@ export function ChallengeDetail({
 							className="inline-flex items-center gap-1.5 mt-2 text-xs text-poe-gold hover:text-poe-gold-bright transition-colors"
 						>
 							<svg
+								aria-hidden="true"
 								width="14"
 								height="14"
 								viewBox="0 0 24 24"

@@ -34,11 +34,21 @@ export function ChallengeCard({
 	const [contentHeight, setContentHeight] = useState(0);
 	const contentRef = useRef<HTMLDivElement>(null);
 
+	// The panel animates via max-height, so it needs the content's real height.
+	// Measuring once is not enough: prices load in asynchronously and change it,
+	// which left the expanded panel clipped. Observing the element re-measures on
+	// any change without guessing at effect dependencies.
 	useEffect(() => {
-		if (contentRef.current) {
-			setContentHeight(contentRef.current.scrollHeight);
-		}
-	}, [expanded, progress]);
+		const element = contentRef.current;
+		if (!element) return;
+
+		const measure = () => setContentHeight(element.scrollHeight);
+		measure();
+
+		const observer = new ResizeObserver(measure);
+		observer.observe(element);
+		return () => observer.disconnect();
+	}, []);
 
 	const isComplete = progress.isComplete;
 	const cardClasses = `${styles.card} rounded-lg overflow-hidden ${isComplete ? styles.complete : ""}`;
@@ -81,6 +91,7 @@ export function ChallengeCard({
 						fill="none"
 						className="shrink-0 text-[#5a9e58]"
 					>
+						<title>Complete</title>
 						<path
 							d="M2 7.5L5.5 11L12 3.5"
 							stroke="currentColor"
@@ -97,6 +108,7 @@ export function ChallengeCard({
 						fill="none"
 						className="shrink-0 text-[#c04040]"
 					>
+						<title>Incomplete</title>
 						<path
 							d="M3 3L11 11M11 3L3 11"
 							stroke="currentColor"

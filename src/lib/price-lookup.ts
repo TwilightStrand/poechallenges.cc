@@ -243,7 +243,8 @@ export async function fetchSubtaskPrices(
 	const entries = [...apiCalls.entries()];
 	const resolved = await Promise.all(entries.map(([, p]) => p));
 	entries.forEach(([key], i) => {
-		results.set(key, resolved[i]!);
+		const lines = resolved[i];
+		if (lines) results.set(key, lines);
 	});
 
 	// Look up prices for each subtask

@@ -31,7 +31,13 @@ export function useLeague(
 		[leagues],
 	);
 
-	const currentLeague = leagues[currentLeagueId] ?? leagues[defaultLeagueId]!;
+	const currentLeague = leagues[currentLeagueId] ?? leagues[defaultLeagueId];
+
+	if (!currentLeague) {
+		throw new Error(
+			`No league data for "${currentLeagueId}" or default "${defaultLeagueId}"`,
+		);
+	}
 	const currentGuide = guides[currentLeagueId];
 
 	const availableLeagues = Object.values(leagues).map((l) => ({

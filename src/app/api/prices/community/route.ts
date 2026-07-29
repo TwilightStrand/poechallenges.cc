@@ -1,4 +1,4 @@
-import { and, eq, gte, sql } from "drizzle-orm";
+import { and, eq, gte } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/db";
 import { reportedPrices } from "@/db/schema";
@@ -47,10 +47,24 @@ export async function GET(request: NextRequest) {
 		.sort((a, b) => a - b);
 
 	const mid = Math.floor(prices.length / 2);
-	const median =
-		prices.length % 2 !== 0
-			? prices[mid]!
-			: (prices[mid - 1]! + prices[mid]!) / 2;
+	const upper = prices[mid];
+	const lower = prices[mid - 1];
+
+	// prices came from reports.length >= 5, so both reads are populated; these
+	// checks exist so a future change to that guard cannot produce NaN prices.
+	const unavailable = NextResponse.json(
+		{ error: "Could not compute a median" },
+		{ status: 500 },
+	);
+
+	if (upper === undefined) return unavailable;
+
+	let median = upper;
+
+	if (prices.length % 2 === 0) {
+		if (lower === undefined) return unavailable;
+		median = (lower + upper) / 2;
+	}
 
 	return NextResponse.json({
 		price: Math.round(median * 100) / 100,

@@ -1,4 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server";
+import {
+	checkRateLimit,
+	clientKey,
+	LIMITS,
+	tooManyRequests,
+} from "@/lib/rate-limit";
 
 // poe.ninja restructured its economy API around June 2026; the old
 // /api/data/currencyoverview endpoints now 404 for every league. The keys here
@@ -31,6 +37,9 @@ const ALLOWED_TYPES = [
 ];
 
 export async function GET(request: NextRequest) {
+	const rate = checkRateLimit(clientKey(request, "prices"), LIMITS.prices);
+	if (!rate.allowed) return tooManyRequests(rate);
+
 	const { searchParams } = request.nextUrl;
 	const league = searchParams.get("league");
 	const endpoint = searchParams.get("endpoint");

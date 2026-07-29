@@ -4,7 +4,6 @@ import {
 	hashSessionToken,
 	invalidateSession,
 	SESSION_COOKIE_NAME,
-	validateSession,
 } from "@/lib/auth";
 
 export async function POST() {

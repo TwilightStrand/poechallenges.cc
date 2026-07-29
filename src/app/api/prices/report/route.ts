@@ -3,6 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/db";
 import { reportedPrices } from "@/db/schema";
 import { SESSION_COOKIE_NAME, validateSession } from "@/lib/auth";
+import { checkRateLimit, LIMITS, tooManyRequests } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
 	const cookieStore = await cookies();
@@ -15,6 +16,9 @@ export async function POST(request: NextRequest) {
 	if (!session) {
 		return NextResponse.json({ error: "Invalid session" }, { status: 401 });
 	}
+
+	const rate = checkRateLimit(`write:${session.session.id}`, LIMITS.write);
+	if (!rate.allowed) return tooManyRequests(rate);
 
 	const body = await request.json();
 	const { leagueId, itemName, priceChaos, quantity } = body;

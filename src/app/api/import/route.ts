@@ -3,6 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/db";
 import { progressSnapshots, userProgress } from "@/db/schema";
 import { SESSION_COOKIE_NAME, validateSession } from "@/lib/auth";
+import { checkRateLimit, LIMITS, tooManyRequests } from "@/lib/rate-limit";
 
 function corsHeaders(origin: string | null) {
 	// Allow requests from PoE website + our own domain
@@ -44,6 +45,9 @@ export async function POST(request: NextRequest) {
 			{ status: 401, headers },
 		);
 	}
+
+	const rate = checkRateLimit(`write:${session.session.id}`, LIMITS.write);
+	if (!rate.allowed) return tooManyRequests(rate);
 
 	const body = await request.json();
 	const { leagueId, challenges, accountName } = body;

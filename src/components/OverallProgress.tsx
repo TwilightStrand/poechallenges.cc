@@ -15,14 +15,24 @@ function RewardIcon({ type }: { type: Reward["type"] }) {
 	if (type === "trophy") {
 		// Trophy / crown
 		return (
-			<svg viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3">
+			<svg
+				aria-hidden="true"
+				viewBox="0 0 16 16"
+				fill="currentColor"
+				className="w-3 h-3"
+			>
 				<path d="M3 2h10v3a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V2zm3 8h4v2H6v-2zm-2 3h8v1H4v-1z" />
 			</svg>
 		);
 	}
 	// MTX / armor chest
 	return (
-		<svg viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3">
+		<svg
+			aria-hidden="true"
+			viewBox="0 0 16 16"
+			fill="currentColor"
+			className="w-3 h-3"
+		>
 			<path d="M2 7h12v7H2V7zm1-4h10l1 3H2l1-3zm5 5h2v2H8V8z" />
 		</svg>
 	);

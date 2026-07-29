@@ -36,7 +36,7 @@ export function SubtaskItem({
 
 	const handleReport = async () => {
 		const chaos = parseFloat(reportValue);
-		if (isNaN(chaos) || chaos < 0 || !leagueId) return;
+		if (Number.isNaN(chaos) || chaos < 0 || !leagueId) return;
 
 		setReporting(true);
 		try {
@@ -83,7 +83,13 @@ export function SubtaskItem({
             `}
 					>
 						{completed && (
-							<svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+							<svg
+								aria-hidden="true"
+								width="10"
+								height="10"
+								viewBox="0 0 10 10"
+								fill="none"
+							>
 								<path
 									d="M2 5l2.5 2.5L8 3"
 									stroke="#0c0b0a"
@@ -120,6 +126,7 @@ export function SubtaskItem({
 
 					{isLoggedIn && tradeLink && !completed && (
 						<button
+							type="button"
 							onClick={(e) => {
 								e.stopPropagation();
 								setShowReport((p) => !p);
@@ -140,7 +147,12 @@ export function SubtaskItem({
 							className="text-poe-text-dim hover:text-poe-gold transition-colors"
 							title={`${tradeLink.type === "exchange" ? "Buy on" : "Search on"} PoE Trade`}
 						>
+							<span className="sr-only">
+								{tradeLink.type === "exchange" ? "Buy on" : "Search on"} PoE
+								Trade: {subtask.name}
+							</span>
 							<svg
+								aria-hidden="true"
 								width="12"
 								height="12"
 								viewBox="0 0 24 24"
@@ -160,6 +172,8 @@ export function SubtaskItem({
 			</div>
 
 			{showReport && (
+				// biome-ignore lint/a11y/noStaticElementInteractions: event boundary, not a control — stops a click on the price field toggling the subtask behind it
+				// biome-ignore lint/a11y/useKeyWithClickEvents: nothing is activated by clicking this wrapper, so there is no keyboard equivalent
 				<div
 					className="flex items-center gap-2"
 					onClick={(e) => e.stopPropagation()}
@@ -172,9 +186,9 @@ export function SubtaskItem({
 						value={reportValue}
 						onChange={(e) => setReportValue(e.target.value)}
 						className="w-24 px-2 py-0.5 text-xs bg-poe-bg-input border border-poe-border-subtle rounded text-poe-text focus:outline-none focus:border-poe-border"
-						autoFocus
 					/>
 					<button
+						type="button"
 						onClick={handleReport}
 						disabled={reporting || !reportValue}
 						className="text-xs px-2 py-0.5 rounded bg-poe-gold/20 border border-poe-gold/30 text-poe-gold-light hover:bg-poe-gold/30 disabled:opacity-50 transition-colors"
@@ -182,6 +196,7 @@ export function SubtaskItem({
 						{reporting ? "..." : "Submit"}
 					</button>
 					<button
+						type="button"
 						onClick={() => setShowReport(false)}
 						className="text-xs text-poe-text-dim hover:text-poe-text"
 					>

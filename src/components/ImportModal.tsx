@@ -54,12 +54,14 @@ export function ImportModal({ data, onConfirm, onCancel }: ImportModalProps) {
 
 						<div className="mt-6 flex gap-3">
 							<button
+								type="button"
 								onClick={onConfirm}
 								className="flex-1 rounded bg-poe-gold/20 border border-poe-gold/40 px-4 py-2 text-poe-gold-light font-medium hover:bg-poe-gold/30 transition-colors"
 							>
 								Import
 							</button>
 							<button
+								type="button"
 								onClick={onCancel}
 								className="flex-1 rounded border border-poe-border px-4 py-2 text-poe-text-dim hover:text-poe-text hover:border-poe-border-highlight transition-colors"
 							>
@@ -73,6 +75,7 @@ export function ImportModal({ data, onConfirm, onCancel }: ImportModalProps) {
 							Invalid import data. The bookmarklet may need to be updated.
 						</p>
 						<button
+							type="button"
 							onClick={onCancel}
 							className="mt-4 rounded border border-poe-border px-4 py-2 text-poe-text-dim hover:text-poe-text"
 						>

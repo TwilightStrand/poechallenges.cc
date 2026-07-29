@@ -41,11 +41,9 @@ export function ChallengeTracker({
 		useAuth();
 
 	const {
-		progress,
 		isLoaded,
 		toggleSubtask,
 		importProgress,
-		resetAll,
 		completedCount,
 		getProgress,
 	} = useProgress(currentLeague, isLoggedIn);
@@ -190,6 +188,7 @@ export function ChallengeTracker({
 					<p className="text-lg">No challenges match your filters.</p>
 					{!showCompleted && (
 						<button
+							type="button"
 							onClick={toggleCompleted}
 							className="mt-2 text-poe-gold underline hover:text-poe-gold-bright"
 						>

@@ -17,6 +17,7 @@ export function BookmarkletInfo() {
 	return (
 		<div className="relative">
 			<button
+				type="button"
 				onClick={() => setIsOpen(!isOpen)}
 				className="text-sm text-poe-gold hover:text-poe-gold-bright transition-colors"
 			>
@@ -31,6 +32,9 @@ export function BookmarkletInfo() {
 					<ol className="text-sm text-poe-text-dim space-y-2 mb-3">
 						<li>
 							1. Drag this link to your bookmarks bar:{" "}
+							{/* biome-ignore lint/a11y/useValidAnchor: a bookmarklet has to be a
+							    draggable anchor carrying a javascript: href. A button cannot be
+							    dragged to the bookmarks bar. */}
 							<a
 								ref={linkRef}
 								href="#"
@@ -45,6 +49,7 @@ export function BookmarkletInfo() {
 						<li>4. Your progress syncs automatically</li>
 					</ol>
 					<button
+						type="button"
 						onClick={() => setIsOpen(false)}
 						className="text-xs text-poe-text-dim hover:text-poe-text"
 					>

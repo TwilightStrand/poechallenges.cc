@@ -26,7 +26,7 @@ export function mergeProgress(
 						(s) => s.id === incomingSub.id,
 					);
 					// Take the more "complete" state
-					if (existingSub && existingSub.completed && !incomingSub.completed) {
+					if (existingSub?.completed && !incomingSub.completed) {
 						return existingSub;
 					}
 					return incomingSub;

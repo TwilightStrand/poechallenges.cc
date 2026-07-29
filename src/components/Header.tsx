@@ -73,11 +73,13 @@ export function Header({
 					{user ? (
 						<div className="relative">
 							<button
+								type="button"
 								onClick={() => setShowMenu((p) => !p)}
 								className="flex items-center gap-2 px-3 py-1.5 rounded border border-poe-border-subtle text-sm text-poe-text hover:border-poe-border transition-colors"
 							>
 								<span className="text-poe-gold-light">{user.displayName}</span>
 								<svg
+									aria-hidden="true"
 									width="10"
 									height="6"
 									viewBox="0 0 10 6"
@@ -109,6 +111,7 @@ export function Header({
 
 									{!hasPoe && (
 										<button
+											type="button"
 											onClick={() => {
 												setShowMenu(false);
 												onLinkPoe();
@@ -120,6 +123,7 @@ export function Header({
 									)}
 
 									<button
+										type="button"
 										onClick={() => {
 											setShowMenu(false);
 											onLogout();
@@ -134,6 +138,7 @@ export function Header({
 					) : (
 						<div className="flex items-center gap-2">
 							<button
+								type="button"
 								onClick={onLoginGithub}
 								className="px-3 py-1.5 rounded border border-poe-border text-sm text-poe-text hover:text-poe-gold-light hover:border-poe-border-highlight transition-colors"
 							>
@@ -141,6 +146,7 @@ export function Header({
 							</button>
 							{isDev && (
 								<button
+									type="button"
 									onClick={() => onLoginDev()}
 									className="px-2 py-1.5 rounded text-xs text-poe-text-dim hover:text-poe-text transition-colors"
 									title="Dev login"
