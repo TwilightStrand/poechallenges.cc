@@ -9,6 +9,7 @@ import {
 	sessionCookieOptions,
 	validateSession,
 } from "@/lib/auth";
+import { poeUserAgent } from "@/lib/poe-api";
 import { redirectTo } from "@/lib/redirect";
 
 export async function GET(request: NextRequest) {
@@ -41,7 +42,10 @@ export async function GET(request: NextRequest) {
 
 		// Fetch PoE profile
 		const profile = await fetch("https://api.pathofexile.com/profile", {
-			headers: { Authorization: `Bearer ${accessToken}` },
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+				"User-Agent": poeUserAgent(),
+			},
 		}).then((r) => r.json());
 
 		const poeAccountName = profile.name ?? "Unknown";

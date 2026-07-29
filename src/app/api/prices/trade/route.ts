@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { poeUserAgent } from "@/lib/poe-api";
 
 // Fetches the cheapest instant buyout price from the official PoE trade API
 // Uses status: "securable" which means automated/instant buyout — real prices, no price fixers
@@ -33,7 +34,7 @@ export async function GET(request: NextRequest) {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
-					"User-Agent": "PoEChallengeTracker/1.0",
+					"User-Agent": poeUserAgent(),
 				},
 				body: JSON.stringify(searchBody),
 				next: { revalidate: 300 }, // cache 5 minutes
@@ -61,7 +62,7 @@ export async function GET(request: NextRequest) {
 		const fetchRes = await fetch(
 			`${TRADE_API}/fetch/${resultIds.join(",")}?query=${queryId}`,
 			{
-				headers: { "User-Agent": "PoEChallengeTracker/1.0" },
+				headers: { "User-Agent": poeUserAgent() },
 			},
 		);
 
