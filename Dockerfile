@@ -35,6 +35,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
 COPY --from=builder --chown=nextjs:nodejs /app/drizzle ./drizzle
 
+# Guide markdown is read when the page is rendered. It is prerendered at build
+# time today, but shipping it keeps that from being load-bearing.
+COPY --from=builder --chown=nextjs:nodejs /app/content ./content
+
 USER nextjs
 EXPOSE 3000
 ENV PORT=3000
