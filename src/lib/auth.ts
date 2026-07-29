@@ -6,28 +6,42 @@ import {
 	generateState,
 	OAuth2Client,
 } from "arctic";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { getDb } from "@/db";
 import { oauthAccounts, sessions, users } from "@/db/schema";
 
 // ── OAuth Clients ──
 
-export const github = process.env.GITHUB_CLIENT_ID
+// All three values or nothing: a provider configured with an id but no secret
+// used to build a client that failed later, at the token exchange, with a
+// confusing error. Now it stays null and the route reports 503.
+function oauthCredentials(prefix: "GITHUB" | "POE") {
+	const clientId = process.env[`${prefix}_CLIENT_ID`];
+	const clientSecret = process.env[`${prefix}_CLIENT_SECRET`];
+	const redirectUri = process.env[`${prefix}_REDIRECT_URI`];
+
+	if (!clientId || !clientSecret || !redirectUri) return null;
+
+	return { clientId, clientSecret, redirectUri };
+}
+
+const githubCredentials = oauthCredentials("GITHUB");
+export const github = githubCredentials
 	? new GitHub(
-			process.env.GITHUB_CLIENT_ID,
-			process.env.GITHUB_CLIENT_SECRET!,
-			process.env.GITHUB_REDIRECT_URI!,
+			githubCredentials.clientId,
+			githubCredentials.clientSecret,
+			githubCredentials.redirectUri,
 		)
 	: null;
 
-export const poe =
-	process.env.POE_CLIENT_ID && process.env.POE_CLIENT_ID !== ""
-		? new OAuth2Client(
-				process.env.POE_CLIENT_ID,
-				process.env.POE_CLIENT_SECRET!,
-				process.env.POE_REDIRECT_URI!,
-			)
-		: null;
+const poeCredentials = oauthCredentials("POE");
+export const poe = poeCredentials
+	? new OAuth2Client(
+			poeCredentials.clientId,
+			poeCredentials.clientSecret,
+			poeCredentials.redirectUri,
+		)
+	: null;
 
 export { generateCodeVerifier, generateState };
 
@@ -106,26 +120,27 @@ export async function findOrCreateUser(
 	providerAccountId: string,
 	displayName: string,
 ) {
-	// Check if oauth account exists
-	const existing = await getDb()
+	// Both columns have to match. Matching on provider alone returns whichever
+	// row comes back first, which means every GitHub sign-in resolves to the
+	// same account regardless of who authenticated.
+	const [existing] = await getDb()
 		.select({ user: users })
 		.from(oauthAccounts)
 		.innerJoin(users, eq(oauthAccounts.userId, users.id))
-		.where(eq(oauthAccounts.provider, provider))
+		.where(
+			and(
+				eq(oauthAccounts.provider, provider),
+				eq(oauthAccounts.providerAccountId, providerAccountId),
+			),
+		)
 		.limit(1);
 
-	// Filter by providerAccountId in JS since compound where is cleaner this way
-	const match = existing.find(
-		(r) => true, // the query already filters, but let's be safe
-	);
-
-	if (existing.length > 0 && existing[0]) {
-		// Update last login
+	if (existing) {
 		await getDb()
 			.update(users)
 			.set({ lastLoginAt: new Date() })
-			.where(eq(users.id, existing[0].user.id));
-		return existing[0].user;
+			.where(eq(users.id, existing.user.id));
+		return existing.user;
 	}
 
 	// Create new user + link oauth account
