@@ -23,7 +23,7 @@ export const allflameGuide: LeagueGuide = {
 			challengeId: 3,
 			difficulty: "very-easy",
 			category: "early-game",
-			tips: "The four quality currencies, all from vendor recipes:\n- **Armourer's Scrap**: sell any armour piece with 20% quality (or a full set of quality armour).\n- **Blacksmith's Whetstone**: same with a quality weapon.\n- **Glassblower's Bauble**: sell a flask with 20% quality.\n- **Gemcutter's Prism**: sell a skill gem with 20% quality.\n\nThe gem is the one people miss. Level a spare gem with quality on it, or combine several partially-qualitied gems until one hits 20%, then vendor it. All four are doable before Act 3.",
+			tips: "The four quality currencies, all from vendor recipes:\n- **Armourer's Scrap**: sell a normal-rarity armour piece at 20% quality, or armour totalling 40% quality.\n- **Blacksmith's Whetstone**: same rule with weapons.\n- **Glassblower's Bauble**: sell a normal-rarity flask at 20% quality, or flasks totalling 40%.\n- **Gemcutter's Prism**: sell a skill gem at 20% quality, or gems totalling 40%.\n\nThe gem is the one people miss. Level a spare gem with quality on it, or combine several partially-qualitied gems until one hits 20%, then vendor it. All four are doable before Act 3.",
 		},
 		{
 			challengeId: 4,
@@ -77,7 +77,6 @@ export const allflameGuide: LeagueGuide = {
 			challengeId: 12,
 			difficulty: "hard",
 			category: "league-mechanics",
-			estimatedHours: 20,
 			tips: "The real league grind, and all three rows are mandatory:\n- **10 Voyages** means 90 completed Charts fed onto the board.\n- **200 rare monsters in Voyages** comes along with those Voyages if you pick Border Modifiers that add packs and upgrade monster rarity; **Monsters in Area are at least Magic** and **Area contains additional Monster Packs** both help, and both count for **Fathomless Fears (32)**.\n- **50,000 Sulphur spent on equipment crafts** is the slow part. Spend it in many cheap crafts on junk bases rather than saving for perfect items; the counter tracks Sulphur spent, not craft quality.\n\nBecause every Voyage consumes nine Charts, treat Chart supply as the bottleneck all league. Take the **Charts have a chance to not be consumed when beginning a Voyage** border modifier whenever it is offered.",
 		},
 		{
@@ -102,7 +101,6 @@ export const allflameGuide: LeagueGuide = {
 			challengeId: 16,
 			difficulty: "hard",
 			category: "endgame",
-			estimatedHours: 15,
 			tips: "Five of eleven at area level 81+. The counts are small, so pick by what you already run:\n- **Abyssal Depths x5** is the cheapest row this league given the Abyss rework.\n- **Blighted or Blight Ravaged Maps x5** and **Fully Completed Ultimatums x10** are self-contained and buyable.\n- **Tier 4 Harvest Seeds x5** is trivial if you specced Harvest for **Legendary Leagues (10)**.\n- **Claim rewards from Rare Maps completed by your Atlas Runners x30** is passive progress; set runners going every session from day one and this row finishes itself.\n\nSkip **Simulacrum Waves x60** unless your build is already Delirium-proof, and skip **Domains of Timeless Conflict with 25+ rewards** unless you are farming Legion, since 25 rewards needs a well-built Domain.",
 		},
 		{
@@ -133,7 +131,7 @@ export const allflameGuide: LeagueGuide = {
 			challengeId: 21,
 			difficulty: "normal",
 			category: "bossing",
-			tips: "Six of eight at level 80+, and most are content you would run anyway:\n- **Izaro** at level 80 means Eternal (Uber) Lab, which you need for **Achieve Ascension (18)**.\n- **Abyssal Lich** and **Omnitect** come from Abyss and Heist, both of which likely appear in your **Legendary Leagues (10)** picks.\n- **Vox Twins** (Sanctum), **K'Tash/Ghorr/Beidat** (Breach), **Medved/Vorana/Uhtred** (Rogue Exile-style uniques) and **The Black Knight/Admiral Valerius/Sasan** each need only one of the named bosses, so take whichever the mechanic hands you first.\n\n**Uber Atziri** is the one to skip unless your build handles her reflect and flameblast phases; the other seven cover the six you need.",
+			tips: "Six of eight at level 80+, and most are content you would run anyway:\n- **Izaro** at level 80 means Eternal (Uber) Lab, which you need for **Achieve Ascension (18)**.\n- **Abyssal Lich** and **Omnitect** come from Abyss and Heist, both of which likely appear in your **Legendary Leagues (10)** picks.\n- **Vox Twins** (Sanctum), **K'Tash/Ghorr/Beidat** (Breach), **Medved/Vorana/Uhtred** (Expedition logbook bosses) and **The Black Knight/Admiral Valerius/Sasan** each need only one of the named bosses, so take whichever the mechanic hands you first.\n\n**Uber Atziri** is the one to skip unless your build handles her reflect and flameblast phases; the other seven cover the six you need.",
 		},
 		{
 			challengeId: 22,
@@ -145,13 +143,12 @@ export const allflameGuide: LeagueGuide = {
 			challengeId: 23,
 			difficulty: "normal",
 			category: "mapping",
-			tips: "Fifteen of eighteen unique maps. Most are cheap to acquire and quick to clear, so buy the fifteen easiest and ignore the rest.\n\nThe three to drop: **Hall of the Grandmasters** (a build check that kills most characters), **Vaults of Atziri** (expensive relative to its length) and **The Twilight Temple** or **Poorjoy's Asylum** depending on your build. **Acton's Nightmare**, **Mao Kun**, **Oba's Cursed Trove**, **Whakawairua Tuahu**, **Death and Taxes** and **Maelström of Chaos** are all fast.\n\nRun them rare if you are also chasing **Modified Maps (30)**, since unique maps carry explicit modifiers like any other.",
+			tips: "Fifteen of eighteen unique maps. Most are cheap to acquire and quick to clear, so buy the fifteen easiest and ignore the rest.\n\nThe three to drop: **Hall of the Grandmasters** (a build check that kills most characters), **Vaults of Atziri** and **The Twilight Temple** or **Poorjoy's Asylum** depending on your build. **Acton's Nightmare**, **Mao Kun**, **Oba's Cursed Trove**, **Whakawairua Tuahu**, **Death and Taxes** and **Maelström of Chaos** are all fast.\n\nRun them rare if you are also chasing **Modified Maps (30)**, since unique maps carry explicit modifiers like any other.",
 		},
 		{
 			challengeId: 24,
 			difficulty: "hard",
 			category: "grind",
-			estimatedHours: 12,
 			tips: "750 scarabs applied to maps, counted per scarab rather than per map. Every scarab counts, including the cheapest bulk ones, so this is a buying problem more than a playing problem.\n\nRun five scarabs per map as your default once you can afford it. That habit also satisfies **Astounding Astrolabes (29)** and **Horrific Halls (38)**, both of which require five scarabs applied, and the Divination Scarab row in **Devious Divination (19)**. Buy in bulk rather than singly, and do not save scarabs for a perfect strategy; an applied cheap scarab counts exactly as much as an applied expensive one.",
 			calculator: [
 				{ label: "maps with 5 scarabs", divisor: 5 },
@@ -180,20 +177,18 @@ export const allflameGuide: LeagueGuide = {
 			challengeId: 28,
 			difficulty: "hard",
 			category: "bossing",
-			tips: "Seven of twelve league bosses. Most are the endgame boss of a past mechanic, so your **Legendary Leagues (10)** picks decide which are cheap:\n- Reliably accessible: **Oshabi** (Harvest), **Catarina** (Betrayal), **Olroth** (Rogue Harbour), **Simulacrum** (Delirium), **The Trialmaster** (Ultimatum), **Velka** (this league).\n- Harder or luck-gated: **Aul** (deep Delve), **Lycia** (Sanctum), **Farrul** (Bestiary spawn), **The King in the Mists**, **Zorath**, **It That Was Tul and It That Was Esh** (both Breach lords in one row).\n\n**Velka** you will fight anyway for **Brinerot's Bloody Bounty (37)**. Aul is the usual skip; deep Delve is a separate build and time investment. Buying a carry for one or two of these is a normal way to close the gap.",
+			tips: "Seven of twelve league bosses. Most are the endgame boss of a past mechanic, so your **Legendary Leagues (10)** picks decide which are cheap:\n- Reliably accessible: **Oshabi** (Harvest), **Catarina** (Betrayal), **Olroth** (Expedition logbook, area level 79+), **Simulacrum** (Delirium), **The Trialmaster** (Ultimatum), **Velka** (this league).\n- Harder or luck-gated: **Aul** (deep Delve), **Lycia** (Sanctum), **Farrul** (Bestiary spawn), **The King in the Mists**, **Zorath**, **It That Was Tul and It That Was Esh** (both Breach lords in one row).\n\n**Velka** you will fight anyway for **Brinerot's Bloody Bounty (37)**. Aul is the one to drop if you are not already delving; deep Delve is a separate build and time investment. Buying a carry for one or two of these is a normal way to close the gap.",
 		},
 		{
 			challengeId: 29,
 			difficulty: "very-hard",
 			category: "mapping",
-			estimatedHours: 18,
 			tips: "Six of ten Astrolabe types, five maps each, every map **Tier 16, Rare, with 5 scarabs applied**. That is 30 fully-kitted T16 maps with a specific Astrolabe active, and the scarab requirement makes it the most expensive volume challenge in the league.\n\nCheck which Astrolabe you have before applying scarabs, because a wasted five-scarab map is the cost here, not the time. Pick the six types your atlas most reliably produces rather than the six with the best rewards. All 30 maps feed **Stacked Scarabs (24)** at five each (150 of the 750) and **Modified Maps (30)**, so run them rare with as many mods as you can survive and take three challenges from one grind.",
 		},
 		{
 			challengeId: 30,
 			difficulty: "hard",
 			category: "grind",
-			estimatedHours: 14,
 			tips: "3000 explicit modifiers across completed maps. A rare map rolls roughly six to eight explicit mods, so this is about always running rare and never running white or magic maps.\n\nThe cheap version: chaos-spam or alch every map to eight mods where your build can take it, which also feeds the 8-modifier row in **Gallant Grinding Goals (40)** and the corrupted-with-8-mods requirement there. Corrupting maps adds mods too. Avoid the temptation to reroll away dangerous mods you can actually handle; each mod you keep is progress, and mod count is the only thing counted here, not tier or quantity.",
 			calculator: [
 				{ label: "rare maps with 8 mods", divisor: 8 },
@@ -216,7 +211,7 @@ export const allflameGuide: LeagueGuide = {
 			challengeId: 33,
 			difficulty: "hard",
 			category: "endgame",
-			tips: "Two of three Eldritch rows in Rare T16 maps, each with an atlas keystone requirement that you have to allocate first:\n- **Eldritch Gaze** for the Eater of Worlds row, **Wrath of the Cosmos** for the Searing Exarch row: 4 altars activated with boss-affecting mods, then kill the boss, 10 times each.\n- **Destructive Play** for 25 Maven-witnessed maps at 150%+ IQ.\n\nThe altar rows are usually cheaper because altars appear multiple times per influenced map; you need the four you activate to roll modifiers that affect the map boss, so read them rather than clicking through. Take the two altar rows if you are farming Eldritch influence anyway; take the Maven row only if you are already running witnessed maps for **Succinct Summons (35)**, since 25 maps at 150% IQ is a heavy juicing commitment.",
+			tips: "Two of three Eldritch rows in Rare T16 maps, each with an atlas keystone requirement that you have to allocate first:\n- **Eldritch Gaze** for the Eater of Worlds row, **Wrath of the Cosmos** for the Searing Exarch row: 4 altars activated with boss-affecting mods, then kill the boss, 10 times each.\n- **Destructive Play** for 25 Maven-witnessed maps at 150%+ IQ.\n\nThe altar rows are cheaper per map because an influenced map spawns several altars; you need the four you activate to roll modifiers that affect the map boss, so read them rather than clicking through. Take the two altar rows if you are farming Eldritch influence anyway; take the Maven row only if you are already running witnessed maps for **Succinct Summons (35)**, since 25 maps at 150% IQ is a heavy juicing commitment.",
 		},
 		{
 			challengeId: 34,
@@ -234,20 +229,19 @@ export const allflameGuide: LeagueGuide = {
 			challengeId: 36,
 			difficulty: "normal",
 			category: "endgame",
-			tips: "Six of eleven **Atlas Anomalies**, the 3.29 encounters that manifest directly on the Atlas without needing a map item. You do not control which appear, so this is opportunistic: run them when they show up rather than saving them.\n\nBecause they are free (no map consumed) and each only needs one completion, check the Atlas every session and clear any of the eleven you have not done. **River's End**, **Lake Islet**, **Overgrown Grove** and **Forgotten Shrine** tend to be short; **Syndicate Hideout**, **Planned Heist** and **The Court of Chaos** are longer set-piece encounters. Six of eleven means you can pass on the three or four that fight your build.",
+			tips: "Six of eleven **Atlas Anomalies**, the 3.29 encounters that manifest directly on the Atlas without needing a map item. You do not control which appear, so this is opportunistic: run them when they show up rather than saving them.\n\nBecause they are free (no map consumed) and each only needs one completion, check the Atlas every session and clear any of the eleven you have not done. These are new in 3.29, so pick by what your build handles rather than by any expected length; six of eleven means you can pass on the three or four that go badly.",
 		},
 		{
 			challengeId: 37,
 			difficulty: "very-hard",
 			category: "bossing",
-			tips: "Three of four conditional kills on **Velka, The Tide Witch**: no hit from **Brine Storm Call**, no hit from **any Anchors**, no hit from **Lightning Whip**, no hit from **Crashing Brine**.\n\nGo for one condition per attempt rather than trying to dodge everything. Learn the fight normally first, note the telegraph for each of the four, then take the three that suit your movement. Drop the fourth entirely; the Anchors row is usually the hardest to guarantee because anchors persist in the arena rather than being a single cast.\n\nTwo practical notes: chip damage from other attacks does not fail the condition, only the named one, so tankiness lets you focus on a single telegraph instead of playing perfectly. And bring movement rather than more damage; a rushed kill that clips you once wastes the attempt, and you also want Velka for **Bountiful Bloodlines (28)**.",
+			tips: "Three of four conditional kills on **Velka, The Tide Witch**: no hit from **Brine Storm Call**, no hit from **any Anchors**, no hit from **Lightning Whip**, no hit from **Crashing Brine**.\n\nGo for one condition per attempt rather than trying to dodge everything. Learn the fight normally first, note the telegraph for each of the four, then take the three that suit your movement. Drop the fourth entirely.\n\nWorth confirming in-game before you invest attempts: whether taking damage from her other attacks voids a condition, or only the named one. Bring movement rather than more damage; a rushed kill that clips you once wastes the attempt, and you also want Velka for **Bountiful Bloodlines (28)**.",
 		},
 		{
 			challengeId: 38,
 			difficulty: "very-hard",
 			category: "endgame",
-			estimatedHours: 10,
-			tips: "Two of five **Nightmare Maps**, each needing **150%+ Item Quantity, 5 scarabs, Delirium Orbs applied, and corrupted**. Every condition stacks danger on already-hard maps, and the corruption requirement means you cannot reroll a bad outcome.\n\nOrder matters: roll the map rare, get your mods and IQ where you want them, apply scarabs and Delirium Orbs, then corrupt last. Pick the two arenas your build handles rather than the two with the best loot; **Sanctuary** and **Citadel** are commonly the more forgiving layouts, **Abomination** the least.\n\nPortals are the constraint. Go in with ailment immunity and enough recovery to survive Delirium stacking on top of corrupted map mods, and expect to lose a set or two before it lands. These also count for the Nightmare row in **Gallant Grinding Goals (40)**.",
+			tips: "Two of five **Nightmare Maps**, each needing **150%+ Item Quantity, 5 scarabs, Delirium Orbs applied, and corrupted**. Every condition stacks danger on already-hard maps, and the corruption requirement means you cannot reroll a bad outcome.\n\nOrder matters: roll the map rare, get your mods and IQ where you want them, apply scarabs and Delirium Orbs, then corrupt last. Pick the two arenas your build handles rather than the two with the best loot, and decide before you corrupt, since that step is irreversible.\n\nPortals are the constraint. Go in with ailment immunity and enough recovery to survive Delirium stacking on top of corrupted map mods, and expect to lose a set or two before it lands. These also count for the Nightmare row in **Gallant Grinding Goals (40)**.",
 		},
 		{
 			challengeId: 39,
@@ -259,8 +253,7 @@ export const allflameGuide: LeagueGuide = {
 			challengeId: 40,
 			difficulty: "very-hard",
 			category: "grind",
-			estimatedHours: 40,
-			tips: "Four of six, and the choice here decides whether 40/40 takes a week or a month. Pick for overlap with what you have already been doing:\n- **Complete T16 Rare Corrupted maps with 8 modifiers x50** overlaps with **Modified Maps (30)**; if you have been running 8-mod rares all league, add corruption and this is nearly done.\n- **Defeat Pinnacle bosses at area level 85 x30** overlaps with **Apex Assailants (39)**; once your build can do one uber reliably, 30 repeats is time rather than difficulty.\n- **Defeat Rare Monsters in Voyages at area level 83 x400** overlaps with **Nautical Navigation (12)**, but note the higher level floor; you need Voyages at 83, not any Voyage.\n- **Complete Nightmare Maps x40** overlaps with **Horrific Halls (38)** but 40 of them is a large ask on its own.\n\n**Reach Level 100** is the honest option if your build is safe: 5-way Legion carries or Breachstone farming makes the last levels predictable, and it competes with nothing else. **Cleanse 150 Darkshrines in the Endgame Labyrinth** is pure repetition of Uber Lab and is usually the row people regret.\n\nWhatever you pick, decide by around challenge 30 so your mapping habits build toward it instead of starting fresh at 36/40.",
+			tips: "Four of six, and the choice here decides whether 40/40 takes a week or a month. Pick for overlap with what you have already been doing:\n- **Complete T16 Rare Corrupted maps with 8 modifiers x50** overlaps with **Modified Maps (30)**; if you have been running 8-mod rares all league, add corruption and this is nearly done.\n- **Defeat Pinnacle bosses at area level 85 x30** overlaps with **Apex Assailants (39)**; once your build can do one uber reliably, 30 repeats is time rather than difficulty.\n- **Defeat Rare Monsters in Voyages at area level 83 x400** overlaps with **Nautical Navigation (12)**, but note the higher level floor; you need Voyages at 83, not any Voyage.\n- **Complete Nightmare Maps x40** overlaps with **Horrific Halls (38)** but 40 of them is a large ask on its own.\n\n**Reach Level 100** is the honest option if your build is safe: 5-way Legion carries or Breachstone farming makes the last levels predictable, and it competes with nothing else. **Cleanse 150 Darkshrines in the Endgame Labyrinth** means repeated Endgame Labyrinth runs, which is slow unless you already farm lab.\n\nWhatever you pick, decide by around challenge 30 so your mapping habits build toward it instead of starting fresh at 36/40.",
 		},
 	],
 };
