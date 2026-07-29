@@ -2,7 +2,7 @@ import type { LeagueGuide } from "@/schemas";
 
 export const mirageGuide: LeagueGuide = {
 	leagueId: "mirage",
-	author: "PoEChallenges Community",
+	contributors: ["Saturate"],
 	lastUpdated: "2026-04-11",
 	overview:
 		"The Mirage league introduces wish-granting encounters that overlay your maps with parallel zones. Focus on pushing atlas progression early to unlock scarab and astrolabe synergies. Challenges 1-18 come naturally while levelling and early mapping; 19-35 require deliberate target-farming; 36-40 demand optimised builds and heavy investment.",

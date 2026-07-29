@@ -141,7 +141,10 @@ export function parseLeagueGuide(
 
 	const guide: LeagueGuide = {
 		leagueId,
-		author: meta.author ?? "PoEChallenges Community",
+		contributors: (meta.contributors ?? "")
+			.split(",")
+			.map((handle) => handle.trim().replace(/^@/, ""))
+			.filter(Boolean),
 		lastUpdated: meta.lastUpdated ?? "",
 		overview,
 		challenges,

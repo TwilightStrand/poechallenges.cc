@@ -2,7 +2,7 @@ import type { LeagueGuide } from "@/schemas";
 
 export const keepersGuide: LeagueGuide = {
 	leagueId: "keepers",
-	author: "PoEChallenges Community",
+	contributors: ["Saturate"],
 	lastUpdated: "2026-04-11",
 	overview:
 		"The Keepers of the Flame league introduces Hiveborn encounters, Grafts, Wombgifts, and the Genesis Tree. Focus on engaging with Hive mechanics early to unlock Grafts and progress the Genesis Tree. Challenges 1-8 complete naturally during the campaign; 9-18 require early mapping; 19-34 demand deliberate target-farming and currency investment; 35-40 are the hardest content in the game requiring optimised builds.",

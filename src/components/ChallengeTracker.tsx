@@ -13,6 +13,7 @@ import { ChallengeList } from "./ChallengeList";
 import styles from "./ChallengeTracker.module.css";
 import { FilterBar } from "./FilterBar";
 import { Footer } from "./Footer";
+import { GuideCredit } from "./GuideCredit";
 import { Header } from "./Header";
 import { ImportModal } from "./ImportModal";
 import { OverallProgress } from "./OverallProgress";
@@ -147,6 +148,8 @@ export function ChallengeTracker({
 					totalCount={currentLeague.challenges.length}
 					rewards={currentLeague.rewards}
 				/>
+
+				<GuideCredit contributors={currentGuide?.contributors ?? []} />
 
 				<div className={styles.separator} />
 

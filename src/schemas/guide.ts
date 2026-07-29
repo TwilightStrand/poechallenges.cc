@@ -40,7 +40,9 @@ const ChallengeGuideSchema = v.object({
 
 const LeagueGuideSchema = v.object({
 	leagueId: v.string(),
-	author: v.string(),
+	// GitHub handles of the people who wrote or corrected this guide, rendered
+	// as links. Not a free-text credit: it should point at real accounts.
+	contributors: v.array(v.string()),
 	lastUpdated: v.string(),
 	overview: v.string(), // markdown: general league guide intro
 	challenges: v.array(ChallengeGuideSchema),

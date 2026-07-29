@@ -1,5 +1,5 @@
 ---
-author: PoEChallenges Community
+contributors: Saturate
 lastUpdated: 2026-07-28
 ---
 
@@ -377,6 +377,6 @@ Four of six, and the choice here decides whether 40/40 takes a week or a month. 
 - **Defeat Rare Monsters in Voyages at area level 83 x400** overlaps with **Nautical Navigation**, but note the higher level floor; you need Voyages at 83, not any Voyage.
 - **Complete Nightmare Maps x40** overlaps with **Horrific Halls** but 40 of them is a large ask on its own.
 
-**Reach Level 100** is the honest option if your build is safe: 5-way Legion carries or Breachstone farming makes the last levels predictable, and it competes with nothing else. **Cleanse 150 Darkshrines in the Endgame Labyrinth** means repeated Endgame Labyrinth runs, which is slow unless you already farm lab.
+**Reach Level 100** is the best option if your build is safe: 5-way Legion carries or Breachstone farming makes the last levels predictable, and it competes with nothing else. **Cleanse 150 Darkshrines in the Endgame Labyrinth** means repeated Endgame Labyrinth runs, which is slow unless you already farm lab.
 
 Whatever you pick, decide early so your mapping habits build toward it instead of starting fresh at 36/40.
