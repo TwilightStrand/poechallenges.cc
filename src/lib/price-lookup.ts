@@ -312,3 +312,195 @@ export function findCheapestCombination(
 
 	return uncompleted.slice(0, remaining);
 }
+
+// Price mappings for Curse of the Allflame "Potent Possibilities".
+// Ten of twenty currency types, so the cheapest-combination view is the point.
+// Only rows poe.ninja actually lists for this league are here, verified against
+// the live API: Influenced Exalted Orb, Orb of Remembrance/Unravelling/Intention,
+// Runegraft/Tattoo, Enshrouding Crystal, Corrupted Essence and Blight Oil are
+// absent from both the stash and exchange overviews, so they carry no price
+// rather than a guessed one.
+export const potentPossibilitiesPrices: SubtaskPriceMapping[] = [
+	{
+		subtaskId: "34-2",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Veiled Chaos Orb",
+			},
+		],
+		quantity: 1,
+	},
+	{
+		subtaskId: "34-4",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Eldritch Chaos Orb",
+			},
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Eldritch Orb of Annulment",
+			},
+		],
+		quantity: 1,
+	},
+	{
+		subtaskId: "34-5",
+		searches: [
+			{
+				endpoint: "exchange",
+				type: "Currency",
+				name: "Exceptional Eldritch Ichor",
+			},
+			{
+				endpoint: "exchange",
+				type: "Currency",
+				name: "Exceptional Eldritch Ember",
+			},
+		],
+		quantity: 1,
+	},
+	{
+		subtaskId: "34-6",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Tainted Catalyst",
+			},
+		],
+		quantity: 10,
+	},
+	{
+		subtaskId: "34-7",
+		searches: [
+			{ endpoint: "exchange", type: "Currency", name: "Awakener's Orb" },
+		],
+		quantity: 1,
+	},
+	{
+		subtaskId: "34-8",
+		searches: [
+			{ endpoint: "exchange", type: "Currency", name: "Orb of Dominance" },
+		],
+		quantity: 1,
+	},
+	{
+		subtaskId: "34-9",
+		searches: [
+			{ endpoint: "exchange", type: "Currency", name: "Mirror of Kalandra" },
+		],
+		quantity: 1,
+	},
+	{
+		subtaskId: "34-10",
+		searches: [
+			{ endpoint: "currencyoverview", type: "Currency", name: "Sacred Orb" },
+		],
+		quantity: 1,
+	},
+	{
+		subtaskId: "34-11",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Fracturing Orb",
+			},
+		],
+		quantity: 1,
+	},
+	{
+		subtaskId: "34-12",
+		searches: [
+			{ endpoint: "exchange", type: "Currency", name: "Hinekora's Lock" },
+		],
+		quantity: 1,
+	},
+	{
+		subtaskId: "34-13",
+		searches: [
+			{ endpoint: "currencyoverview", type: "Currency", name: "Tempering Orb" },
+		],
+		quantity: 1,
+	},
+	{
+		subtaskId: "34-14",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Reflecting Mist",
+			},
+		],
+		quantity: 1,
+	},
+	{
+		// Any catalyst counts, so the cheapest of the ten listed wins.
+		subtaskId: "34-17",
+		searches: [
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Abrasive Catalyst",
+			},
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Accelerating Catalyst",
+			},
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Fertile Catalyst",
+			},
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Imbued Catalyst",
+			},
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Intrinsic Catalyst",
+			},
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Noxious Catalyst",
+			},
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Prismatic Catalyst",
+			},
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Tempering Catalyst",
+			},
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Turbulent Catalyst",
+			},
+			{
+				endpoint: "currencyoverview",
+				type: "Currency",
+				name: "Unstable Catalyst",
+			},
+		],
+		quantity: 40,
+	},
+	{
+		subtaskId: "34-20",
+		searches: [
+			{ endpoint: "exchange", type: "Currency", name: "Crystallised Rancour" },
+		],
+		quantity: 1,
+	},
+];

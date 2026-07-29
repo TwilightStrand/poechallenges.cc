@@ -56,6 +56,7 @@ export function ChallengeDetail({
 	const { prices, loading, hasPrices, cheapest, totalCostForCheapest } =
 		usePrices(
 			ninjaLeague ?? leagueName,
+			leagueId,
 			challenge.id,
 			subtaskIds,
 			completedIds,

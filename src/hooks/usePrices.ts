@@ -6,16 +6,21 @@ import {
 	fetchSubtaskPrices,
 	findCheapestCombination,
 	type PriceInfo,
+	potentPossibilitiesPrices,
 	type SubtaskPriceMapping,
 } from "@/lib/price-lookup";
 
-// Registry of challenges that have price mappings
+// Keyed by league id as well as challenge id: challenge numbers repeat across
+// leagues with completely different contents, so keying on the number alone
+// priced Mirage's Coveted Currency items for Allflame's Ethereal Enhancements.
 const PRICE_MAPPINGS: Record<string, SubtaskPriceMapping[]> = {
-	"22": covetedCurrencyPrices, // Coveted Currency (Mirage)
+	"mirage:22": covetedCurrencyPrices,
+	"allflame:34": potentPossibilitiesPrices,
 };
 
 export function usePrices(
 	leagueName: string,
+	leagueId: string,
 	challengeId: number,
 	subtaskIds: string[],
 	completedIds: Set<string>,
@@ -25,7 +30,7 @@ export function usePrices(
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	const mappings = PRICE_MAPPINGS[String(challengeId)];
+	const mappings = PRICE_MAPPINGS[`${leagueId}:${challengeId}`];
 	const hasPrices = mappings !== undefined;
 
 	useEffect(() => {
