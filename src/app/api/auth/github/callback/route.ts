@@ -7,6 +7,7 @@ import {
 	SESSION_COOKIE_NAME,
 	sessionCookieOptions,
 } from "@/lib/auth";
+import { redirectTo } from "@/lib/redirect";
 
 export async function GET(request: NextRequest) {
 	if (!github) {
@@ -24,7 +25,7 @@ export async function GET(request: NextRequest) {
 	const storedState = cookieStore.get("github_oauth_state")?.value;
 
 	if (!code || !state || state !== storedState) {
-		return NextResponse.redirect(new URL("/?error=auth_failed", request.url));
+		return redirectTo("/?error=auth_failed");
 	}
 
 	try {
@@ -51,8 +52,8 @@ export async function GET(request: NextRequest) {
 			sessionCookieOptions(session.expiresAt),
 		);
 
-		return NextResponse.redirect(new URL("/", request.url));
+		return redirectTo("/");
 	} catch {
-		return NextResponse.redirect(new URL("/?error=auth_failed", request.url));
+		return redirectTo("/?error=auth_failed");
 	}
 }

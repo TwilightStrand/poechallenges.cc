@@ -9,6 +9,7 @@ import {
 	sessionCookieOptions,
 	validateSession,
 } from "@/lib/auth";
+import { redirectTo } from "@/lib/redirect";
 
 export async function GET(request: NextRequest) {
 	if (!poe) {
@@ -27,7 +28,7 @@ export async function GET(request: NextRequest) {
 	const codeVerifier = cookieStore.get("poe_code_verifier")?.value;
 
 	if (!code || !state || state !== storedState || !codeVerifier) {
-		return NextResponse.redirect(new URL("/?error=auth_failed", request.url));
+		return redirectTo("/?error=auth_failed");
 	}
 
 	try {
@@ -58,7 +59,7 @@ export async function GET(request: NextRequest) {
 				);
 				cookieStore.delete("poe_oauth_state");
 				cookieStore.delete("poe_code_verifier");
-				return NextResponse.redirect(new URL("/?linked=poe", request.url));
+				return redirectTo("/?linked=poe");
 			}
 		}
 
@@ -78,8 +79,8 @@ export async function GET(request: NextRequest) {
 			sessionCookieOptions(session.expiresAt),
 		);
 
-		return NextResponse.redirect(new URL("/", request.url));
+		return redirectTo("/");
 	} catch {
-		return NextResponse.redirect(new URL("/?error=auth_failed", request.url));
+		return redirectTo("/?error=auth_failed");
 	}
 }
