@@ -41,8 +41,31 @@ async function fetchNinja(
 function findPrice(
 	lines: NinjaLine[],
 	search: string,
-): { chaos: number; icon?: string } | null {
+): { chaos: number; icon?: string; name?: string } | null {
 	const lower = search.toLowerCase();
+
+	// "*" means the cheapest entry of this type. Several challenges accept any
+	// member of a large family — any Tattoo, any Oil, any Enshrouding Crystal —
+	// and naming all 53 tattoos here would be unreadable and go stale.
+	if (search === "*") {
+		let best: NinjaLine | undefined;
+		let bestChaos = Number.POSITIVE_INFINITY;
+
+		for (const line of lines) {
+			const chaos = line.chaosEquivalent ?? line.chaosValue ?? 0;
+			if (chaos > 0 && chaos < bestChaos) {
+				bestChaos = chaos;
+				best = line;
+			}
+		}
+
+		if (!best) return null;
+		return {
+			chaos: bestChaos,
+			icon: best.icon,
+			name: best.currencyTypeName ?? best.name,
+		};
+	}
 
 	// Try exact match first
 	const exact = lines.find(
@@ -203,15 +226,16 @@ export const covetedCurrencyPrices: SubtaskPriceMapping[] = [
 	},
 ];
 
-// Manual price overrides — verified in-game prices that differ from poe.ninja
-// These take priority until crowdsourced DB is running
-// Format: subtaskId → chaos per unit
+// Manual price overrides — verified in-game prices that differ from poe.ninja.
+// These take priority until the crowdsourced DB is running.
+// Keyed leagueId:subtaskId, because challenge numbers repeat across leagues with
+// entirely different items behind them.
 const PRICE_OVERRIDES: Record<string, number> = {
-	"22-1": 79, // Coin of Knowledge — not on poe.ninja
-	"22-2": 185, // Coin of Power — not on poe.ninja
-	"22-9": 34, // Essence of Desolation
-	"22-10": 79, // Miraged Incubator (cheapest of Honoured/Sacred/Miraged)
-	"22-11": 175, // Refracting Fog
+	"mirage:22-1": 79, // Coin of Knowledge — not on poe.ninja
+	"mirage:22-2": 185, // Coin of Power — not on poe.ninja
+	"mirage:22-9": 34, // Essence of Desolation
+	"mirage:22-10": 79, // Miraged Incubator (cheapest of Honoured/Sacred/Miraged)
+	"mirage:22-11": 175, // Refracting Fog
 };
 
 // Override for multi-search subtasks where we pick the cheapest
@@ -219,11 +243,12 @@ const PRICE_OVERRIDES: Record<string, number> = {
 // The system picks the cheapest, so Sinistral at 30c wins
 const MULTI_SEARCH_OVERRIDES: Record<string, { name: string; chaos: number }> =
 	{
-		"22-7": { name: "Sinistral Catalyst", chaos: 30 },
+		"mirage:22-7": { name: "Sinistral Catalyst", chaos: 30 },
 	};
 
 export async function fetchSubtaskPrices(
 	league: string,
+	leagueId: string,
 	mappings: SubtaskPriceMapping[],
 ): Promise<Map<string, PriceInfo>> {
 	// Collect unique API calls needed
@@ -261,15 +286,16 @@ export async function fetchSubtaskPrices(
 			const found = findPrice(lines, search.name);
 			if (found && found.chaos < bestPrice) {
 				bestPrice = found.chaos;
-				bestName = search.name;
+				bestName = found.name ?? search.name;
 				bestIcon = found.icon;
 			}
 		}
 
 		if (bestPrice < Infinity) {
 			// Apply manual overrides if they exist
-			const override = PRICE_OVERRIDES[mapping.subtaskId];
-			const multiOverride = MULTI_SEARCH_OVERRIDES[mapping.subtaskId];
+			const overrideKey = `${leagueId}:${mapping.subtaskId}`;
+			const override = PRICE_OVERRIDES[overrideKey];
+			const multiOverride = MULTI_SEARCH_OVERRIDES[overrideKey];
 			if (multiOverride) {
 				bestName = multiOverride.name;
 				bestPrice = multiOverride.chaos;
@@ -316,11 +342,8 @@ export function findCheapestCombination(
 
 // Price mappings for Curse of the Allflame "Potent Possibilities".
 // Ten of twenty currency types, so the cheapest-combination view is the point.
-// Only rows poe.ninja actually lists for this league are here, verified against
-// the live API: Influenced Exalted Orb, Orb of Remembrance/Unravelling/Intention,
-// Runegraft/Tattoo, Enshrouding Crystal, Corrupted Essence and Blight Oil are
-// absent from both the stash and exchange overviews, so they carry no price
-// rather than a guessed one.
+// Every row except Mirror of Kalandra is priced. The wide families use "*",
+// meaning the cheapest of that type, since the challenge accepts any member.
 export const potentPossibilitiesPrices: SubtaskPriceMapping[] = [
 	{
 		subtaskId: "34-2",
@@ -504,4 +527,78 @@ export const potentPossibilitiesPrices: SubtaskPriceMapping[] = [
 		],
 		quantity: 1,
 	},
+	{
+		subtaskId: "34-1",
+		searches: [
+			{ endpoint: "exchange", type: "Currency", name: "Hunter's Exalted Orb" },
+			{
+				endpoint: "exchange",
+				type: "Currency",
+				name: "Crusader's Exalted Orb",
+			},
+			{
+				endpoint: "exchange",
+				type: "Currency",
+				name: "Redeemer's Exalted Orb",
+			},
+			{ endpoint: "exchange", type: "Currency", name: "Warlord's Exalted Orb" },
+		],
+		quantity: 1,
+	},
+	{
+		subtaskId: "34-3",
+		searches: [
+			{ endpoint: "exchange", type: "Currency", name: "Orb of Remembrance" },
+			{ endpoint: "exchange", type: "Currency", name: "Orb of Unravelling" },
+			{ endpoint: "exchange", type: "Currency", name: "Orb of Intention" },
+		],
+		quantity: 1,
+	},
+	{
+		subtaskId: "34-15",
+		searches: [
+			{ endpoint: "exchange", type: "Runegraft", name: "*" },
+			{ endpoint: "exchange", type: "Tattoo", name: "*" },
+		],
+		quantity: 5,
+	},
+	{
+		subtaskId: "34-16",
+		searches: [{ endpoint: "exchange", type: "EnshroudingCrystal", name: "*" }],
+		quantity: 5,
+	},
+	{
+		subtaskId: "34-18",
+		searches: [
+			{ endpoint: "exchange", type: "Essence", name: "Essence of Delirium" },
+			{ endpoint: "exchange", type: "Essence", name: "Essence of Horror" },
+			{ endpoint: "exchange", type: "Essence", name: "Essence of Hysteria" },
+			{ endpoint: "exchange", type: "Essence", name: "Essence of Insanity" },
+		],
+		quantity: 4,
+	},
+	{
+		subtaskId: "34-19",
+		searches: [{ endpoint: "exchange", type: "Oil", name: "*" }],
+		quantity: 10,
+	},
 ];
+
+// Price mappings for Curse of the Allflame "Ethereal Enhancements".
+// Five of nine Cursed Ducats. They live on poe.ninja's exchange endpoint under
+// type=Ducat, which is not visible from the stash overviews.
+export const etherealEnhancementsPrices: SubtaskPriceMapping[] = [
+	["22-1", "Merrick's Ducat"],
+	["22-2", "Cyaxan's Ducat"],
+	["22-3", "The Genteel's Ducat"],
+	["22-4", "Kishara's Ducat"],
+	["22-5", "Telesia's Ducat"],
+	["22-6", "Rotmother's Ducat"],
+	["22-7", "Brinehook's Ducat"],
+	["22-8", "Katakohi's Ducat"],
+	["22-9", "Tzamoto's Ducat"],
+].map(([subtaskId, name]) => ({
+	subtaskId: subtaskId as string,
+	searches: [{ endpoint: "exchange", type: "Ducat", name: name as string }],
+	quantity: 1,
+}));

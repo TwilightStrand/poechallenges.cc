@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
 	covetedCurrencyPrices,
+	etherealEnhancementsPrices,
 	fetchSubtaskPrices,
 	findCheapestCombination,
 	type PriceInfo,
@@ -15,6 +16,7 @@ import {
 // priced Mirage's Coveted Currency items for Allflame's Ethereal Enhancements.
 const PRICE_MAPPINGS: Record<string, SubtaskPriceMapping[]> = {
 	"mirage:22": covetedCurrencyPrices,
+	"allflame:22": etherealEnhancementsPrices,
 	"allflame:34": potentPossibilitiesPrices,
 };
 
@@ -40,7 +42,7 @@ export function usePrices(
 		setLoading(true);
 		setError(null);
 
-		fetchSubtaskPrices(leagueName, mappings)
+		fetchSubtaskPrices(leagueName, leagueId, mappings)
 			.then((result) => {
 				if (!cancelled) {
 					setPrices(result);
@@ -57,7 +59,7 @@ export function usePrices(
 		return () => {
 			cancelled = true;
 		};
-	}, [leagueName, mappings]);
+	}, [leagueName, leagueId, mappings]);
 
 	const cheapest = useMemo(() => {
 		if (!mappings || prices.size === 0) return new Set<string>();

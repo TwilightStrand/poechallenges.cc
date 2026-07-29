@@ -34,6 +34,16 @@ const ALLOWED_TYPES = [
 	"UniqueWeapon",
 	"UniqueFlask",
 	"UniqueJewel",
+	// League and exchange-only categories. The allowlist is what stops this
+	// route proxying arbitrary values, so anything new has to be added here or
+	// it comes back as 400 rather than as data.
+	"Ducat",
+	"Runegraft",
+	"Tattoo",
+	"EnshroudingCrystal",
+	"Omen",
+	"Astrolabe",
+	"DeliriumOrb",
 ];
 
 export async function GET(request: NextRequest) {
