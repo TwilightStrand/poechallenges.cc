@@ -125,7 +125,7 @@ export const allflameGuide: LeagueGuide = {
 			challengeId: 20,
 			difficulty: "normal",
 			category: "crafting",
-			tips: "The three heavier vendor recipes, five times each:\n- **Unique item**: the Chaos-recipe style trade of a full rare set (one item per slot) to a vendor, using unidentified items.\n- **Scarab**: the scarab vendor recipe; check the current recipe before buying ingredients since these move between patches.\n- **Tier 16 map**: three same-tier maps of the same base upgrade into the next tier, so chain low-tier duplicates upward rather than vendoring them for currency.\n\nSet a stash tab aside for recipe ingredients on day one. Doing this five times each is cheap while mapping and irritating as a dedicated session later.",
+			tips: "Three recipes, five completions each. These take real ingredients, unlike the quality currencies in **Peddler's Produce I**:\n- **Unique item**: look up a current recipe list before buying anything. A full rare set is the Chaos and Regal recipe, not this one, and the unique recipes get changed between patches.\n- **Scarab**: three scarabs of the same name vendor into one of another type.\n- **Tier 16 map**: three maps of the same name and tier vendor into one of the next tier, so chain duplicates upward instead of selling them.\n\nSet a stash tab aside for ingredients on day one. Five of each is easy while mapping and tedious as a dedicated session later.",
 		},
 		{
 			challengeId: 21,
@@ -211,7 +211,7 @@ export const allflameGuide: LeagueGuide = {
 			challengeId: 33,
 			difficulty: "hard",
 			category: "endgame",
-			tips: "Two of three Eldritch rows in Rare T16 maps, each with an atlas keystone requirement that you have to allocate first:\n- **Eldritch Gaze** for the Eater of Worlds row, **Wrath of the Cosmos** for the Searing Exarch row: 4 altars activated with boss-affecting mods, then kill the boss, 10 times each.\n- **Destructive Play** for 25 Maven-witnessed maps at 150%+ IQ.\n\nThe altar rows are cheaper per map because an influenced map spawns several altars; you need the four you activate to roll modifiers that affect the map boss, so read them rather than clicking through. Take the two altar rows if you are farming Eldritch influence anyway; take the Maven row only if you are already running witnessed maps for **Succinct Summons**, since 25 maps at 150% IQ is a heavy juicing commitment.",
+			tips: "Two of three Eldritch rows in Rare T16 maps, each with an atlas keystone requirement that you have to allocate first:\n- **Eldritch Gaze** for the Eater of Worlds row, **Wrath of the Cosmos** for the Searing Exarch row: 4 altars activated with boss-affecting mods, then kill the boss, 10 times each.\n- **Destructive Play** for 25 Maven-witnessed maps at 150%+ IQ.\n\nThe altar rows are cheaper per map because an influenced map spawns several altars; you need the four you activate to roll modifiers that affect the map boss, so read them rather than clicking through. Take the two altar rows if you are farming Eldritch influence anyway; take the Maven row only if you are already running witnessed maps for **Succinct Summons**, since 150% IQ on 25 separate maps means paying for scarabs or fragments on every one.",
 		},
 		{
 			challengeId: 34,
