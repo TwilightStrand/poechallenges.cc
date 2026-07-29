@@ -171,6 +171,7 @@ export function ChallengeTracker({
 						items={filteredChallenges}
 						onToggleSubtask={toggleSubtask}
 						leagueName={currentLeague.name}
+						ninjaLeague={currentLeague.ninjaLeague ?? currentLeague.name}
 						leagueId={currentLeague.id}
 						isLoggedIn={isLoggedIn}
 					/>

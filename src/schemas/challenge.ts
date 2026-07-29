@@ -30,6 +30,11 @@ const RewardSchema = v.object({
 const LeagueSchema = v.object({
 	id: v.string(),
 	name: v.string(),
+	// poe.ninja's league name, which is often the short form ("Allflame" for
+	// "Curse of the Allflame") and is case-sensitive. Only needed when it
+	// differs from name; trade links always use name, since GGG wants the full
+	// one. Omit and callers fall back to name.
+	ninjaLeague: v.optional(v.string()),
 	version: v.string(),
 	startDate: v.string(),
 	rewards: v.array(RewardSchema),

@@ -15,6 +15,7 @@ interface ChallengeCardProps {
 	progress: ChallengeProgress;
 	onToggleSubtask: (subtaskId: string) => void;
 	leagueName?: string;
+	ninjaLeague?: string;
 	leagueId?: string;
 	isLoggedIn?: boolean;
 }
@@ -25,6 +26,7 @@ export function ChallengeCard({
 	progress,
 	onToggleSubtask,
 	leagueName,
+	ninjaLeague,
 	leagueId,
 	isLoggedIn,
 }: ChallengeCardProps) {
@@ -134,6 +136,7 @@ export function ChallengeCard({
 						progress={progress}
 						onToggleSubtask={onToggleSubtask}
 						leagueName={leagueName}
+						ninjaLeague={ninjaLeague}
 						leagueId={leagueId}
 						isLoggedIn={isLoggedIn}
 					/>

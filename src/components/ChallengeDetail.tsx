@@ -19,6 +19,7 @@ interface ChallengeDetailProps {
 	progress: ChallengeProgress;
 	onToggleSubtask: (subtaskId: string) => void;
 	leagueName?: string;
+	ninjaLeague?: string;
 	leagueId?: string;
 	isLoggedIn?: boolean;
 }
@@ -41,6 +42,7 @@ export function ChallengeDetail({
 	progress,
 	onToggleSubtask,
 	leagueName = "Mirage",
+	ninjaLeague,
 	leagueId = "mirage",
 	isLoggedIn = false,
 }: ChallengeDetailProps) {
@@ -53,7 +55,7 @@ export function ChallengeDetail({
 
 	const { prices, loading, hasPrices, cheapest, totalCostForCheapest } =
 		usePrices(
-			leagueName,
+			ninjaLeague ?? leagueName,
 			challenge.id,
 			subtaskIds,
 			completedIds,

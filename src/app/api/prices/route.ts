@@ -1,7 +1,13 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-const NINJA_BASE = "https://poe.ninja/api/data";
-const ALLOWED_ENDPOINTS = ["currencyoverview", "itemoverview"];
+// poe.ninja restructured its economy API around June 2026; the old
+// /api/data/currencyoverview endpoints now 404 for every league. The keys here
+// stay as the app's own vocabulary so callers did not have to change.
+const NINJA_BASE = "https://poe.ninja/poe1/api/economy/stash/current";
+const ENDPOINT_PATHS: Record<string, string> = {
+	currencyoverview: "currency/overview",
+	itemoverview: "item/overview",
+};
 const ALLOWED_TYPES = [
 	"Currency",
 	"Fragment",
@@ -33,7 +39,9 @@ export async function GET(request: NextRequest) {
 		);
 	}
 
-	if (!ALLOWED_ENDPOINTS.includes(endpoint)) {
+	const endpointPath = ENDPOINT_PATHS[endpoint];
+
+	if (!endpointPath) {
 		return NextResponse.json({ error: "Invalid endpoint" }, { status: 400 });
 	}
 
@@ -41,7 +49,10 @@ export async function GET(request: NextRequest) {
 		return NextResponse.json({ error: "Invalid type" }, { status: 400 });
 	}
 
-	const url = `${NINJA_BASE}/${endpoint}?league=${encodeURIComponent(league)}&type=${encodeURIComponent(type)}`;
+	// The league here is poe.ninja's short name ("Allflame"), not the in-game
+	// name and not our internal id; it is case-sensitive, and a wrong case
+	// returns 200 with an empty body rather than an error.
+	const url = `${NINJA_BASE}/${endpointPath}?league=${encodeURIComponent(league)}&type=${encodeURIComponent(type)}`;
 
 	const res = await fetch(url, {
 		next: { revalidate: 300 }, // cache for 5 minutes

@@ -3,6 +3,7 @@ import type { League } from "@/schemas";
 export const allflameLeague: League = {
 	id: "allflame",
 	name: "Curse of the Allflame",
+	ninjaLeague: "Allflame",
 	version: "3.29",
 	startDate: "2026-07-24",
 	rewards: [

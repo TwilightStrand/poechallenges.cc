@@ -5,6 +5,7 @@ interface ChallengeListProps {
 	items: FilteredChallenge[];
 	onToggleSubtask: (challengeId: number, subtaskId: string) => void;
 	leagueName?: string;
+	ninjaLeague?: string;
 	leagueId?: string;
 	isLoggedIn?: boolean;
 }
@@ -13,6 +14,7 @@ export function ChallengeList({
 	items,
 	onToggleSubtask,
 	leagueName,
+	ninjaLeague,
 	leagueId,
 	isLoggedIn,
 }: ChallengeListProps) {
@@ -36,6 +38,7 @@ export function ChallengeList({
 						onToggleSubtask(item.challenge.id, subtaskId)
 					}
 					leagueName={leagueName}
+					ninjaLeague={ninjaLeague}
 					leagueId={leagueId}
 					isLoggedIn={isLoggedIn}
 				/>
