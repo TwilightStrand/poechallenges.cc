@@ -1,0 +1,10 @@
+/* Native spinners duplicate the −/+ buttons and cramp an already narrow field. */
+.input {
+	appearance: textfield;
+}
+
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button {
+	appearance: none;
+	margin: 0;
+}

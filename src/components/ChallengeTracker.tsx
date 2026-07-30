@@ -43,6 +43,8 @@ export function ChallengeTracker({
 	const {
 		isLoaded,
 		toggleSubtask,
+		updateCounter,
+		updateSubtaskCounter,
 		importProgress,
 		completedCount,
 		getProgress,
@@ -174,6 +176,8 @@ export function ChallengeTracker({
 					<ChallengeList
 						items={filteredChallenges}
 						onToggleSubtask={toggleSubtask}
+						onSetCounter={updateCounter}
+						onSetSubtaskCounter={updateSubtaskCounter}
 						leagueName={currentLeague.name}
 						ninjaLeague={currentLeague.ninjaLeague ?? currentLeague.name}
 						leagueId={currentLeague.id}

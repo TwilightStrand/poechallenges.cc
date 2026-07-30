@@ -11,6 +11,7 @@ import type {
 	SubtaskProgress,
 } from "@/schemas";
 import styles from "./ChallengeDetail.module.css";
+import { CounterInput } from "./CounterInput";
 import { SubtaskItem } from "./SubtaskItem";
 
 interface ChallengeDetailProps {
@@ -18,6 +19,8 @@ interface ChallengeDetailProps {
 	guide?: ChallengeGuide;
 	progress: ChallengeProgress;
 	onToggleSubtask: (subtaskId: string) => void;
+	onSetCounter: (value: number) => void;
+	onSetSubtaskCounter: (subtaskId: string, value: number) => void;
 	leagueName?: string;
 	ninjaLeague?: string;
 	leagueId?: string;
@@ -41,6 +44,8 @@ export function ChallengeDetail({
 	guide,
 	progress,
 	onToggleSubtask,
+	onSetCounter,
+	onSetSubtaskCounter,
 	leagueName = "Mirage",
 	ninjaLeague,
 	leagueId = "mirage",
@@ -82,6 +87,24 @@ export function ChallengeDetail({
 				<p className={`${styles.description} text-sm leading-relaxed`}>
 					{challenge.description}
 				</p>
+			)}
+
+			{/* Counter challenges have no subtasks to tick, so the tally itself is
+			    the only thing a player can edit */}
+			{challenge.type === "counter" && (
+				<div className="flex items-center justify-between gap-3 rounded border border-poe-border bg-poe-bg-panel px-3 py-2">
+					<span className="text-xs font-semibold uppercase tracking-wider text-poe-gold-light">
+						Progress
+					</span>
+					<CounterInput
+						value={progress.completed}
+						target={challenge.required}
+						label={challenge.name}
+						name={`challenge-${leagueId}-${challenge.id}`}
+						onChange={onSetCounter}
+						showMax
+					/>
+				</div>
 			)}
 
 			{/* Calculator breakdown for counter challenges */}
@@ -148,6 +171,9 @@ export function ChallengeDetail({
 									subtask={subtask}
 									progress={findSubtaskProgress(progress.subtasks, subtask.id)}
 									onToggle={() => onToggleSubtask(subtask.id)}
+									onSetCounter={(value) =>
+										onSetSubtaskCounter(subtask.id, value)
+									}
 									price={price}
 									recommended={isRecommended}
 									tradeLink={tradeLink}

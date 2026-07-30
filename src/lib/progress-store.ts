@@ -77,7 +77,12 @@ export function recalculateChallenge(
 	let completedCount: number;
 
 	if (challengeDef.type === "counter") {
-		completedCount = challengeProgress.completed;
+		// Counters are edited directly, so the bounds are enforced here rather
+		// than at every call site.
+		completedCount = Math.min(
+			challengeDef.required,
+			Math.max(0, Math.trunc(challengeProgress.completed)),
+		);
 	} else {
 		completedCount = challengeProgress.subtasks.filter(
 			(s) => s.completed,

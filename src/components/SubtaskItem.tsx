@@ -4,12 +4,14 @@ import { useState } from "react";
 import type { PriceInfo } from "@/lib/price-lookup";
 import type { TradeLink } from "@/lib/trade-links";
 import type { Subtask, SubtaskProgress } from "@/schemas";
+import { CounterInput } from "./CounterInput";
 import styles from "./SubtaskItem.module.css";
 
 interface SubtaskItemProps {
 	subtask: Subtask;
 	progress: SubtaskProgress;
 	onToggle: () => void;
+	onSetCounter: (value: number) => void;
 	price?: PriceInfo;
 	recommended?: boolean;
 	tradeLink?: TradeLink;
@@ -21,6 +23,7 @@ export function SubtaskItem({
 	subtask,
 	progress,
 	onToggle,
+	onSetCounter,
 	price,
 	recommended,
 	tradeLink,
@@ -28,7 +31,6 @@ export function SubtaskItem({
 	leagueId,
 }: SubtaskItemProps) {
 	const completed = progress.completed;
-	const hasCounter = subtask.counterTarget !== undefined;
 	const counterValue = progress.counter ?? 0;
 	const [showReport, setShowReport] = useState(false);
 	const [reportValue, setReportValue] = useState("");
@@ -101,18 +103,21 @@ export function SubtaskItem({
 						)}
 					</span>
 
-					<span className={`text-sm ${textColor}`}>
-						<span>{subtask.name}</span>
-						{hasCounter && (
-							<span className="ml-1 opacity-75">
-								({counterValue}/{subtask.counterTarget})
-							</span>
-						)}
-					</span>
+					<span className={`text-sm ${textColor}`}>{subtask.name}</span>
 				</button>
 
-				{/* Right side: price + report + trade */}
+				{/* Right side: counter + price + report + trade */}
 				<div className="shrink-0 flex items-center gap-1.5">
+					{subtask.counterTarget !== undefined && (
+						<CounterInput
+							value={counterValue}
+							target={subtask.counterTarget}
+							label={subtask.name}
+							name={`subtask-${leagueId}-${subtask.id}`}
+							onChange={onSetCounter}
+						/>
+					)}
+
 					{price && !completed && (
 						<span className="flex items-center gap-1 text-xs">
 							{recommended && (

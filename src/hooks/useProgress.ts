@@ -10,6 +10,16 @@ import {
 } from "@/lib/progress-store";
 import type { ChallengeProgress, League, PlayerProgress } from "@/schemas";
 
+function findSubtaskTarget(
+	league: League,
+	challengeId: number,
+	subtaskId: string,
+): number | undefined {
+	return league.challenges
+		.find((c) => c.id === challengeId)
+		?.subtasks.find((s) => s.id === subtaskId)?.counterTarget;
+}
+
 export function useProgress(league: League, isLoggedIn: boolean) {
 	const [progress, setProgress] = useState<PlayerProgress>(() =>
 		createDefaultProgress(league),
@@ -91,7 +101,14 @@ export function useProgress(league: League, isLoggedIn: boolean) {
 
 					const updatedSubtasks = cp.subtasks.map((s) => {
 						if (s.id !== subtaskId) return s;
-						return { ...s, completed: !s.completed };
+
+						const completed = !s.completed;
+						const target = findSubtaskTarget(league, challengeId, subtaskId);
+						if (target === undefined) return { ...s, completed };
+
+						// Ticking a counted subtask means its counter is full; unticking
+						// resets it, or the row would read "30/30" beside an empty box.
+						return { ...s, completed, counter: completed ? target : 0 };
 					});
 
 					const updated = { ...cp, subtasks: updatedSubtasks };
@@ -111,6 +128,30 @@ export function useProgress(league: League, isLoggedIn: boolean) {
 					if (cp.challengeId !== challengeId) return cp;
 					const updated = { ...cp, completed: value };
 					return recalculateChallenge(updated, league);
+				});
+				return { ...prev, challenges };
+			});
+		},
+		[league, updateProgress],
+	);
+
+	const updateSubtaskCounter = useCallback(
+		(challengeId: number, subtaskId: string, value: number) => {
+			const target = findSubtaskTarget(league, challengeId, subtaskId);
+			if (target === undefined) return;
+
+			const next = Math.min(target, Math.max(0, Math.trunc(value)));
+
+			updateProgress((prev) => {
+				const challenges = prev.challenges.map((cp) => {
+					if (cp.challengeId !== challengeId) return cp;
+
+					const subtasks = cp.subtasks.map((s) =>
+						s.id === subtaskId
+							? { ...s, counter: next, completed: next >= target }
+							: s,
+					);
+					return recalculateChallenge({ ...cp, subtasks }, league);
 				});
 				return { ...prev, challenges };
 			});
@@ -162,6 +203,7 @@ export function useProgress(league: League, isLoggedIn: boolean) {
 		isLoaded,
 		toggleSubtask,
 		updateCounter,
+		updateSubtaskCounter,
 		importProgress,
 		resetAll,
 		completedCount,

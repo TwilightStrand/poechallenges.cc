@@ -4,6 +4,12 @@ import { ChallengeCard } from "./ChallengeCard";
 interface ChallengeListProps {
 	items: FilteredChallenge[];
 	onToggleSubtask: (challengeId: number, subtaskId: string) => void;
+	onSetCounter: (challengeId: number, value: number) => void;
+	onSetSubtaskCounter: (
+		challengeId: number,
+		subtaskId: string,
+		value: number,
+	) => void;
 	leagueName?: string;
 	ninjaLeague?: string;
 	leagueId?: string;
@@ -13,6 +19,8 @@ interface ChallengeListProps {
 export function ChallengeList({
 	items,
 	onToggleSubtask,
+	onSetCounter,
+	onSetSubtaskCounter,
 	leagueName,
 	ninjaLeague,
 	leagueId,
@@ -36,6 +44,10 @@ export function ChallengeList({
 					progress={item.progress}
 					onToggleSubtask={(subtaskId) =>
 						onToggleSubtask(item.challenge.id, subtaskId)
+					}
+					onSetCounter={(value) => onSetCounter(item.challenge.id, value)}
+					onSetSubtaskCounter={(subtaskId, value) =>
+						onSetSubtaskCounter(item.challenge.id, subtaskId, value)
 					}
 					leagueName={leagueName}
 					ninjaLeague={ninjaLeague}

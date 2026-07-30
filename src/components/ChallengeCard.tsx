@@ -14,6 +14,8 @@ interface ChallengeCardProps {
 	guide?: ChallengeGuide;
 	progress: ChallengeProgress;
 	onToggleSubtask: (subtaskId: string) => void;
+	onSetCounter: (value: number) => void;
+	onSetSubtaskCounter: (subtaskId: string, value: number) => void;
 	leagueName?: string;
 	ninjaLeague?: string;
 	leagueId?: string;
@@ -25,6 +27,8 @@ export function ChallengeCard({
 	guide,
 	progress,
 	onToggleSubtask,
+	onSetCounter,
+	onSetSubtaskCounter,
 	leagueName,
 	ninjaLeague,
 	leagueId,
@@ -147,6 +151,8 @@ export function ChallengeCard({
 						guide={guide}
 						progress={progress}
 						onToggleSubtask={onToggleSubtask}
+						onSetCounter={onSetCounter}
+						onSetSubtaskCounter={onSetSubtaskCounter}
 						leagueName={leagueName}
 						ninjaLeague={ninjaLeague}
 						leagueId={leagueId}
