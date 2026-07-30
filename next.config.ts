@@ -11,9 +11,16 @@ import type { NextConfig } from "next";
 // poe.ninja and web.poecdn.com are in img-src because price lookups carry icon
 // URLs from those hosts. Nothing renders them today, but the data layer
 // produces them and a tighter policy would fail silently later.
+
+// React's development build calls eval() to rebuild call stacks for the error
+// overlay and to name hooks in the inspector; the production build never does.
+// Without this the dev server logs a CSP violation on every page load.
+const devScriptSrc =
+	process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";
+
 const csp = [
 	"default-src 'self'",
-	"script-src 'self' 'unsafe-inline'",
+	`script-src 'self' 'unsafe-inline'${devScriptSrc}`,
 	"style-src 'self' 'unsafe-inline'",
 	"img-src 'self' data: https://poe.ninja https://web.poecdn.com",
 	"font-src 'self' data:",
