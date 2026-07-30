@@ -19,9 +19,12 @@ jobs:
       - uses: actions/checkout@v5
 
       # A real build timestamp. repository.updated_at is the repo's own mtime,
-      # which is not when this image was built.
+      # which is not when this image was built. The epoch form goes in the tag,
+      # since Flux's ImagePolicy needs something sortable and a SHA is not.
       - id: stamp
-        run: echo "built=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "built=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_OUTPUT"
+          echo "epoch=$(date -u +%s)" >> "$GITHUB_OUTPUT"
 
       - uses: docker/setup-buildx-action@v3
 
@@ -35,12 +38,13 @@ jobs:
         with:
           context: .
           push: true
-          # :latest is what the cluster pulls, since this repo has no Flux
-          # image automation. The sha tag exists so a rollback has something
-          # concrete to point at.
+          # main-<sha>-<epoch> is what Flux image automation tracks: the epoch
+          # sorts, the sha says which commit. :latest and the bare sha tag stay
+          # for anything pulling by hand and for rollbacks.
           tags: |
             ghcr.io/saturate/poechallenges:latest
             ghcr.io/saturate/poechallenges:${{ github.sha }}
+            ghcr.io/saturate/poechallenges:main-${{ github.sha }}-${{ steps.stamp.outputs.epoch }}
           build-args: |
             GIT_SHA=${{ github.sha }}
             BUILD_TIME=${{ steps.stamp.outputs.built }}
