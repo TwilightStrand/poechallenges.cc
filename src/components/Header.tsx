@@ -47,6 +47,7 @@ export function Header({
 					{/* League selector */}
 					<select
 						value={currentLeagueId}
+						aria-label="Select league"
 						onChange={(e) => onLeagueChange(e.target.value)}
 						className="
               appearance-none cursor-pointer

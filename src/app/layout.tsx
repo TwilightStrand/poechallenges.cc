@@ -18,6 +18,22 @@ export const metadata: Metadata = {
 	title: "PoE Challenge Tracker",
 	description:
 		"Track your Path of Exile league challenge progress with an interactive guide",
+	openGraph: {
+		title: "PoE Challenge Tracker",
+		description:
+			"Track your Path of Exile league challenge progress with an interactive guide",
+		url: "https://poechallenges.cc",
+		siteName: "PoE Challenge Tracker",
+		type: "website",
+		locale: "en_US",
+	},
+	twitter: {
+		card: "summary",
+		title: "PoE Challenge Tracker",
+		description:
+			"Track your Path of Exile league challenge progress with an interactive guide",
+	},
+	metadataBase: new URL("https://poechallenges.cc"),
 };
 
 export default function RootLayout({

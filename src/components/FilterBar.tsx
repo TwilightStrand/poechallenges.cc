@@ -40,6 +40,7 @@ export function FilterBar({
 				<input
 					type="text"
 					placeholder="Search..."
+					aria-label="Search challenges"
 					value={searchQuery}
 					onChange={(e) => onSearchChange(e.target.value)}
 					className="
@@ -78,6 +79,7 @@ export function FilterBar({
 			{/* Sort dropdown */}
 			<select
 				value={sortBy}
+				aria-label="Sort challenges by"
 				onChange={(e) => onSortChange(e.target.value)}
 				className="
           appearance-none
