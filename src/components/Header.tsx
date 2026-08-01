@@ -35,24 +35,24 @@ export function Header({
 	const hasPoe = user?.providers.includes("pathofexile") ?? false;
 
 	return (
-		<header className={`${styles.header} px-6 py-5 rounded-t-lg`}>
-			<div className="flex items-center justify-between gap-4">
+		<header className={`${styles.header} px-4 py-4 sm:px-6 sm:py-5 rounded-t-lg`}>
+			<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
 				<h1
-					className={`${styles.titleGlow} font-heading text-2xl tracking-wider text-poe-gold-light uppercase`}
+					className={`${styles.titleGlow} font-heading text-xl sm:text-2xl tracking-wider text-poe-gold-light uppercase`}
 				>
 					Challenge Tracker
 				</h1>
 
-				<div className="flex items-center gap-3">
+				<div className="flex items-center gap-2 sm:gap-3">
 					{/* League selector */}
 					<select
 						value={currentLeagueId}
 						aria-label="Select league"
 						onChange={(e) => onLeagueChange(e.target.value)}
 						className="
-              appearance-none cursor-pointer
+              appearance-none cursor-pointer min-w-0 flex-1 sm:flex-initial
               bg-poe-bg-input border border-poe-border rounded
-              px-3 py-1.5 pr-8 text-sm
+              px-3 py-2 pr-8 text-sm
               text-poe-gold-light font-heading tracking-wide
               focus:outline-none focus:border-poe-gold-dim
               transition-colors
@@ -76,16 +76,18 @@ export function Header({
 							<button
 								type="button"
 								onClick={() => setShowMenu((p) => !p)}
-								className="flex items-center gap-2 px-3 py-1.5 rounded border border-poe-border-subtle text-sm text-poe-text hover:border-poe-border transition-colors"
+								className="flex items-center gap-2 px-3 py-2 rounded border border-poe-border-subtle text-sm text-poe-text hover:border-poe-border transition-colors"
 							>
-								<span className="text-poe-gold-light">{user.displayName}</span>
+								<span className="text-poe-gold-light truncate max-w-[120px] sm:max-w-none">
+									{user.displayName}
+								</span>
 								<svg
 									aria-hidden="true"
 									width="10"
 									height="6"
 									viewBox="0 0 10 6"
 									fill="currentColor"
-									className="text-poe-text-dim"
+									className="text-poe-text-dim shrink-0"
 								>
 									<path d="M0 0l5 6 5-6z" />
 								</svg>
@@ -141,7 +143,7 @@ export function Header({
 							<button
 								type="button"
 								onClick={onLoginGithub}
-								className="px-3 py-1.5 rounded border border-poe-border text-sm text-poe-text hover:text-poe-gold-light hover:border-poe-border-highlight transition-colors"
+								className="px-3 py-2 rounded border border-poe-border text-sm text-poe-text hover:text-poe-gold-light hover:border-poe-border-highlight transition-colors"
 							>
 								Sign in
 							</button>
@@ -149,7 +151,7 @@ export function Header({
 								<button
 									type="button"
 									onClick={() => onLoginDev()}
-									className="px-2 py-1.5 rounded text-xs text-poe-text-dim hover:text-poe-text transition-colors"
+									className="px-2 py-2 rounded text-xs text-poe-text-dim hover:text-poe-text transition-colors"
 									title="Dev login"
 								>
 									DEV
