@@ -40,10 +40,12 @@ export function useLeague(
 	}
 	const currentGuide = guides[currentLeagueId];
 
-	const availableLeagues = Object.values(leagues).map((l) => ({
-		id: l.id,
-		name: l.name,
-	}));
+	const availableLeagues = Object.values(leagues)
+		.sort((a, b) => b.version.localeCompare(a.version))
+		.map((l) => ({
+			id: l.id,
+			name: `${l.name} (${l.version})`,
+		}));
 
 	return {
 		currentLeagueId,
