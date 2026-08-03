@@ -59,7 +59,7 @@ export function Header({
 						className="
               appearance-none cursor-pointer shrink-0
               bg-poe-bg-input border border-poe-border rounded
-              px-3 py-2 pr-8 text-sm
+              px-3 py-2 pr-10 text-sm
               text-poe-gold-light font-heading tracking-wide
               focus:outline-none focus:border-poe-gold-dim
               transition-colors
