@@ -137,9 +137,7 @@ That pairs with **Use Chromatic Orbs x10** anyway, so do both at once on gear yo
 difficulty: normal
 category: mapping
 
-Voidstones come from the Pinnacle Atlas bosses: **Searing Exarch**, **Eater of Worlds**, **Maven** and **Uber Elder** (or whichever set your atlas progression puts in front of you). Each is a build check, not a grind.
-
-Do these on the way to the harder boss challenges instead of as a detour; every one of them also counts toward **Apex Assailants** once you can run them at area level 85, and toward **Bountiful Bloodlines** in some cases. Voidstones raise all map tiers to 16, which **Trustworthy Teachers**, **Astounding Astrolabes**, **Excruciating Echoes**, **Intrigued Interlopers** and **Gallant Grinding Goals** all need, so treat this as a prerequisite.
+Voidstones require you to complete each atlas quadrant. You can buy a carry or find a public party for this, game should be enough of a guide here.
 
 ## Taxing Tasks
 difficulty: hard
