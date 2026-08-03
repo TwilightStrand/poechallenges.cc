@@ -48,6 +48,15 @@ const BULK_EXCHANGE_IDS: Record<string, string> = {
 	// Fragments
 	Simulacrum: "simulacrum",
 	"Offering to the Goddess": "offer",
+	"Dedication to the Goddess": "offer-dedication",
+	"Tribute to the Goddess": "offer-tribute",
+	"Gift to the Goddess": "offer-gift",
+};
+
+// Boss subtask names that map to a buyable entry item
+const BOSS_ENTRY_ITEMS: Record<string, string> = {
+	Izaro: "offer-dedication",
+	"Uber Atziri": "hope",
 };
 
 // Items that should use the item search (not bulk exchange)
@@ -72,6 +81,8 @@ const ITEM_SEARCH_NAMES: Set<string> = new Set([
 	"Pillars of Arun",
 	"Doryani's Machinarium",
 	"Cortex",
+	// Heist contracts
+	"Contract: The Twins",
 	// Incubators (traded as items, not currency)
 	"Honoured Incubator",
 	"Sacred Incubator",
@@ -83,7 +94,7 @@ export interface TradeLink {
 	type: "exchange" | "search";
 }
 
-function buildExchangeUrl(league: string, staticId: string): string {
+export function buildExchangeUrl(league: string, staticId: string): string {
 	const query = JSON.stringify({
 		exchange: {
 			have: ["chaos"],
@@ -94,7 +105,7 @@ function buildExchangeUrl(league: string, staticId: string): string {
 	return `https://www.pathofexile.com/trade/exchange/${encodeURIComponent(league)}?q=${encodeURIComponent(query)}`;
 }
 
-function buildSearchUrl(league: string, itemName: string): string {
+export function buildSearchUrl(league: string, itemName: string): string {
 	const query = JSON.stringify({
 		query: {
 			type: itemName,
@@ -110,6 +121,12 @@ export function getTradeLink(
 	itemName: string,
 	league: string,
 ): TradeLink | null {
+	// Boss names that map to an entry fragment
+	const entryId = BOSS_ENTRY_ITEMS[itemName];
+	if (entryId) {
+		return { url: buildExchangeUrl(league, entryId), type: "exchange" };
+	}
+
 	// Check bulk exchange mapping first (exact match)
 	const staticId = BULK_EXCHANGE_IDS[itemName];
 	if (staticId) {

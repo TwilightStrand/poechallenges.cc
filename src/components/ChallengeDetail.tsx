@@ -1,9 +1,14 @@
 "use client";
 
 import { useMemo } from "react";
-import Markdown from "react-markdown";
+import type { Components } from "react-markdown";
+import Markdown, { defaultUrlTransform } from "react-markdown";
 import { usePrices } from "@/hooks/usePrices";
-import { getTradeLink } from "@/lib/trade-links";
+import {
+	buildExchangeUrl,
+	buildSearchUrl,
+	getTradeLink,
+} from "@/lib/trade-links";
 import type {
 	Challenge,
 	ChallengeGuide,
@@ -67,6 +72,85 @@ export function ChallengeDetail({
 			completedIds,
 			challenge.required,
 		);
+
+	const mdxComponents = useMemo<Components>(
+		() => ({
+			a: ({ href, children, ...rest }) => {
+				if (href?.startsWith("trade:")) {
+					const staticId = href.slice(6);
+					return (
+						<a
+							href={buildExchangeUrl(leagueName, staticId)}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-poe-gold hover:text-poe-gold-bright"
+							{...rest}
+						>
+							{children}
+							<svg
+								aria-hidden="true"
+								className="inline ml-0.5 -mt-0.5"
+								width="10"
+								height="10"
+								viewBox="0 0 12 12"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="1.5"
+							>
+								<path d="M3.5 1.5h7v7M10.5 1.5L1.5 10.5" />
+							</svg>
+						</a>
+					);
+				}
+				if (href?.startsWith("search:")) {
+					const itemName = decodeURIComponent(href.slice(7));
+					return (
+						<a
+							href={buildSearchUrl(leagueName, itemName)}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-poe-gold hover:text-poe-gold-bright"
+							{...rest}
+						>
+							{children}
+							<svg
+								aria-hidden="true"
+								className="inline ml-0.5 -mt-0.5"
+								width="10"
+								height="10"
+								viewBox="0 0 12 12"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="1.5"
+							>
+								<path d="M3.5 1.5h7v7M10.5 1.5L1.5 10.5" />
+							</svg>
+						</a>
+					);
+				}
+				if (href?.startsWith("wiki:")) {
+					const page = href.slice(5);
+					return (
+						<a
+							href={`https://www.poewiki.net/wiki/${page}`}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-poe-blue hover:text-poe-gold-bright underline"
+							{...rest}
+						>
+							{children}
+						</a>
+					);
+				}
+				return (
+					<a href={href} {...rest}>
+						{children}
+					</a>
+				);
+			},
+		}),
+		[leagueName],
+	);
 
 	// Generate trade links for all subtasks
 	const tradeLinks = useMemo(() => {
@@ -198,7 +282,18 @@ export function ChallengeDetail({
 						</p>
 					)}
 					<div className={`${styles.guideContent} text-sm text-poe-text`}>
-						<Markdown>{guide.tips}</Markdown>
+						<Markdown
+							components={mdxComponents}
+							urlTransform={(url) =>
+								url.startsWith("trade:") ||
+								url.startsWith("search:") ||
+								url.startsWith("wiki:")
+									? url
+									: defaultUrlTransform(url)
+							}
+						>
+							{guide.tips}
+						</Markdown>
 					</div>
 					{guide.videoUrl && (
 						<a

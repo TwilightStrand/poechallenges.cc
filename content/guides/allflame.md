@@ -185,9 +185,9 @@ difficulty: normal
 category: bossing
 
 All of these are at level 80+, and most are content you would run anyway:
-- **Izaro** at level 80 means the Uber Uber Lab (one of the special invitations), which you need for **Achieve Ascension**.
-- **Abyssal Lich** and **Omnitect** come from Abyss and Heist, both of which likely appear in your **Legendary Leagues** picks.
-- **Vox Twins** (Sanctum), **K'Tash/Ghorr/Beidat** (Breach), **Medved/Vorana/Uhtred** (Expedition logbook bosses) and **The Black Knight/Admiral Valerius/Sasan** each need only one of the named bosses, so take whichever the mechanic hands you first.
+- **Izaro** at level 80 means the [Uber Uber Lab](wiki:The_Lord%27s_Labyrinth) (one of the special invitations). Buy a [Dedication to the Goddess](trade:offer-dedication), [Tribute to the Goddess](trade:offer-tribute) or [Gift to the Goddess](trade:offer-gift) to enter.
+- **Abyssal Lich** (Abyss) and **Omnitect** (Incursion) both likely appear in your **Legendary Leagues** picks.
+- **Vox Twins** (Heist, buy a [Contract: The Twins](search:Contract%3A%20The%20Twins)), **K'Tash/Ghorr/Beidat** (Breach), **Medved/Vorana/Uhtred** (Expedition logbook bosses) and **The Black Knight/Admiral Valerius/Sasan** each need only one of the named bosses, so take whichever the mechanic hands you first.
 
 Skip **Uber Atziri** unless your build handles her reflect and flameblast phases; the rest cover everything you need.
 
