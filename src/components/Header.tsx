@@ -50,7 +50,7 @@ export function Header({
 						aria-label="Select league"
 						onChange={(e) => onLeagueChange(e.target.value)}
 						className="
-              appearance-none cursor-pointer min-w-0 flex-1 sm:flex-initial
+              appearance-none cursor-pointer min-w-0
               bg-poe-bg-input border border-poe-border rounded
               px-3 py-2 pr-8 text-sm
               text-poe-gold-light font-heading tracking-wide

@@ -143,13 +143,7 @@ Voidstones require you to complete each atlas quadrant. You can buy a carry or f
 difficulty: hard
 category: endgame
 
-Everything here happens at area level 81+, and the counts are small, so pick by what you already run:
-- **Abyssal Depths x5** is the cheapest row this league given the Abyss rework.
-- **Blighted or Blight Ravaged Maps x5** and **Fully Completed Ultimatums x10** are self-contained and buyable.
-- **Tier 4 Harvest Seeds x5** is trivial if you specced Harvest for **Legendary Leagues**.
-- **Claim rewards from Rare Maps completed by your Atlas Runners x30** is passive progress; set runners going every session from day one and this row finishes itself.
-
-Skip **Simulacrum Waves x60** unless your build is already Delirium-proof, and skip **Domains of Timeless Conflict with 25+ rewards** unless you are farming Legion, since 25 rewards needs a well-built Domain.
+Everything here happens at area level 81+, can be done without speccing into these, but it's a lot faster if you have an atlas for the picked mechanics. Sharing a Harvest seed etc. is also a possibility, so friends here help, or a community like global 4040.
 
 ## Comprehensive Charting
 difficulty: normal
@@ -191,7 +185,7 @@ difficulty: normal
 category: bossing
 
 All of these are at level 80+, and most are content you would run anyway:
-- **Izaro** at level 80 means Eternal (Uber) Lab, which you need for **Achieve Ascension**.
+- **Izaro** at level 80 means the Uber Uber Lab (one of the special invitations), which you need for **Achieve Ascension**.
 - **Abyssal Lich** and **Omnitect** come from Abyss and Heist, both of which likely appear in your **Legendary Leagues** picks.
 - **Vox Twins** (Sanctum), **K'Tash/Ghorr/Beidat** (Breach), **Medved/Vorana/Uhtred** (Expedition logbook bosses) and **The Black Knight/Admiral Valerius/Sasan** each need only one of the named bosses, so take whichever the mechanic hands you first.
 

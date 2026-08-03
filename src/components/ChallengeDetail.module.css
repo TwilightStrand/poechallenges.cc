@@ -24,8 +24,14 @@
 	line-height: 1.6;
 }
 
-.guideContent :global(ul),
+.guideContent :global(ul) {
+	list-style-type: disc;
+	margin-left: 1.25rem;
+	margin-bottom: 0.5rem;
+}
+
 .guideContent :global(ol) {
+	list-style-type: decimal;
 	margin-left: 1.25rem;
 	margin-bottom: 0.5rem;
 }
