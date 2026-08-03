@@ -45,7 +45,7 @@ export function Header({
 					>
 						Challenge Tracker
 					</h1>
-					<p className="text-[10px] sm:text-xs tracking-wide text-poe-text-dim uppercase">
+					<p className="text-[9px] sm:text-[10px] tracking-wide text-poe-text-dim">
 						for Path of Exile
 					</p>
 				</div>
