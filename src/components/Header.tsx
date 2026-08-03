@@ -39,11 +39,16 @@ export function Header({
 			className={`${styles.header} px-4 py-4 sm:px-6 sm:py-5 rounded-t-lg`}
 		>
 			<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-				<h1
-					className={`${styles.titleGlow} font-heading text-xl sm:text-2xl tracking-wider text-poe-gold-light uppercase`}
-				>
-					Challenge Tracker
-				</h1>
+				<div>
+					<h1
+						className={`${styles.titleGlow} font-heading text-xl sm:text-2xl tracking-wider text-poe-gold-light uppercase`}
+					>
+						Challenge Tracker
+					</h1>
+					<p className="text-[10px] sm:text-xs tracking-wide text-poe-text-dim uppercase">
+						for Path of Exile
+					</p>
+				</div>
 
 				<div className="flex items-center gap-2 sm:gap-3">
 					{/* League selector */}
