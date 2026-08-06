@@ -42,9 +42,9 @@ jobs:
           # sorts, the sha says which commit. :latest and the bare sha tag stay
           # for anything pulling by hand and for rollbacks.
           tags: |
-            ghcr.io/saturate/poechallenges:latest
-            ghcr.io/saturate/poechallenges:${{ github.sha }}
-            ghcr.io/saturate/poechallenges:main-${{ github.sha }}-${{ steps.stamp.outputs.epoch }}
+            ghcr.io/twilightstrand/poechallenges.cc:latest
+            ghcr.io/twilightstrand/poechallenges.cc:${{ github.sha }}
+            ghcr.io/twilightstrand/poechallenges.cc:main-${{ github.sha }}-${{ steps.stamp.outputs.epoch }}
           build-args: |
             GIT_SHA=${{ github.sha }}
             BUILD_TIME=${{ steps.stamp.outputs.built }}
@@ -55,7 +55,7 @@ jobs:
       # .env to the world the moment this job finishes. Fail the build first.
       - name: Fail if an env file got baked into the image
         run: |
-          docker create --name check ghcr.io/saturate/poechallenges:${{ github.sha }}
+          docker create --name check ghcr.io/twilightstrand/poechallenges.cc:${{ github.sha }}
           if docker export check | tar -t | grep -E '(^|/)\.env'; then
             echo "::error::env file present in image layers"
             exit 1

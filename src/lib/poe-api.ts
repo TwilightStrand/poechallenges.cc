@@ -6,7 +6,7 @@ const VERSION = "1.0.0";
 
 // Falls back to the repository rather than a personal address, so the default
 // is a real contact point even if POE_CONTACT_EMAIL is unset.
-const FALLBACK_CONTACT = "https://github.com/Saturate/PoEChallenges";
+const FALLBACK_CONTACT = "https://github.com/TwilightStrand/poechallenges.cc";
 
 export function poeUserAgent() {
 	const clientId = process.env.POE_CLIENT_ID || "poechallenges";
