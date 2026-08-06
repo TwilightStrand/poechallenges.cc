@@ -40,7 +40,7 @@ export function Footer() {
 					<span>dev build</span>
 				) : (
 					<a
-						href={`https://github.com/Saturate/PoEChallenges/commit/${gitSha}`}
+						href={`https://github.com/TwilightStrand/poechallenges.cc/commit/${gitSha}`}
 						target="_blank"
 						rel="noopener noreferrer"
 						className="transition-colors hover:text-poe-gold"
