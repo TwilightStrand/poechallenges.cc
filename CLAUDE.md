@@ -1,5 +1,7 @@
 # PoE Challenge Tracker
 
+See [README.md](README.md) for project overview and [CONTRIBUTING.md](CONTRIBUTING.md) for guide format, trade links, and adding new leagues.
+
 ## Quick Start
 ```bash
 docker compose up -d db          # Postgres on :5433
@@ -22,7 +24,7 @@ scrutinized — a mitigation against supply-chain compromise. Existing
 3-layer schema: `src/schemas/challenge.ts` (game data) / `guide.ts` (author content) / `progress.ts` (per-user state)
 
 League data: `src/data/leagues/{league}.ts` — scraped from poedb.tw
-Guide data: `src/data/guides/{league}.ts` — tips, difficulty, category, calculator
+Guide data: `src/data/guides/{league}.ts` (TypeScript) or `content/guides/{league}.md` (markdown). Markdown overrides TypeScript for the same league.
 
 ## Key Files
 - `src/components/ChallengeTracker.tsx` — main orchestrator (client component)
@@ -44,15 +46,5 @@ GitHub OAuth works now. PoE OAuth wired up, needs GGG approval.
 Env: `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `GITHUB_REDIRECT_URI`.
 Dev mode: `/api/auth/dev-login?account=Name` creates a fake session.
 
-## Adding a New League
-1. Scrape from poedb.tw: `https://poedb.tw/us/{League}_challenges`
-2. Create `src/data/leagues/{league}.ts` (follow mirage.ts format)
-3. Create `src/data/guides/{league}.ts` (follow mirage.ts format)
-4. Add to both index files
-
-## CSS Layout
-Component-specific styles live in co-located `.module.css` files next to
-the component. `globals.css` is limited to `@theme` tokens, body base
-styling (background, noise, vignette), native `<option>` dark theme, and
-scrollbar styling. Tailwind utilities are preferred; modules are for
-gradients, pseudo-elements, and other things utilities don't express well.
+## Writing Guides
+Do not rely on LLMs for PoE game knowledge when writing guide content. LLMs have outdated information about game mechanics, items, and challenge specifics. Use them for simple lookups (wiki queries, formatting) but the actual guide tips must come from current player knowledge, poedb.tw, or the wiki. Wrong tips are worse than no tips.
