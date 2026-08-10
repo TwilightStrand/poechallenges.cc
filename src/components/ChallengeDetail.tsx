@@ -276,11 +276,6 @@ export function ChallengeDetail({
 					<h4 className="text-xs font-semibold uppercase tracking-wider text-poe-gold-light mb-2">
 						Guide
 					</h4>
-					{guide.estimatedHours !== undefined && (
-						<p className="text-xs text-poe-text-dim mb-2">
-							Estimated time: ~{guide.estimatedHours}h
-						</p>
-					)}
 					<div className={`${styles.guideContent} text-sm text-poe-text`}>
 						<Markdown
 							components={mdxComponents}

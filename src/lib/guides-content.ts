@@ -115,10 +115,11 @@ export function parseLeagueGuide(
 		}
 		seen.add(challengeId);
 
-		const { difficulty, category, calculator, videoUrl } = section.meta;
-		if (!difficulty || !category) {
+		const { difficulty, category, timeInvestment, calculator, videoUrl } =
+			section.meta;
+		if (!difficulty || !category || !timeInvestment) {
 			throw new Error(
-				`${leagueId}.md: "${section.heading}" needs difficulty and category`,
+				`${leagueId}.md: "${section.heading}" needs difficulty, category, and timeInvestment`,
 			);
 		}
 
@@ -126,6 +127,7 @@ export function parseLeagueGuide(
 			challengeId,
 			difficulty,
 			category,
+			timeInvestment,
 			tips: section.body,
 			...(calculator ? { calculator: parseCalculator(calculator) } : {}),
 			...(videoUrl ? { videoUrl } : {}),

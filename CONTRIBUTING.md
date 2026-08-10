@@ -43,8 +43,11 @@ Each section needs two required fields directly under the heading:
 |---|---|---|
 | `difficulty` | yes | `very-easy`, `easy`, `normal`, `hard`, `very-hard` |
 | `category` | yes | `early-game`, `mapping`, `endgame`, `bossing`, `crafting`, `league-mechanics`, `grind` |
+| `timeInvestment` | no | `minimal`, `short`, `moderate`, `long`, `extreme` |
 | `calculator` | no | `Label=divisor,Label=divisor` |
 | `videoUrl` | no | YouTube or similar link |
+
+`difficulty` is how hard the content is for your build. `timeInvestment` is how long it takes even if it's easy. Only add `timeInvestment` when it diverges from difficulty (e.g. Modified Maps is easy but extreme time).
 
 ### Writing tips
 

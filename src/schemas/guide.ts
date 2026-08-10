@@ -23,6 +23,14 @@ const CategorySchema = v.picklist([
 	"grind",
 ]);
 
+const TimeInvestmentSchema = v.picklist([
+	"minimal",
+	"short",
+	"moderate",
+	"long",
+	"extreme",
+]);
+
 const CalculatorBreakdownSchema = v.object({
 	label: v.string(),
 	divisor: v.pipe(v.number(), v.minValue(1)),
@@ -32,7 +40,7 @@ const ChallengeGuideSchema = v.object({
 	challengeId: v.pipe(v.number(), v.integer(), v.minValue(1), v.maxValue(40)),
 	difficulty: DifficultySchema,
 	category: CategorySchema,
-	estimatedHours: v.optional(v.pipe(v.number(), v.minValue(0))),
+	timeInvestment: v.optional(TimeInvestmentSchema),
 	tips: v.string(), // markdown content
 	videoUrl: v.optional(v.pipe(v.string(), v.url())),
 	calculator: v.optional(v.array(CalculatorBreakdownSchema)),
@@ -52,6 +60,7 @@ export type CalculatorBreakdown = v.InferOutput<
 	typeof CalculatorBreakdownSchema
 >;
 export type Difficulty = v.InferOutput<typeof DifficultySchema>;
+export type TimeInvestment = v.InferOutput<typeof TimeInvestmentSchema>;
 export type Category = v.InferOutput<typeof CategorySchema>;
 export type ChallengeGuide = v.InferOutput<typeof ChallengeGuideSchema>;
 export type LeagueGuide = v.InferOutput<typeof LeagueGuideSchema>;
@@ -62,4 +71,5 @@ export {
 	ChallengeGuideSchema,
 	DifficultySchema,
 	LeagueGuideSchema,
+	TimeInvestmentSchema,
 };

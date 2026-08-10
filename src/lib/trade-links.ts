@@ -57,7 +57,7 @@ const BULK_EXCHANGE_IDS: Record<string, string> = {
 const BOSS_ENTRY_ITEMS: Record<string, string> = {
 	Izaro: "offer-dedication",
 	"Uber Atziri": "hope",
-	"Abyssal Depths": "scarab-of-abyssal-depths",
+	"Abyssal Depths": "abyss-scarab-of-descending",
 };
 
 // Items that should use the item search (not bulk exchange)

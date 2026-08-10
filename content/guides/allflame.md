@@ -16,12 +16,14 @@ Three things to decide in week one, because they shape everything after: which f
 ## Beginner's Basics
 difficulty: very-easy
 category: early-game
+timeInvestment: minimal
 
 Hillock, Brutus and Merveil are the three mandatory Act 1 bosses. You cannot reach Act 2 without all three, so this completes easily. :)
 
 ## Deep Dive
 difficulty: very-easy
 category: league-mechanics
+timeInvestment: minimal
 
 Do all three the first time the league mechanic shows up:
 - **Visit The Sovereign** happens during the Maiden Voyage introduction quest.
@@ -33,6 +35,7 @@ Do not hoard your first Charts waiting for a better board. You need the mechanic
 ## Peddler's Produce I
 difficulty: very-easy
 category: early-game
+timeInvestment: minimal
 
 The quality currencies, all from vendor recipes:
 - **Armourer's Scrap**: sell a normal-rarity armour piece at 20% quality, or armour totalling 40% quality.
@@ -45,12 +48,14 @@ Easy to just buy from trade, and you'll also drop most of these.
 ## Act Adversaries I
 difficulty: very-easy
 category: early-game
+timeInvestment: short
 
 Mandatory campaign bosses for Acts 1-5. You get credit when the boss dies even if you died during the fight, so a messy kill still counts. Unless you play hardcore, then GG.
 
 ## Possessive Pantheons
 difficulty: easy
 category: early-game
+timeInvestment: short
 
 These are the **Pantheon** quests, not the main storyline, and easy to run past:
 - **The Father of War** (Act 6, Karui Fortress), **The Cloven One** (Act 6, Wetlands), **The Puppet Mistress** (Act 6, Cavern of Anger), **The Master of a Million Faces** (Act 7, Chamber of Sins).
@@ -61,6 +66,7 @@ Check your quest log at the end of each act, not at the end of the campaign; bac
 ## Underwater Undertaking
 difficulty: easy
 category: league-mechanics
+timeInvestment: short
 
 The Voyage is the gate: you need Charts stocked on the board before you can launch one, so run Charts as they drop during the campaign and early maps. Saving them only delays the Voyage.
 
@@ -69,12 +75,14 @@ For the craft, use the cheapest thing that qualifies. Any item plus any accepted
 ## Act Adversaries II
 difficulty: very-easy
 category: early-game
+timeInvestment: short
 
 Acts 6-10 act bosses, all mandatory. Cap your elemental resistances before Kitava in Act 10, since beating him applies the second permanent resistance penalty.
 
 ## Atlas Accomplishment
 difficulty: normal
 category: mapping
+timeInvestment: moderate
 
 Every non-unique map on the Atlas, which is the standard full-completion grind. Use Kirac's shop to buy the maps you are missing and his atlas mission to force specific ones. Watch the corners of the Atlas: the tier 1-4 maps you outlevelled in week one are the ones still uncompleted in week four.
 
@@ -83,6 +91,7 @@ Do this early while you are still filling the Atlas anyway. Retrofitting low-tie
 ## Ingrained Increases
 difficulty: easy
 category: mapping
+timeInvestment: moderate
 
 **Essences**, **Strongboxes** and **Shrines** are the default answer: all three spawn in maps without any investment, and all three have cheap atlas passive clusters.
 
@@ -91,6 +100,7 @@ category: mapping
 ## Legendary Leagues
 difficulty: normal
 category: mapping
+timeInvestment: moderate
 
 This pick shapes your atlas tree for the whole league, so choose before you spend points.
 
@@ -101,6 +111,7 @@ Avoid **Ultimatum Waves x200** and **Rituals x100** unless you enjoy them; both 
 ## Trustworthy Teachers
 difficulty: normal
 category: mapping
+timeInvestment: moderate
 
 Every mission has to run in a **Tier 16 map at 80%+ Item Quantity**. Both conditions are checked on the map, so do not burn missions in low tiers; an alch-and-go T16 usually clears 80% IQ on its own.
 
@@ -109,6 +120,7 @@ Every mission has to run in a **Tier 16 map at 80%+ Item Quantity**. Both condit
 ## Nautical Navigation
 difficulty: hard
 category: league-mechanics
+timeInvestment: long
 
 The real league grind, and every row is mandatory:
 - **10 Voyages** means 90 completed Charts fed onto the board.
@@ -120,6 +132,7 @@ Because every Voyage consumes nine Charts, treat Chart supply as the bottleneck 
 ## Savage Sellswords
 difficulty: normal
 category: league-mechanics
+timeInvestment: moderate
 
 **100 rares killed while you have an Allied Mercenary** is the easiest row if you take the Scion **Luminary** Bloodline class, which hires mercenaries permanently and stacks up to three; that turns it into passive progress while mapping.
 
@@ -128,26 +141,30 @@ Without Luminary, hire from Mercenary encounters as they appear and keep one ali
 ## Chromatic Crafting
 difficulty: easy
 category: crafting
+timeInvestment: short
 
 This challenge changed meaning with the 3.29 socket rework: sockets now default to **White**, gems fit any socket regardless of colour, and coloured sockets roll based on item level. So **15 coloured sockets across your equipment** is no longer automatic; you have to deliberately chromatic your gear into colours.
 
-That pairs with **Use Chromatic Orbs x10** anyway, so do both at once on gear you are about to replace. The **60% gem quality** row wants stacked quality sources: Gemcutter's Prisms take you to 20%, and the new matching-colour socket bonus (+10% quality when the gem colour matches a red, green or blue socket) plus quality from gear and supports gets you the rest. Put your highest-quality gem in a matching socket and check the tooltip.
+That pairs with **Use Chromatic Orbs x10** anyway, so do both at once on gear you are about to replace. The **60% gem quality** row wants stacked quality sources: Gemcutter's Prisms take you to 20%, and the new matching-colour socket bonus (+10% quality when the gem colour matches a red, green or blue socket) plus quality from gear and supports gets you the rest. **Replica Voideye**, **Ashes of the Stars** or **Dialla's Malefaction** can push quality over the line. Put your highest-quality gem in a matching socket and check the tooltip.
 
 ## Vanquished Villains
 difficulty: normal
 category: mapping
+timeInvestment: moderate
 
 Voidstones require you to complete each atlas quadrant. You can buy a carry or find a public party for this, game should be enough of a guide here.
 
 ## Taxing Tasks
 difficulty: hard
 category: endgame
+timeInvestment: moderate
 
-Everything here happens at area level 81+, can be done without speccing into these, but it's a lot faster if you have an atlas for the picked mechanics. Sharing a Harvest seed etc. is also a possibility, so friends here help, or a community like global 4040.
+Everything here happens at area level 81+, can be done without speccing into these, but it's a lot faster if you have an atlas for the picked mechanics. **Abyss Scarab of Descending** forces Abyssal Depths every map. **Harvest Scarab of Cornucopia** plus the **Heart of the Grove** atlas passive increase Tier 4 seed boss spawns. Sharing a Harvest seed etc. is also a possibility, so friends here help, or a community like global 4040.
 
 ## Comprehensive Charting
 difficulty: normal
 category: league-mechanics
+timeInvestment: moderate
 
 A collection challenge, not a grind: one completion of each Chart type, and Charts drop from Cursed Treasure guarded by map monsters.
 
@@ -156,6 +173,7 @@ Keep a stash tab of Charts sorted by type and check which types you are still mi
 ## Achieve Ascension
 difficulty: easy
 category: early-game
+timeInvestment: short
 
 The Labyrinth difficulties plus **Gain a Bloodline Class**. Normal through Merciless come with campaign progression; Eternal (Uber) Lab needs all six Trials from maps, so pick up Trials as they appear. Hunting them down later is the slow way. Check poelab.com for the day's layout.
 
@@ -164,14 +182,16 @@ The Bloodline Class is not something you have to put points into, you just have 
 ## Devious Divination
 difficulty: easy
 category: crafting
+timeInvestment: short
 
 **Open Stacked Decks x40** and **Hand in Divination Card sets x30** are both pure volume you can buy your way through, and card sets can be the cheapest full sets on trade; nothing checks which cards you turned in.
 
 **Red maps with a Divination Scarab x10** is fine if you are already running scarabs for **Stacked Scarabs**, since the scarab counts toward both. **Scry a Map** can in 3.29 be bought from [trade](https://www.pathofexile.com/trade/search/Allflame/pJgq00Mwt0) for a few chaos.
 
 ## Peddler's Produce II
-difficulty: normal
+difficulty: easy
 category: crafting
+timeInvestment: minimal
 
 - **Unique item**: Use the 5:1 or 3:1 recipe for uniques, just use some very common ones uncorrupted.
 - **Scarab**: three scarabs of the same name vendor into one of another type.
@@ -180,6 +200,7 @@ category: crafting
 ## Challenging Curators
 difficulty: normal
 category: bossing
+timeInvestment: moderate
 
 All of these are at level 80+, and most are content you would run anyway:
 - **Izaro** at level 80 means Eternal (Uber Uber) Lab.
@@ -191,8 +212,9 @@ Skip **Uber Atziri** unless your build handles her reflect and flameblast phases
 You can buy a carry for some of these, so don't sweat it too much.
 
 ## Ethereal Enhancements
-difficulty: normal
+difficulty: easy
 category: crafting
+timeInvestment: minimal
 
 **Cursed Ducats** are league-specific drops that only work at Vesper's Allflame bench, and each type does something normal currency cannot: modifier-preserving copies, attribute shifts, transformations.
 
@@ -203,6 +225,7 @@ All these are pretty cheap to just buy, and if you engage with the league mechan
 ## Remarkable Realms
 difficulty: normal
 category: mapping
+timeInvestment: short
 
 Unique maps, most of them cheap to acquire and quick to clear, so buy the easy ones and ignore the rest.
 
@@ -213,6 +236,7 @@ Run them rare if you are also chasing **Modified Maps**, since unique maps carry
 ## Stacked Scarabs
 difficulty: hard
 category: grind
+timeInvestment: long
 calculator: maps with 5 scarabs=5, maps with 3 scarabs=3
 
 Run five scarabs per map as your default once you can afford it. That habit also satisfies **Astounding Astrolabes** and **Horrific Halls**, both of which require five scarabs applied, and the Divination Scarab row in **Devious Divination**.
@@ -222,6 +246,7 @@ In general running maps without scarabs is a waste, it's pretty free juice that 
 ## Corrupted Crystals
 difficulty: normal
 category: crafting
+timeInvestment: moderate
 
 The gem tasks:
 - **Level 10 gems to 20** is passive if you keep a weapon swap loaded with gems you are levelling; rotate finished ones out every few maps.
@@ -234,18 +259,20 @@ Take whichever are cheapest for you; the Pact gem row is the only one gated on n
 ## Cross Contamination
 difficulty: hard
 category: endgame
+timeInvestment: moderate
 
 Overlapping-mechanic kills, each a one-off. Set up conditions that co-occur; waiting for them to happen by accident does not work:
-- **Mercenary while Delirious** and **Possessed Rogue Exile while you have an Allied Mercenary** are easy with a Mercenary Scarab plus a Delirium Orb.
-- **Originator Influenced map affected by an Astrolabe** overlaps directly with **Excruciating Echoes** and **Astounding Astrolabes**, so it ticks while you grind those.
-- **Abyssal Consort while affected by a Shrine** You can use an Abyssal Consort Scarab and a Shrine Scarab, if you need more time you can spec shrine duration on the atlas.
-- **Breach Marshal empowered by Wildwood Wisps** and **Legion General while affected by a Tempest** can be done with some luck or scarabs again, just time the tempest and breach kill correctly.
-
-Spec the atlas for the two mechanics in each pair simultaneously; some can also be done with scarabs.
+- **Possessed Rogue Exile while you have an Allied Mercenary**: the **Exile Will** atlas passive guarantees rogue exiles spawn possessed.
+- **Mercenary while Delirious**: Mercenary Scarab plus a Delirium Orb, or use the **Unending Nightmare** atlas keystone for permanent delirium.
+- **Originator Influenced map affected by an Astrolabe** overlaps with **Excruciating Echoes** and **Astounding Astrolabes**.
+- **Abyssal Consort while affected by a Shrine**: use an **Abyss Scarab of Consort** and a Shrine Scarab.
+- **Breach Marshal empowered by Wildwood Wisps**: needs a **Scarab of Wisps**.
+- **Legion General while affected by a Tempest**: needs a **Scarab of Radiant Storms**.
 
 ## Superior Sovereign
 difficulty: normal
 category: league-mechanics
+timeInvestment: moderate
 
 Upgrade steps on **The Sovereign**. Nothing separate to chase: play the league mechanic and the upgrades come with it. Doing it early pays off, since a better ship makes the rest of the league cheaper. **Velka** is the last upgrade.
 
@@ -254,6 +281,7 @@ You can buy the [Kishara's Rest Chart from trade](https://www.pathofexile.com/tr
 ## Bountiful Bloodlines
 difficulty: hard
 category: bossing
+timeInvestment: moderate
 
 League bosses, most of them the endgame boss of a past mechanic, so your **Legendary Leagues** picks decide which are cheap:
 - Reliably accessible: **Oshabi** (Harvest), **Catarina** (Betrayal), **Olroth** (Expedition logbook, area level 79+), **Simulacrum** (Delirium), **The Trialmaster** (Ultimatum), **Velka** (this league).
@@ -266,14 +294,16 @@ You can buy an "Aul taxi" but the host cannot help you kill Aul, just remember f
 ## Astounding Astrolabes
 difficulty: normal
 category: mapping
+timeInvestment: moderate
 
 Five maps per Astrolabe type, and every one has to be **Tier 16, Rare, with 5 scarabs applied**. That's 30x T16 maps, very doable.
 
 All 30 maps feed **Stacked Scarabs** at five each and **Modified Maps** as well, so run them rare with as many mods as you can survive and take three challenges from one grind.
 
 ## Modified Maps
-difficulty: very-hard
+difficulty: easy
 category: grind
+timeInvestment: extreme
 calculator: rare maps with 8 mods=8, rare maps with 6 mods=6
 
 A rare map rolls six to eight (vaaled) explicit mods, so this is about always running rare and never running white or magic maps.
@@ -285,6 +315,7 @@ This is the most grindy one of them all, so depending on your mapping this might
 ## Excruciating Echoes
 difficulty: hard
 category: mapping
+timeInvestment: moderate
 
 Everything here is **T16, Rare, 150%+ Item Quantity**. Alch-and-go will not reach 150%, so plan on scarabs, fragments, a Vaal Orb, and a good effect Atlas.
 
@@ -293,6 +324,7 @@ Everything here is **T16, Rare, 150%+ Item Quantity**. Alch-and-go will not reac
 ## Fathomless Fears
 difficulty: normal
 category: league-mechanics
+timeInvestment: moderate
 
 Border Modifiers roll on the edges of your Chart board and scale with area level, so higher-level Charts roll from a wider pool. They only count on Voyages you finish.
 
@@ -301,6 +333,7 @@ You do not choose these directly, which makes it a tracking exercise: before lau
 ## Intrigued Interlopers
 difficulty: hard
 category: endgame
+timeInvestment: long
 
 Eldritch rows in Rare T16 maps, each with an atlas keystone you have to allocate first:
 - **Eldritch Gaze** for the Eater of Worlds row, **Wrath of the Cosmos** for the Searing Exarch row: 4 altars activated with boss-affecting mods, then kill the boss, 10 times each.
@@ -311,6 +344,7 @@ I find that using a Scarab with influenced pack size gives a bit more chance on 
 ## Potent Possibilities
 difficulty: hard
 category: crafting
+timeInvestment: short
 
 You can ignore half the list, and **Mirror of Kalandra** is the obvious one here unless you are mega rich.
 
@@ -319,6 +353,7 @@ Check the list above for live prices, and do your own search for these and you'l
 ## Succinct Summons
 difficulty: hard
 category: endgame
+timeInvestment: moderate
 
 Every Invitation has to be rolled to **5+ explicit modifiers**. Invitations are the Maven's boss-gauntlet items, so that means alching or chaos-spamming each one before you run it. You can also use exalted on something, pretty cheap and works.
 
@@ -327,6 +362,7 @@ This overlaps with **Bountiful Bloodlines** and **Apex Assailants** for the boss
 ## Atlas Assertions
 difficulty: normal
 category: endgame
+timeInvestment: long
 
 **Atlas Anomalies** are the 3.29 encounters that manifest directly on the Atlas without needing a map item. You do not control which appear, so this is opportunistic: run them when they show up. Some can be shared with friends.
 
@@ -335,22 +371,25 @@ Each map quadrant has different Anomalies. Rush maps fast like Town Square to ge
 ## Brinerot's Bloody Bounty
 difficulty: very-hard
 category: bossing
+timeInvestment: short
 
 You can buy a Kishara's Rest Chart via [trade](https://www.pathofexile.com/trade/search/Allflame/4mPV5DbQh9), making it less time consuming to get tries. Try it a few times, a lot of damage will make phases go quicker so fewer things to dodge.
 
 ## Horrific Halls
 difficulty: very-hard
 category: endgame
+timeInvestment: moderate
 
 **Nightmare Maps** needing **150%+ Item Quantity, 5 scarabs, Delirium Orbs applied, and corrupted**. Every condition stacks danger on already-hard maps, and the corruption requirement means you cannot reroll a bad outcome.
 
-Around 90 Quantity on the map, and a full effect atlas will be enough, otherwise altars also count. For the scarabs you can use things that make the map easier, like Shrines. A Headhunter build that ramps can be good here, or just a very strong build in general.
+Around 67% IIQ on the map itself, atlas bonuses make up the rest to 150%. Five scarab slots are all taken, so no fragments for IIQ. Use scarabs that make the map easier, like Shrines. **Scarab of Stability** gives extra retries. A Headhunter build that ramps can be good here, or just a very strong build in general.
 
 Also count for the Nightmare row in **Gallant Grinding Goals**.
 
 ## Apex Assailants
 difficulty: very-hard
 category: bossing
+timeInvestment: moderate
 
 Pinnacle bosses at **area level 85**, the uber version of each fight, and the hard damage-and-defence gate of the league.
 
@@ -359,6 +398,7 @@ Easiest for most builds: **Sirus**, **The Searing Exarch**, **The Eater of World
 ## Gallant Grinding Goals
 difficulty: very-hard
 category: grind
+timeInvestment: extreme
 
 **Defeat Pinnacle bosses at area level 85 x30** can be done pretty quickly with a good build and invitations. If you are going for 40/40 your main build should be able to handle it. You'll need to get 5x of these from **Apex Assailants**, so pick the easiest or cheapest one.
 

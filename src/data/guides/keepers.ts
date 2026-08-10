@@ -101,7 +101,7 @@ export const keepersGuide: LeagueGuide = {
 			challengeId: 16,
 			difficulty: "normal",
 			category: "endgame",
-			tips: "Complete 4 of 10 encounters at area level 81+. **Abyssal Depths** (5x) and **Blighted Maps** (5x) are the easiest options. Use a **Scarab of Abyssal Depths** to guarantee the Depths spawns every map. **Simulacrum Waves** (60x) require running 4 full Simulacrums. Avoid **Atlas Runners** (30x) unless you have that system set up. Pick mechanics that overlap with your farming strategy.",
+			tips: "Complete 4 of 10 encounters at area level 81+. **Abyssal Depths** (5x) and **Blighted Maps** (5x) are the easiest options. Use an **Abyss Scarab of Descending** to guarantee the Depths spawns every map. **Simulacrum Waves** (60x) require running 4 full Simulacrums. Avoid **Atlas Runners** (30x) unless you have that system set up. Pick mechanics that overlap with your farming strategy.",
 		},
 		{
 			challengeId: 17,

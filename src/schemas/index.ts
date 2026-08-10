@@ -20,6 +20,8 @@ export {
 	DifficultySchema,
 	type LeagueGuide,
 	LeagueGuideSchema,
+	type TimeInvestment,
+	TimeInvestmentSchema,
 } from "./guide";
 
 export {
