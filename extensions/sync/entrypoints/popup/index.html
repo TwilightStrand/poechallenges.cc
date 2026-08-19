@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>PoE Challenge Sync</title>
+		<link rel="stylesheet" href="./style.css" />
+	</head>
+	<body>
+		<h1>PoE Challenge Sync</h1>
+
+		<div id="setup-prompt" class="setup-prompt" hidden>
+			<p>Visit your PoE challenges page to start syncing.</p>
+			<a id="setup-link" class="btn" href="https://www.pathofexile.com/account/view-profile" target="_blank">
+				Open PoE Profile &#8599;
+			</a>
+		</div>
+
+		<div id="main-panel" hidden>
+			<div class="status-bar">
+				<div id="status-dot" class="status-dot idle"></div>
+				<span id="status-text" class="status-text">Not synced yet</span>
+			</div>
+
+			<div class="account-bar">
+				<span class="account-label">Account</span>
+				<span id="account-display" class="account-name"></span>
+			</div>
+
+			<div class="field">
+				<label for="sync-interval">Sync Interval</label>
+				<select id="sync-interval">
+					<option value="5">Every 5 minutes</option>
+					<option value="15" selected>Every 15 minutes</option>
+					<option value="30">Every 30 minutes</option>
+					<option value="60">Every 60 minutes</option>
+				</select>
+			</div>
+
+			<button id="sync-btn" class="btn" type="button">Sync Now</button>
+
+			<button id="advanced-toggle" class="advanced-toggle" type="button">
+				&#9654; Advanced
+			</button>
+
+			<div id="advanced-section" class="advanced-section">
+				<div class="field">
+					<label for="tracker-url">Tracker URL</label>
+					<input type="text" id="tracker-url" placeholder="https://poechallenges.com" />
+				</div>
+			</div>
+
+			<div class="footer">
+				<a id="challenges-link" href="#" target="_blank">Open challenges page &#8599;</a>
+			</div>
+		</div>
+
+		<script type="module" src="./main.ts"></script>
+	</body>
+</html>
