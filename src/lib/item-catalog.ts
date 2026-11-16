@@ -733,9 +733,10 @@ export const ITEM_CATALOG: Record<string, CatalogEntry> = {
 		trade: { exchange: ["simulacrum"] },
 		price: [{ endpoint: "exchange", type: "Fragment", name: "Simulacrum" }],
 	},
+	// No price: the counter is waves, not fragments, so counterTarget (60)
+	// would price 60 Simulacrums.
 	"Simulacrum Waves": {
 		trade: { exchange: ["simulacrum"] },
-		price: [{ endpoint: "exchange", type: "Fragment", name: "Simulacrum" }],
 	},
 	"Sinistral or Dextral Catalyst": {
 		trade: { exchange: ["sinistral-catalyst", "dextral-catalyst"] },

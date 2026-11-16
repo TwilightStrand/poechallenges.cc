@@ -22,7 +22,34 @@ interface NinjaResponse {
 	lines: NinjaLine[];
 }
 
-async function fetchNinja(
+// Every challenge card fetches its own prices, so the same category would be
+// requested once per card. Sharing the request for a few minutes collapses
+// those, and matches the API route's own 5-minute revalidate.
+const NINJA_CACHE_MS = 5 * 60 * 1000;
+const ninjaCache = new Map<
+	string,
+	{ at: number; lines: Promise<NinjaLine[]> }
+>();
+
+function fetchNinja(
+	league: string,
+	endpoint: string,
+	type: string,
+): Promise<NinjaLine[]> {
+	const key = `${league}:${endpoint}:${type}`;
+	const hit = ninjaCache.get(key);
+	if (hit && Date.now() - hit.at < NINJA_CACHE_MS) return hit.lines;
+
+	const lines = requestNinja(league, endpoint, type);
+	ninjaCache.set(key, { at: Date.now(), lines });
+	// A failed request also comes back empty; don't pin that for 5 minutes.
+	lines.then((result) => {
+		if (result.length === 0) ninjaCache.delete(key);
+	});
+	return lines;
+}
+
+async function requestNinja(
 	league: string,
 	endpoint: string,
 	type: string,

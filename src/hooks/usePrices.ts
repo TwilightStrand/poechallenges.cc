@@ -32,11 +32,17 @@ export function usePrices(
 	);
 
 	useEffect(() => {
-		if (mappings.length === 0) return;
+		// Cards are reused across leagues for the same challenge number, so the
+		// previous challenge's prices must not survive into this one.
+		setPrices(new Map());
+		setError(null);
+		if (mappings.length === 0) {
+			setLoading(false);
+			return;
+		}
 
 		let cancelled = false;
 		setLoading(true);
-		setError(null);
 
 		fetchSubtaskPrices(ninjaLeague, leagueId, mappings)
 			.then((result) => {
