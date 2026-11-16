@@ -56,11 +56,22 @@ const BULK_EXCHANGE_IDS: Record<string, string> = {
 	"Gift to the Goddess": "offer-gift",
 };
 
-// Boss subtask names that map to a buyable entry item
-const BOSS_ENTRY_ITEMS: Record<string, string> = {
+// Boss subtask names that map to a buyable entry item. Zorath lists all four
+// Eyes because his arena needs one of each.
+const BOSS_ENTRY_ITEMS: Record<string, string | string[]> = {
 	Izaro: "offer-dedication",
 	"Uber Atziri": "hope",
 	"Abyssal Depths": "abyss-scarab-of-descending",
+	Oshabi: "sacred-blossom",
+	Catarina: "syndicate-medallion",
+	"The King in the Mists": "an-audience-with-the-king",
+	Saresh: "the-black-barya",
+	Zorath: [
+		"zoraths-eye-of-malevolence",
+		"zoraths-eye-of-authority",
+		"zoraths-eye-of-the-inevitable",
+		"zoraths-eye-of-the-endless",
+	],
 };
 
 // Items that should use the item search (not bulk exchange)
@@ -98,11 +109,14 @@ export interface TradeLink {
 	type: "exchange" | "search";
 }
 
-export function buildExchangeUrl(league: string, staticId: string): string {
+export function buildExchangeUrl(
+	league: string,
+	staticId: string | string[],
+): string {
 	const query = JSON.stringify({
 		exchange: {
 			have: ["chaos"],
-			want: [staticId],
+			want: Array.isArray(staticId) ? staticId : [staticId],
 			status: { option: "securable" },
 		},
 	});
