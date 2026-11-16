@@ -3,12 +3,15 @@
 import { useEffect, useMemo, useState } from "react";
 import {
 	covetedCurrencyPrices,
+	creativeCurrenciesPrices,
 	etherealEnhancementsPrices,
 	fetchSubtaskPrices,
 	findCheapestCombination,
 	type PriceInfo,
 	potentPossibilitiesPrices,
 	type SubtaskPriceMapping,
+	unequaledUniquesPrices,
+	vulgarVisceraPrices,
 } from "@/lib/price-lookup";
 
 // Keyed by league id as well as challenge id: challenge numbers repeat across
@@ -18,6 +21,9 @@ const PRICE_MAPPINGS: Record<string, SubtaskPriceMapping[]> = {
 	"mirage:22": covetedCurrencyPrices,
 	"allflame:22": etherealEnhancementsPrices,
 	"allflame:34": potentPossibilitiesPrices,
+	"coven:15": creativeCurrenciesPrices,
+	"coven:22": vulgarVisceraPrices,
+	"coven:23": unequaledUniquesPrices,
 };
 
 export function usePrices(

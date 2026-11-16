@@ -44,6 +44,7 @@ const ALLOWED_TYPES = [
 	"Omen",
 	"Astrolabe",
 	"DeliriumOrb",
+	"Viscera",
 ];
 
 export async function GET(request: NextRequest) {
