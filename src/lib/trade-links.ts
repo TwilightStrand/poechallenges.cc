@@ -109,10 +109,24 @@ export function buildExchangeUrl(league: string, staticId: string): string {
 	return `https://www.pathofexile.com/trade/exchange/${encodeURIComponent(league)}?q=${encodeURIComponent(query)}`;
 }
 
+// Real base types. Everything else in ITEM_SEARCH_NAMES is a unique, and the
+// trade API rejects a unique's name as `type` ("Unknown item base type"), so
+// those go through `term`, the same free-text match as the site's search box.
+const BASE_TYPE_NAMES: Set<string> = new Set([
+	"Honoured Incubator",
+	"Sacred Incubator",
+	"Miraged Incubator",
+]);
+
 export function buildSearchUrl(league: string, itemName: string): string {
+	// term finds nothing for "Maelström of Chaos" but 400+ listings for
+	// "Maelstrom of Chaos", so accents are stripped.
+	const match = BASE_TYPE_NAMES.has(itemName)
+		? { type: itemName }
+		: { term: itemName.normalize("NFD").replace(/\p{M}/gu, "") };
 	const query = JSON.stringify({
 		query: {
-			type: itemName,
+			...match,
 			status: { option: "securable" },
 			stats: [{ type: "and", filters: [] }],
 		},

@@ -10,6 +10,7 @@ import {
 	type PriceInfo,
 	potentPossibilitiesPrices,
 	type SubtaskPriceMapping,
+	unequaledUniquesPrices,
 	vulgarVisceraPrices,
 } from "@/lib/price-lookup";
 
@@ -22,6 +23,7 @@ const PRICE_MAPPINGS: Record<string, SubtaskPriceMapping[]> = {
 	"allflame:34": potentPossibilitiesPrices,
 	"coven:15": creativeCurrenciesPrices,
 	"coven:22": vulgarVisceraPrices,
+	"coven:23": unequaledUniquesPrices,
 };
 
 export function usePrices(

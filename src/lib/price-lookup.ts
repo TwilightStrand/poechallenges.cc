@@ -666,3 +666,32 @@ export const vulgarVisceraPrices: SubtaskPriceMapping[] = vulgarViscera.map(
 		quantity: 1,
 	}),
 );
+
+// Price mappings for Covens of Umbra "Unequaled Uniques" (id: 23).
+// Fifteen of eighteen unique maps. Hall of the Grandmasters is left out
+// because poe.ninja does not list it, and the trade site has no entry for it.
+const unequaledUniques: [string, string][] = [
+	["23-1", "Vaults of Atziri"],
+	["23-2", "Maelström of Chaos"],
+	["23-3", "The Coward's Trial"],
+	["23-4", "Acton's Nightmare"],
+	["23-5", "Poorjoy's Asylum"],
+	["23-6", "Mao Kun"],
+	["23-7", "Oba's Cursed Trove"],
+	["23-8", "Olmec's Sanctum"],
+	["23-9", "Death and Taxes"],
+	["23-10", "Whakawairua Tuahu"],
+	["23-11", "The Vinktar Square"],
+	["23-12", "Caer Blaidd, Wolfpack's Den"],
+	["23-13", "The Putrid Cloister"],
+	["23-14", "Hallowed Ground"],
+	["23-15", "The Twilight Temple"],
+	["23-16", "Pillars of Arun"],
+	["23-17", "Doryani's Machinarium"],
+];
+export const unequaledUniquesPrices: SubtaskPriceMapping[] =
+	unequaledUniques.map(([subtaskId, name]) => ({
+		subtaskId,
+		searches: [{ endpoint: "itemoverview", type: "UniqueMap", name }],
+		quantity: 1,
+	}));
