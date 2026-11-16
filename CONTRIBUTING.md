@@ -54,6 +54,7 @@ Each section needs two required fields directly under the heading:
 - Reference challenges and items by their **in-game name**, not by number.
 - Section headings must match the challenge name in the league data exactly; a mismatch fails the build.
 - Every challenge in the league needs a section; missing ones also fail the build.
+- A section you haven't written yet can be just `status: todo` under the heading, with no other fields or prose. It shows no guide on the site. Replace that line with the metadata fields when you fill it in.
 - Stay vague rather than invent detail you're unsure about. Wrong tips are worse than no tips.
 
 ## Trade links

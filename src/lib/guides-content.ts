@@ -103,7 +103,7 @@ export function parseLeagueGuide(
 	const idByName = new Map(league.challenges.map((c) => [c.name, c.id]));
 	const seen = new Set<number>();
 
-	const challenges: ChallengeGuide[] = sections.map((section) => {
+	const challenges: ChallengeGuide[] = sections.flatMap((section) => {
 		const challengeId = idByName.get(section.heading);
 		if (challengeId === undefined) {
 			throw new Error(
@@ -114,6 +114,24 @@ export function parseLeagueGuide(
 			throw new Error(`${leagueId}.md: "${section.heading}" appears twice`);
 		}
 		seen.add(challengeId);
+
+		const { status, ...rest } = section.meta;
+		if (status !== undefined && status !== "todo") {
+			throw new Error(
+				`${leagueId}.md: "${section.heading}" has unknown status "${status}"`,
+			);
+		}
+		// A todo section still counts as present, so a new league can ship a
+		// guide that is filled in one challenge at a time. It must stay empty:
+		// ratings or prose under it would be dropped without anyone noticing.
+		if (status === "todo") {
+			if (Object.keys(rest).length > 0 || section.body !== "") {
+				throw new Error(
+					`${leagueId}.md: "${section.heading}" is marked todo but has content; remove "status: todo" to publish it`,
+				);
+			}
+			return [];
+		}
 
 		const { difficulty, category, timeInvestment, calculator, videoUrl } =
 			section.meta;
