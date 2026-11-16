@@ -1,7 +1,7 @@
 import type { League } from "@/schemas";
 
 export const covensLeague: League = {
-	id: "covens",
+	id: "coven",
 	name: "Covens of Umbra",
 	ninjaLeague: "Covens",
 	version: "3.30",
@@ -168,7 +168,7 @@ export const covensLeague: League = {
 		{
 			id: 10,
 			name: "Foretold Foes",
-			description: "Defeat 50 Fate empowered Unique Map Bosses.",
+			description: "Defeat 50 Fate empowered Unique Bosses.",
 			type: "counter",
 			required: 50,
 			subtasks: [],
@@ -303,7 +303,7 @@ export const covensLeague: League = {
 			name: "Vital Voidstones",
 			description: "Socket four Voidstones into your Atlas.",
 			type: "counter",
-			required: 4,
+			required: 1,
 			subtasks: [],
 		},
 		{
