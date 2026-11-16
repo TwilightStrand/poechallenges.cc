@@ -38,6 +38,9 @@ const BULK_EXCHANGE_IDS: Record<string, string> = {
 	"Gemcutter's Prism": "gcp",
 	"Vaal Orb": "vaal",
 	"Mirror of Kalandra": "mirror",
+	"Ancient Orb": "ancient-orb",
+	"Fracturing Orb": "fracturing-orb",
+	"Hinekora's Lock": "hinekoras-lock",
 
 	// Essences
 	"Essence of Desolation": "essence-of-desolation",

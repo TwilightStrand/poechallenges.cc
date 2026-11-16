@@ -67,16 +67,20 @@ function findPrice(
 		};
 	}
 
-	// Try exact match first
-	const exact = lines.find(
-		(l) => (l.currencyTypeName ?? l.name ?? "").toLowerCase() === lower,
-	);
-	if (exact) {
-		return {
-			chaos: exact.chaosEquivalent ?? exact.chaosValue ?? 0,
-			icon: exact.icon,
-		};
+	// Try exact match first. Items such as Viscera get one row per rolled
+	// modifier under the same name, and any roll satisfies the challenge, so
+	// the cheapest row is the price.
+	let exact: { chaos: number; icon?: string } | null = null;
+	for (const line of lines) {
+		if ((line.currencyTypeName ?? line.name ?? "").toLowerCase() !== lower) {
+			continue;
+		}
+		const chaos = line.chaosEquivalent ?? line.chaosValue ?? 0;
+		if (!exact || (chaos > 0 && (exact.chaos <= 0 || chaos < exact.chaos))) {
+			exact = { chaos, icon: line.icon };
+		}
 	}
+	if (exact) return exact;
 
 	// Try partial match
 	const partial = lines.find((l) =>
@@ -602,3 +606,63 @@ export const etherealEnhancementsPrices: SubtaskPriceMapping[] = [
 	searches: [{ endpoint: "exchange", type: "Ducat", name: name as string }],
 	quantity: 1,
 }));
+
+// Price mappings for Covens of Umbra "Creative Currencies" (id: 15).
+// Twelve of seventeen basic currencies. All come from the exchange endpoint:
+// the stash overview has no Chaos Orb row (it is the unit), leaves out the
+// chase orbs, and rounds anything cheaper than a Chaos Orb up to 1.
+const creativeCurrencies: [string, string][] = [
+	["15-1", "Orb of Chance"],
+	["15-2", "Orb of Scouring"],
+	["15-3", "Orb of Fusing"],
+	["15-4", "Jeweller's Orb"],
+	["15-5", "Chromatic Orb"],
+	["15-6", "Vaal Orb"],
+	["15-7", "Orb of Annulment"],
+	["15-8", "Regal Orb"],
+	["15-9", "Chaos Orb"],
+	["15-10", "Exalted Orb"],
+	["15-11", "Blessed Orb"],
+	["15-12", "Ancient Orb"],
+	["15-13", "Divine Orb"],
+	["15-14", "Fracturing Orb"],
+	["15-15", "Sacred Orb"],
+	["15-16", "Hinekora's Lock"],
+	["15-17", "Mirror of Kalandra"],
+];
+export const creativeCurrenciesPrices: SubtaskPriceMapping[] =
+	creativeCurrencies.map(([subtaskId, name]) => ({
+		subtaskId,
+		searches: [{ endpoint: "exchange", type: "Currency", name }],
+		quantity: 1,
+	}));
+
+// Price mappings for Covens of Umbra "Vulgar Viscera" (id: 22).
+// Eight of seventeen Viscera. poe.ninja names them with a possessive
+// ("Chimera's Head") where the challenge text says "Chimera Head".
+const vulgarViscera: [string, string][] = [
+	["22-1", "Minotaur's Head"],
+	["22-2", "Hydra's Head"],
+	["22-3", "Chimera's Head"],
+	["22-4", "Phoenix's Head"],
+	["22-5", "Constrictor's Head"],
+	["22-6", "Purifier's Head"],
+	["22-7", "Enslaver's Head"],
+	["22-8", "Eradicator's Head"],
+	["22-9", "Baran's Head"],
+	["22-10", "Veritania's Head"],
+	["22-11", "Drox's Head"],
+	["22-12", "Al-Hezmin's Head"],
+	["22-13", "Nightmarish Book of Depravity"],
+	["22-14", "Nightmarish Head of Uhtred"],
+	["22-15", "Nightmarish Core of the Unbreakable"],
+	["22-16", "Nightmarish Wings of Lycia"],
+	["22-17", "Nightmarish Wings of Catarina"],
+];
+export const vulgarVisceraPrices: SubtaskPriceMapping[] = vulgarViscera.map(
+	([subtaskId, name]) => ({
+		subtaskId,
+		searches: [{ endpoint: "itemoverview", type: "Viscera", name }],
+		quantity: 1,
+	}),
+);
