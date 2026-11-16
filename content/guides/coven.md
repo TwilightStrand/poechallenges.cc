@@ -69,10 +69,14 @@ status: todo
 status: todo
 
 ## Vital Voidstones
-status: todo
+difficulty: normal
+category: mapping
+timeInvestment: moderate
 
 ## Achieve Ascension
-status: todo
+difficulty: easy
+category: early-game
+timeInvestment: short
 
 ## Promised Profits
 status: todo
@@ -90,7 +94,9 @@ status: todo
 status: todo
 
 ## Unequaled Uniques
-status: todo
+difficulty: normal
+category: mapping
+timeInvestment: short
 
 ## Tangled Threads
 status: todo
@@ -102,10 +108,14 @@ status: todo
 status: todo
 
 ## Cross Contamination
-status: todo
+difficulty: hard
+category: endgame
+timeInvestment: moderate
 
 ## Legacied Lineage
-status: todo
+difficulty: hard
+category: bossing
+timeInvestment: moderate
 
 ## Adjacent Anomalies
 status: todo
