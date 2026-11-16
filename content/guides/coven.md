@@ -1,10 +1,12 @@
 ---
-contributors:
-lastUpdated:
+contributors: Saturate
+lastUpdated: 2026-11-16
 ---
 
 ## Beginner's Basics
-status: todo
+difficulty: very-easy
+category: early-game
+timeInvestment: minimal
 
 ## Witch's Wishes
 status: todo
