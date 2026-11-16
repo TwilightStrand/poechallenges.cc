@@ -56,7 +56,9 @@ export function ChallengeDetail({
 	leagueId = "mirage",
 	isLoggedIn = false,
 }: ChallengeDetailProps) {
-	const subtaskIds = challenge.subtasks.map((s) => s.id);
+	// poe.ninja and the trade site both use the short league id ("Covens"),
+	// not the display name ("Covens of Umbra").
+	const tradeLeague = ninjaLeague ?? leagueName;
 	const completedIds = useMemo(
 		() =>
 			new Set(progress.subtasks.filter((s) => s.completed).map((s) => s.id)),
@@ -65,10 +67,10 @@ export function ChallengeDetail({
 
 	const { prices, loading, hasPrices, cheapest, totalCostForCheapest } =
 		usePrices(
-			ninjaLeague ?? leagueName,
+			tradeLeague,
 			leagueId,
 			challenge.id,
-			subtaskIds,
+			challenge.subtasks,
 			completedIds,
 			challenge.required,
 		);
@@ -80,7 +82,7 @@ export function ChallengeDetail({
 					const staticId = href.slice(6);
 					return (
 						<a
-							href={buildExchangeUrl(leagueName, staticId)}
+							href={buildExchangeUrl(tradeLeague, staticId)}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-poe-gold hover:text-poe-gold-bright"
@@ -106,7 +108,7 @@ export function ChallengeDetail({
 					const itemName = decodeURIComponent(href.slice(7));
 					return (
 						<a
-							href={buildSearchUrl(leagueName, itemName)}
+							href={buildSearchUrl(tradeLeague, itemName)}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-poe-gold hover:text-poe-gold-bright"
@@ -149,20 +151,20 @@ export function ChallengeDetail({
 				);
 			},
 		}),
-		[leagueName],
+		[tradeLeague],
 	);
 
 	// Generate trade links for all subtasks
 	const tradeLinks = useMemo(() => {
 		const links = new Map<string, ReturnType<typeof getTradeLink>>();
 		for (const subtask of challenge.subtasks) {
-			const link = getTradeLink(subtask.name, leagueName);
+			const link = getTradeLink(subtask.name, tradeLeague);
 			if (link) {
 				links.set(subtask.id, link);
 			}
 		}
 		return links;
-	}, [challenge.subtasks, leagueName]);
+	}, [challenge.subtasks, tradeLeague]);
 
 	return (
 		<div className="px-4 pb-4 pt-2 space-y-4">

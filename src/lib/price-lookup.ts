@@ -1,5 +1,5 @@
-// Maps challenge subtask names to poe.ninja API lookups
-// Each entry: { type: poe.ninja API type, search: name to match }
+import type { Subtask } from "@/schemas";
+import { ITEM_CATALOG, type PriceSource } from "./item-catalog";
 
 export interface PriceInfo {
 	name: string;
@@ -98,145 +98,35 @@ function findPrice(
 
 export interface SubtaskPriceMapping {
 	subtaskId: string;
-	searches: { endpoint: string; type: string; name: string }[];
-	quantity: number; // how many you need to use/buy
+	searches: PriceSource[];
+	needsAll: boolean;
+	quantity: number;
 }
 
-// Price mappings for Mirage league "Coveted Currency" challenge (id: 22)
-export const covetedCurrencyPrices: SubtaskPriceMapping[] = [
-	{
-		subtaskId: "22-1",
-		searches: [
+// Every subtask whose name has price sources in the catalog. A subtask with a
+// counter ("Use Vaal Orbs x20") needs that many of the item.
+export function priceMappingsFor(subtasks: Subtask[]): SubtaskPriceMapping[] {
+	return subtasks.flatMap((subtask) => {
+		const entry = ITEM_CATALOG[subtask.name];
+		if (!entry?.price) return [];
+		return [
 			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Coin of Knowledge",
+				subtaskId: subtask.id,
+				searches: entry.price,
+				needsAll: entry.needsAll === true,
+				quantity: subtask.counterTarget ?? 1,
 			},
-		],
-		quantity: 5,
-	},
-	{
-		subtaskId: "22-2",
-		searches: [
-			{ endpoint: "currencyoverview", type: "Currency", name: "Coin of Power" },
-		],
-		quantity: 5,
-	},
-	{
-		subtaskId: "22-3",
-		searches: [
-			{ endpoint: "currencyoverview", type: "Currency", name: "Coin of Skill" },
-		],
-		quantity: 5,
-	},
-	{
-		subtaskId: "22-4",
-		searches: [
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Coin of Restoration",
-			},
-		],
-		quantity: 5,
-	},
-	{
-		subtaskId: "22-5",
-		searches: [
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Coin of Desecration",
-			},
-		],
-		quantity: 5,
-	},
-	{
-		subtaskId: "22-6",
-		searches: [
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Volatile Vaal Orb",
-			},
-		],
-		quantity: 5,
-	},
-	{
-		subtaskId: "22-7",
-		searches: [
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Sinistral Catalyst",
-			},
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Dextral Catalyst",
-			},
-		],
-		quantity: 20,
-	},
-	{
-		subtaskId: "22-8",
-		searches: [
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Crystallised Rancour",
-			},
-		],
-		quantity: 3,
-	},
-	{
-		subtaskId: "22-9",
-		searches: [
-			{
-				endpoint: "itemoverview",
-				type: "Essence",
-				name: "Essence of Desolation",
-			},
-		],
-		quantity: 3,
-	},
-	{
-		subtaskId: "22-10",
-		searches: [
-			{
-				endpoint: "itemoverview",
-				type: "Incubator",
-				name: "Honoured Incubator",
-			},
-			{ endpoint: "itemoverview", type: "Incubator", name: "Sacred Incubator" },
-			{
-				endpoint: "itemoverview",
-				type: "Incubator",
-				name: "Miraged Incubator",
-			},
-		],
-		quantity: 10,
-	},
-	{
-		subtaskId: "22-11",
-		searches: [
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Refracting Fog",
-			},
-		],
-		quantity: 5,
-	},
-];
+		];
+	});
+}
 
-// Manual price overrides — verified in-game prices that differ from poe.ninja.
+// Manual price overrides: verified in-game prices that differ from poe.ninja.
 // These take priority until the crowdsourced DB is running.
 // Keyed leagueId:subtaskId, because challenge numbers repeat across leagues with
 // entirely different items behind them.
 const PRICE_OVERRIDES: Record<string, number> = {
-	"mirage:22-1": 79, // Coin of Knowledge — not on poe.ninja
-	"mirage:22-2": 185, // Coin of Power — not on poe.ninja
+	"mirage:22-1": 79, // Coin of Knowledge, not on poe.ninja
+	"mirage:22-2": 185, // Coin of Power, not on poe.ninja
 	"mirage:22-9": 34, // Essence of Desolation
 	"mirage:22-10": 79, // Miraged Incubator (cheapest of Honoured/Sacred/Miraged)
 	"mirage:22-11": 175, // Refracting Fog
@@ -284,15 +174,29 @@ export async function fetchSubtaskPrices(
 		let bestName = "";
 		let bestIcon: string | undefined;
 
-		for (const search of mapping.searches) {
-			const key = `${search.endpoint}:${search.type}`;
-			const lines = results.get(key) ?? [];
-			const found = findPrice(lines, search.name);
-			if (found && found.chaos < bestPrice) {
-				bestPrice = found.chaos;
-				bestName = found.name ?? search.name;
-				bestIcon = found.icon;
+		const found = mapping.searches.map((search) =>
+			findPrice(
+				results.get(`${search.endpoint}:${search.type}`) ?? [],
+				search.name,
+			),
+		);
+
+		if (mapping.needsAll) {
+			// Only a full set is a usable price; a partial sum would understate it.
+			const all = found.filter((f) => f !== null);
+			if (all.length === found.length && all.length > 0) {
+				bestPrice = all.reduce((sum, f) => sum + f.chaos, 0);
+				bestName = `${all.length} items`;
+				bestIcon = all[0]?.icon;
 			}
+		} else {
+			found.forEach((f, i) => {
+				if (f && f.chaos < bestPrice) {
+					bestPrice = f.chaos;
+					bestName = f.name ?? mapping.searches[i]?.name ?? "";
+					bestIcon = f.icon;
+				}
+			});
 		}
 
 		if (bestPrice < Infinity) {
@@ -343,355 +247,3 @@ export function findCheapestCombination(
 
 	return uncompleted.slice(0, remaining);
 }
-
-// Price mappings for Curse of the Allflame "Potent Possibilities".
-// Ten of twenty currency types, so the cheapest-combination view is the point.
-// Every row except Mirror of Kalandra is priced. The wide families use "*",
-// meaning the cheapest of that type, since the challenge accepts any member.
-export const potentPossibilitiesPrices: SubtaskPriceMapping[] = [
-	{
-		subtaskId: "34-2",
-		searches: [
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Veiled Chaos Orb",
-			},
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-4",
-		searches: [
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Eldritch Chaos Orb",
-			},
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Eldritch Orb of Annulment",
-			},
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-5",
-		searches: [
-			{
-				endpoint: "exchange",
-				type: "Currency",
-				name: "Exceptional Eldritch Ichor",
-			},
-			{
-				endpoint: "exchange",
-				type: "Currency",
-				name: "Exceptional Eldritch Ember",
-			},
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-6",
-		searches: [
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Tainted Catalyst",
-			},
-		],
-		quantity: 10,
-	},
-	{
-		subtaskId: "34-7",
-		searches: [
-			{ endpoint: "exchange", type: "Currency", name: "Awakener's Orb" },
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-8",
-		searches: [
-			{ endpoint: "exchange", type: "Currency", name: "Orb of Dominance" },
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-9",
-		searches: [
-			{ endpoint: "exchange", type: "Currency", name: "Mirror of Kalandra" },
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-10",
-		searches: [
-			{ endpoint: "currencyoverview", type: "Currency", name: "Sacred Orb" },
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-11",
-		searches: [
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Fracturing Orb",
-			},
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-12",
-		searches: [
-			{ endpoint: "exchange", type: "Currency", name: "Hinekora's Lock" },
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-13",
-		searches: [
-			{ endpoint: "currencyoverview", type: "Currency", name: "Tempering Orb" },
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-14",
-		searches: [
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Reflecting Mist",
-			},
-		],
-		quantity: 1,
-	},
-	{
-		// Any catalyst counts, so the cheapest of the ten listed wins.
-		subtaskId: "34-17",
-		searches: [
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Abrasive Catalyst",
-			},
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Accelerating Catalyst",
-			},
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Fertile Catalyst",
-			},
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Imbued Catalyst",
-			},
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Intrinsic Catalyst",
-			},
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Noxious Catalyst",
-			},
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Prismatic Catalyst",
-			},
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Tempering Catalyst",
-			},
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Turbulent Catalyst",
-			},
-			{
-				endpoint: "currencyoverview",
-				type: "Currency",
-				name: "Unstable Catalyst",
-			},
-		],
-		quantity: 40,
-	},
-	{
-		subtaskId: "34-20",
-		searches: [
-			{ endpoint: "exchange", type: "Currency", name: "Crystallised Rancour" },
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-1",
-		searches: [
-			{ endpoint: "exchange", type: "Currency", name: "Hunter's Exalted Orb" },
-			{
-				endpoint: "exchange",
-				type: "Currency",
-				name: "Crusader's Exalted Orb",
-			},
-			{
-				endpoint: "exchange",
-				type: "Currency",
-				name: "Redeemer's Exalted Orb",
-			},
-			{ endpoint: "exchange", type: "Currency", name: "Warlord's Exalted Orb" },
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-3",
-		searches: [
-			{ endpoint: "exchange", type: "Currency", name: "Orb of Remembrance" },
-			{ endpoint: "exchange", type: "Currency", name: "Orb of Unravelling" },
-			{ endpoint: "exchange", type: "Currency", name: "Orb of Intention" },
-		],
-		quantity: 1,
-	},
-	{
-		subtaskId: "34-15",
-		searches: [
-			{ endpoint: "exchange", type: "Runegraft", name: "*" },
-			{ endpoint: "exchange", type: "Tattoo", name: "*" },
-		],
-		quantity: 5,
-	},
-	{
-		subtaskId: "34-16",
-		searches: [{ endpoint: "exchange", type: "EnshroudingCrystal", name: "*" }],
-		quantity: 5,
-	},
-	{
-		subtaskId: "34-18",
-		searches: [
-			{ endpoint: "exchange", type: "Essence", name: "Essence of Delirium" },
-			{ endpoint: "exchange", type: "Essence", name: "Essence of Horror" },
-			{ endpoint: "exchange", type: "Essence", name: "Essence of Hysteria" },
-			{ endpoint: "exchange", type: "Essence", name: "Essence of Insanity" },
-		],
-		quantity: 4,
-	},
-	{
-		subtaskId: "34-19",
-		searches: [{ endpoint: "exchange", type: "Oil", name: "*" }],
-		quantity: 10,
-	},
-];
-
-// Price mappings for Curse of the Allflame "Ethereal Enhancements".
-// Five of nine Cursed Ducats. They live on poe.ninja's exchange endpoint under
-// type=Ducat, which is not visible from the stash overviews.
-export const etherealEnhancementsPrices: SubtaskPriceMapping[] = [
-	["22-1", "Merrick's Ducat"],
-	["22-2", "Cyaxan's Ducat"],
-	["22-3", "The Genteel's Ducat"],
-	["22-4", "Kishara's Ducat"],
-	["22-5", "Telesia's Ducat"],
-	["22-6", "Rotmother's Ducat"],
-	["22-7", "Brinehook's Ducat"],
-	["22-8", "Katakohi's Ducat"],
-	["22-9", "Tzamoto's Ducat"],
-].map(([subtaskId, name]) => ({
-	subtaskId: subtaskId as string,
-	searches: [{ endpoint: "exchange", type: "Ducat", name: name as string }],
-	quantity: 1,
-}));
-
-// Price mappings for Covens of Umbra "Creative Currencies" (id: 15).
-// Twelve of seventeen basic currencies. All come from the exchange endpoint:
-// the stash overview has no Chaos Orb row (it is the unit), leaves out the
-// chase orbs, and rounds anything cheaper than a Chaos Orb up to 1.
-const creativeCurrencies: [string, string][] = [
-	["15-1", "Orb of Chance"],
-	["15-2", "Orb of Scouring"],
-	["15-3", "Orb of Fusing"],
-	["15-4", "Jeweller's Orb"],
-	["15-5", "Chromatic Orb"],
-	["15-6", "Vaal Orb"],
-	["15-7", "Orb of Annulment"],
-	["15-8", "Regal Orb"],
-	["15-9", "Chaos Orb"],
-	["15-10", "Exalted Orb"],
-	["15-11", "Blessed Orb"],
-	["15-12", "Ancient Orb"],
-	["15-13", "Divine Orb"],
-	["15-14", "Fracturing Orb"],
-	["15-15", "Sacred Orb"],
-	["15-16", "Hinekora's Lock"],
-	["15-17", "Mirror of Kalandra"],
-];
-export const creativeCurrenciesPrices: SubtaskPriceMapping[] =
-	creativeCurrencies.map(([subtaskId, name]) => ({
-		subtaskId,
-		searches: [{ endpoint: "exchange", type: "Currency", name }],
-		quantity: 1,
-	}));
-
-// Price mappings for Covens of Umbra "Vulgar Viscera" (id: 22).
-// Eight of seventeen Viscera. poe.ninja names them with a possessive
-// ("Chimera's Head") where the challenge text says "Chimera Head".
-const vulgarViscera: [string, string][] = [
-	["22-1", "Minotaur's Head"],
-	["22-2", "Hydra's Head"],
-	["22-3", "Chimera's Head"],
-	["22-4", "Phoenix's Head"],
-	["22-5", "Constrictor's Head"],
-	["22-6", "Purifier's Head"],
-	["22-7", "Enslaver's Head"],
-	["22-8", "Eradicator's Head"],
-	["22-9", "Baran's Head"],
-	["22-10", "Veritania's Head"],
-	["22-11", "Drox's Head"],
-	["22-12", "Al-Hezmin's Head"],
-	["22-13", "Nightmarish Book of Depravity"],
-	["22-14", "Nightmarish Head of Uhtred"],
-	["22-15", "Nightmarish Core of the Unbreakable"],
-	["22-16", "Nightmarish Wings of Lycia"],
-	["22-17", "Nightmarish Wings of Catarina"],
-];
-export const vulgarVisceraPrices: SubtaskPriceMapping[] = vulgarViscera.map(
-	([subtaskId, name]) => ({
-		subtaskId,
-		searches: [{ endpoint: "itemoverview", type: "Viscera", name }],
-		quantity: 1,
-	}),
-);
-
-// Price mappings for Covens of Umbra "Unequaled Uniques" (id: 23).
-// Fifteen of eighteen unique maps. Hall of the Grandmasters is left out
-// because poe.ninja does not list it, and the trade site has no entry for it.
-const unequaledUniques: [string, string][] = [
-	["23-1", "Vaults of Atziri"],
-	["23-2", "Maelström of Chaos"],
-	["23-3", "The Coward's Trial"],
-	["23-4", "Acton's Nightmare"],
-	["23-5", "Poorjoy's Asylum"],
-	["23-6", "Mao Kun"],
-	["23-7", "Oba's Cursed Trove"],
-	["23-8", "Olmec's Sanctum"],
-	["23-9", "Death and Taxes"],
-	["23-10", "Whakawairua Tuahu"],
-	["23-11", "The Vinktar Square"],
-	["23-12", "Caer Blaidd, Wolfpack's Den"],
-	["23-13", "The Putrid Cloister"],
-	["23-14", "Hallowed Ground"],
-	["23-15", "The Twilight Temple"],
-	["23-16", "Pillars of Arun"],
-	["23-17", "Doryani's Machinarium"],
-];
-export const unequaledUniquesPrices: SubtaskPriceMapping[] =
-	unequaledUniques.map(([subtaskId, name]) => ({
-		subtaskId,
-		searches: [{ endpoint: "itemoverview", type: "UniqueMap", name }],
-		quantity: 1,
-	}));

@@ -1,108 +1,7 @@
-// Maps item names to PoE trade static IDs for bulk exchange
-// IDs sourced from https://www.pathofexile.com/api/trade/data/static
+import { ITEM_CATALOG } from "./item-catalog";
 
-const BULK_EXCHANGE_IDS: Record<string, string> = {
-	// Mirage Djinn Coins
-	"Coin of Knowledge": "coin-of-knowledge",
-	"Coin of Power": "coin-of-power",
-	"Coin of Skill": "coin-of-skill",
-	"Coin of Restoration": "coin-of-restoration",
-	"Coin of Desecration": "coin-of-desecration",
-
-	// Mirage currency
-	"Volatile Vaal Orb": "volatile-vaal-orb",
-	"Sinistral Catalyst": "sinistral-catalyst",
-	"Dextral Catalyst": "dextral-catalyst",
-	"Crystallised Rancour": "crystallised-rancour",
-	"Refracting Fog": "refracting-fog",
-
-	// Common currency
-	"Orb of Transmutation": "transmute",
-	"Orb of Alteration": "alt",
-	"Orb of Augmentation": "aug",
-	"Orb of Alchemy": "alch",
-	"Orb of Chance": "chance",
-	"Chaos Orb": "chaos",
-	"Exalted Orb": "exalted",
-	"Divine Orb": "divine",
-	"Orb of Scouring": "scour",
-	"Orb of Fusing": "fusing",
-	"Jeweller's Orb": "jewellers",
-	"Chromatic Orb": "chrome",
-	"Orb of Annulment": "annul",
-	"Regal Orb": "regal",
-	"Blessed Orb": "blessed",
-	"Sacred Orb": "sacred-orb",
-	"Orb of Regret": "regret",
-	"Orb of Unmaking": "unmaking",
-	"Gemcutter's Prism": "gcp",
-	"Vaal Orb": "vaal",
-	"Mirror of Kalandra": "mirror",
-	"Ancient Orb": "ancient-orb",
-	"Fracturing Orb": "fracturing-orb",
-	"Hinekora's Lock": "hinekoras-lock",
-
-	// Essences
-	"Essence of Desolation": "essence-of-desolation",
-	"Essence of Hysteria": "essence-of-hysteria",
-	"Essence of Insanity": "essence-of-insanity",
-	"Essence of Delirium": "essence-of-delirium",
-
-	// Fragments
-	Simulacrum: "simulacrum",
-	"Offering to the Goddess": "offer",
-	"Dedication to the Goddess": "offer-dedication",
-	"Tribute to the Goddess": "offer-tribute",
-	"Gift to the Goddess": "offer-gift",
-};
-
-// Boss subtask names that map to a buyable entry item. Zorath lists all four
-// Eyes because his arena needs one of each.
-const BOSS_ENTRY_ITEMS: Record<string, string | string[]> = {
-	Izaro: "offer-dedication",
-	"Uber Atziri": "hope",
-	"Abyssal Depths": "abyss-scarab-of-descending",
-	Oshabi: "sacred-blossom",
-	Catarina: "syndicate-medallion",
-	"The King in the Mists": "an-audience-with-the-king",
-	Saresh: "the-black-barya",
-	Zorath: [
-		"zoraths-eye-of-malevolence",
-		"zoraths-eye-of-authority",
-		"zoraths-eye-of-the-inevitable",
-		"zoraths-eye-of-the-endless",
-	],
-};
-
-// Items that should use the item search (not bulk exchange)
-// Includes unique maps, incubators, and other non-currency tradables
-const ITEM_SEARCH_NAMES: Set<string> = new Set([
-	// Unique maps
-	"Vaults of Atziri",
-	"Maelström of Chaos",
-	"The Coward's Trial",
-	"Acton's Nightmare",
-	"Poorjoy's Asylum",
-	"Mao Kun",
-	"Oba's Cursed Trove",
-	"Olmec's Sanctum",
-	"Death and Taxes",
-	"Whakawairua Tuahu",
-	"The Vinktar Square",
-	"Caer Blaidd, Wolfpack's Den",
-	"The Putrid Cloister",
-	"Hallowed Ground",
-	"The Twilight Temple",
-	"Pillars of Arun",
-	"Doryani's Machinarium",
-	"Cortex",
-	// Heist contracts
-	"Contract: The Twins",
-	// Incubators (traded as items, not currency)
-	"Honoured Incubator",
-	"Sacred Incubator",
-	"Miraged Incubator",
-]);
+// All trade links use "securable" (instant buyout): "online" listings are full
+// of price fixers.
 
 export interface TradeLink {
 	url: string;
@@ -123,21 +22,17 @@ export function buildExchangeUrl(
 	return `https://www.pathofexile.com/trade/exchange/${encodeURIComponent(league)}?q=${encodeURIComponent(query)}`;
 }
 
-// Real base types. Everything else in ITEM_SEARCH_NAMES is a unique, and the
-// trade API rejects a unique's name as `type` ("Unknown item base type"), so
-// those go through `term`, the same free-text match as the site's search box.
-const BASE_TYPE_NAMES: Set<string> = new Set([
-	"Honoured Incubator",
-	"Sacred Incubator",
-	"Miraged Incubator",
-]);
-
-export function buildSearchUrl(league: string, itemName: string): string {
+export function buildSearchUrl(
+	league: string,
+	text: string,
+	by: "term" | "type" = "term",
+): string {
 	// term finds nothing for "Maelström of Chaos" but 400+ listings for
 	// "Maelstrom of Chaos", so accents are stripped.
-	const match = BASE_TYPE_NAMES.has(itemName)
-		? { type: itemName }
-		: { term: itemName.normalize("NFD").replace(/\p{M}/gu, "") };
+	const match =
+		by === "type"
+			? { type: text }
+			: { term: text.normalize("NFD").replace(/\p{M}/gu, "") };
 	const query = JSON.stringify({
 		query: {
 			...match,
@@ -149,56 +44,19 @@ export function buildSearchUrl(league: string, itemName: string): string {
 	return `https://www.pathofexile.com/trade/search/${encodeURIComponent(league)}?q=${encodeURIComponent(query)}`;
 }
 
+// `league` is the trade site's league id ("Covens"), not the display name.
 export function getTradeLink(
-	itemName: string,
+	subtaskName: string,
 	league: string,
 ): TradeLink | null {
-	// Boss names that map to an entry fragment
-	const entryId = BOSS_ENTRY_ITEMS[itemName];
-	if (entryId) {
-		return { url: buildExchangeUrl(league, entryId), type: "exchange" };
-	}
+	const trade = ITEM_CATALOG[subtaskName]?.trade;
+	if (!trade) return null;
 
-	// Check bulk exchange mapping first (exact match)
-	const staticId = BULK_EXCHANGE_IDS[itemName];
-	if (staticId) {
-		return { url: buildExchangeUrl(league, staticId), type: "exchange" };
+	if ("exchange" in trade) {
+		return { url: buildExchangeUrl(league, trade.exchange), type: "exchange" };
 	}
-
-	// Check partial matches for compound names like "Sinistral or Dextral Catalyst"
-	for (const [name, id] of Object.entries(BULK_EXCHANGE_IDS)) {
-		if (itemName.includes(name)) {
-			return { url: buildExchangeUrl(league, id), type: "exchange" };
-		}
-	}
-
-	// Check item search names (unique maps, incubators, etc.)
-	if (ITEM_SEARCH_NAMES.has(itemName)) {
-		return { url: buildSearchUrl(league, itemName), type: "search" };
-	}
-
-	// Check partial matches for compound names like "Honoured, Sacred or Miraged Incubator"
-	for (const name of ITEM_SEARCH_NAMES) {
-		if (itemName.includes(name)) {
-			return { url: buildSearchUrl(league, name), type: "search" };
-		}
-	}
-
-	// Non-tradeable (boss kills, quest completions, generic tasks)
-	return null;
-}
-
-// Get trade links for all subtasks in a challenge
-export function getSubtaskTradeLinks(
-	subtaskNames: string[],
-	league: string,
-): Map<string, TradeLink> {
-	const links = new Map<string, TradeLink>();
-	for (const name of subtaskNames) {
-		const link = getTradeLink(name, league);
-		if (link) {
-			links.set(name, link);
-		}
-	}
-	return links;
+	return {
+		url: buildSearchUrl(league, trade.search, trade.by),
+		type: "search",
+	};
 }
