@@ -9,7 +9,9 @@ category: early-game
 timeInvestment: minimal
 
 ## Witch's Wishes
-status: todo
+difficulty: very-easy
+category: early-game
+timeInvestment: minimal
 
 ## Peddler's Produce I
 difficulty: very-easy
