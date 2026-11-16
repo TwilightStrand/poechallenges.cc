@@ -1,36 +1,20 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { CHEAPEST_PATH_CHALLENGES } from "@/lib/item-catalog";
 import {
-	covetedCurrencyPrices,
-	creativeCurrenciesPrices,
-	etherealEnhancementsPrices,
 	fetchSubtaskPrices,
 	findCheapestCombination,
 	type PriceInfo,
-	potentPossibilitiesPrices,
-	type SubtaskPriceMapping,
-	unequaledUniquesPrices,
-	vulgarVisceraPrices,
+	priceMappingsFor,
 } from "@/lib/price-lookup";
-
-// Keyed by league id as well as challenge id: challenge numbers repeat across
-// leagues with completely different contents, so keying on the number alone
-// priced Mirage's Coveted Currency items for Allflame's Ethereal Enhancements.
-const PRICE_MAPPINGS: Record<string, SubtaskPriceMapping[]> = {
-	"mirage:22": covetedCurrencyPrices,
-	"allflame:22": etherealEnhancementsPrices,
-	"allflame:34": potentPossibilitiesPrices,
-	"coven:15": creativeCurrenciesPrices,
-	"coven:22": vulgarVisceraPrices,
-	"coven:23": unequaledUniquesPrices,
-};
+import type { Subtask } from "@/schemas";
 
 export function usePrices(
-	leagueName: string,
+	ninjaLeague: string,
 	leagueId: string,
 	challengeId: number,
-	subtaskIds: string[],
+	subtasks: Subtask[],
 	completedIds: Set<string>,
 	required: number,
 ) {
@@ -38,17 +22,29 @@ export function usePrices(
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	const mappings = PRICE_MAPPINGS[`${leagueId}:${challengeId}`];
-	const hasPrices = mappings !== undefined;
+	const mappings = useMemo(() => priceMappingsFor(subtasks), [subtasks]);
+	const subtaskIds = useMemo(() => subtasks.map((s) => s.id), [subtasks]);
+	const hasPrices = mappings.length > 0;
+	// Keyed by league as well as challenge: challenge numbers repeat across
+	// leagues with completely different contents.
+	const showCheapest = CHEAPEST_PATH_CHALLENGES.has(
+		`${leagueId}:${challengeId}`,
+	);
 
 	useEffect(() => {
-		if (!mappings) return;
+		// Cards are reused across leagues for the same challenge number, so the
+		// previous challenge's prices must not survive into this one.
+		setPrices(new Map());
+		setError(null);
+		if (mappings.length === 0) {
+			setLoading(false);
+			return;
+		}
 
 		let cancelled = false;
 		setLoading(true);
-		setError(null);
 
-		fetchSubtaskPrices(leagueName, leagueId, mappings)
+		fetchSubtaskPrices(ninjaLeague, leagueId, mappings)
 			.then((result) => {
 				if (!cancelled) {
 					setPrices(result);
@@ -65,10 +61,10 @@ export function usePrices(
 		return () => {
 			cancelled = true;
 		};
-	}, [leagueName, leagueId, mappings]);
+	}, [ninjaLeague, leagueId, mappings]);
 
 	const cheapest = useMemo(() => {
-		if (!mappings || prices.size === 0) return new Set<string>();
+		if (!showCheapest || prices.size === 0) return new Set<string>();
 		const best = findCheapestCombination(
 			prices,
 			subtaskIds,
@@ -76,7 +72,7 @@ export function usePrices(
 			required,
 		);
 		return new Set(best.map((b) => b.subtaskId));
-	}, [prices, mappings, subtaskIds, completedIds, required]);
+	}, [prices, showCheapest, subtaskIds, completedIds, required]);
 
 	const totalCostForCheapest = useMemo(() => {
 		if (cheapest.size === 0) return 0;

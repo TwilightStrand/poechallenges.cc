@@ -25,7 +25,8 @@ pnpm db:push                     # Create/update tables
 src/data/leagues/{league}.ts     Challenge definitions, scraped from poedb.tw
 src/data/guides/{league}.ts      Guide data as TypeScript (legacy format)
 content/guides/{league}.md       Guide data as markdown (preferred format)
-src/lib/trade-links.ts           PoE trade URL builder + item mappings
+src/lib/item-catalog.ts          Trade ids + poe.ninja lookups per subtask name
+src/lib/trade-links.ts           PoE trade URL builder
 src/lib/price-lookup.ts          poe.ninja price fetcher + manual overrides
 src/components/                  React components (ChallengeTracker is the main one)
 src/db/schema.ts                 Drizzle tables (users, sessions, progress, snapshots)

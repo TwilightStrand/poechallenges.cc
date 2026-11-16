@@ -57,13 +57,21 @@ Each section needs two required fields directly under the heading:
 - A section you haven't written yet can be just `status: todo` under the heading, with no other fields or prose. It shows no guide on the site. Replace that line with the metadata fields when you fill it in.
 - Stay vague rather than invent detail you're unsure about. Wrong tips are worse than no tips.
 
-## Trade links
+## Trade links and prices
 
-Trade link mappings live in `src/lib/trade-links.ts`. Three mapping types:
+Both come from `src/lib/item-catalog.ts`. It has one entry per subtask name, shared by every league, and the name must match the subtask exactly:
 
-- **`BULK_EXCHANGE_IDS`** - maps item names to PoE trade static IDs for bulk exchange (currency, fragments, scarabs)
-- **`BOSS_ENTRY_ITEMS`** - maps subtask names to the bulk exchange ID of their entry item (e.g. "Izaro" maps to "offer-dedication", "Abyssal Depths" maps to "scarab-of-abyssal-depths")
-- **`ITEM_SEARCH_NAMES`** - set of item names that use the regular item search (unique maps, incubators)
+```ts
+"Sacred Blossom": {
+	trade: { exchange: ["sacred-blossom"] },
+	price: [{ endpoint: "exchange", type: "Fragment", name: "Sacred Blossom" }],
+},
+```
+
+- **`trade`** is either `{ exchange: [ids] }` for bulk exchange, with ids from https://www.pathofexile.com/api/trade/data/static, or `{ search, by }` for an item search. Use `by: "term"` for uniques and `by: "type"` for real base types.
+- **`price`** lists poe.ninja lookups. With several, the subtask accepts any of them and the cheapest wins; add `needsAll: true` when it needs one of each. A `"*"` name means the cheapest item of that type.
+- Quantities come from the subtask's `counterTarget`, so they aren't stored here.
+- The "cheapest path" total only shows for challenges listed in `CHEAPEST_PATH_CHALLENGES`. Add a challenge there only when its subtasks are interchangeable purchases.
 
 All trade queries use `status: { option: "securable" }` (instant buyout only). Do not use `"online"` as it shows price fixers.
 

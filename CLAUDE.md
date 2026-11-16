@@ -29,6 +29,7 @@ Guide data: `src/data/guides/{league}.ts` (TypeScript) or `content/guides/{leagu
 ## Key Files
 - `src/components/ChallengeTracker.tsx` — main orchestrator (client component)
 - `src/lib/auth.ts` — Arctic OAuth clients + Oslo session helpers
+- `src/lib/item-catalog.ts` — trade ids and poe.ninja lookups per subtask name
 - `src/lib/price-lookup.ts` — poe.ninja prices + manual overrides
 - `src/lib/trade-links.ts` — PoE trade URLs (uses "securable" for instant buyout)
 - `src/db/schema.ts` — Drizzle tables (users, oauth_accounts, sessions, user_progress, progress_snapshots, reported_prices)
