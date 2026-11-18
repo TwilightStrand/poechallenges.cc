@@ -33,6 +33,13 @@ export function Footer() {
 					className="text-poe-gold transition-colors hover:text-poe-gold-bright"
 				>
 					AKJ.IO
+				</a>{" "}
+				&middot;{" "}
+				<a
+					href="/stats"
+					className="text-poe-gold transition-colors hover:text-poe-gold-bright"
+				>
+					Stats
 				</a>
 			</p>
 			<p className="text-poe-text-muted">
