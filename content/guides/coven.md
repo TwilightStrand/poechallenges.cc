@@ -197,6 +197,7 @@ Roughly 150-300 juiced maps. Stack modifier effect on the tree.
 
 ## Otherworldly Obstructions
 difficulty: easy
+timeInvestment: long
 
 Use Maven's destructive play on a boss with phases to cut down the Maven count.
 
