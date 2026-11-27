@@ -75,8 +75,11 @@ export function ChallengeCard({
 
 				{guide && (
 					<div className="hidden sm:flex items-center gap-1.5 shrink-0">
-						<DifficultyBadge difficulty={guide.difficulty} timeInvestment={guide.timeInvestment} />
-						<CategoryBadge category={guide.category} />
+						<DifficultyBadge
+							difficulty={guide.difficulty}
+							timeInvestment={guide.timeInvestment}
+						/>
+						{guide.category && <CategoryBadge category={guide.category} />}
 					</div>
 				)}
 
@@ -141,8 +144,11 @@ export function ChallengeCard({
 					{/* Mobile badges */}
 					{guide && (
 						<div className="flex items-center gap-1.5 px-4 pb-2 sm:hidden">
-							<DifficultyBadge difficulty={guide.difficulty} timeInvestment={guide.timeInvestment} />
-							<CategoryBadge category={guide.category} />
+							<DifficultyBadge
+								difficulty={guide.difficulty}
+								timeInvestment={guide.timeInvestment}
+							/>
+							{guide.category && <CategoryBadge category={guide.category} />}
 						</div>
 					)}
 
