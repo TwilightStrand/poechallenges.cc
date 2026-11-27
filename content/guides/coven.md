@@ -207,6 +207,7 @@ Full atlas: all invitations, pinnacles and 10 unique maps. Carries work.
 
 ## Astounding Augury
 difficulty: very-hard
+category: bossing
 
 Grim Fates are rare, untradeable drops from the league mechanic in maps, used from the boss fight UI. Uber kills count for this and Ultimate Undertaking, so five different Grim Fates covers both. Carries work.
 
@@ -230,6 +231,7 @@ status: todo
 
 ## Ultimate Undertaking
 difficulty: very-hard
+category: bossing
 
 Uber versions of the Astounding Augury bosses at area level 85. Finding the Grim Fates is the bottleneck. Carries work.
 
