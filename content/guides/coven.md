@@ -235,7 +235,7 @@ Uber versions of the Astounding Augury bosses at area level 85. Finding the Grim
 
 ## Grand Goal Grind
 difficulty: hard
-timeInvestment: long
+timeInvestment: extreme
 
 Pick four:
 - **Level 100**: buy five-way runs. Omen of Amelioration saves your XP once per area; don't bring it into an invitation or uber fight, it gets used up anyway
