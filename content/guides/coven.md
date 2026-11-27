@@ -234,7 +234,8 @@ difficulty: very-hard
 Uber versions of the Astounding Augury bosses at area level 85. Finding the Grim Fates is the bottleneck. Carries work.
 
 ## Grand Goal Grind
-difficulty: normal
+difficulty: hard
+timeInvestment: long
 
 Pick four:
 - **Level 100**: buy five-way runs. Omen of Amelioration saves your XP once per area; don't bring it into an invitation or uber fight, it gets used up anyway
