@@ -39,7 +39,7 @@ const CalculatorBreakdownSchema = v.object({
 const ChallengeGuideSchema = v.object({
 	challengeId: v.pipe(v.number(), v.integer(), v.minValue(1), v.maxValue(40)),
 	difficulty: DifficultySchema,
-	category: CategorySchema,
+	category: v.optional(CategorySchema),
 	timeInvestment: v.optional(TimeInvestmentSchema),
 	tips: v.string(), // markdown content
 	videoUrl: v.optional(v.pipe(v.string(), v.url())),

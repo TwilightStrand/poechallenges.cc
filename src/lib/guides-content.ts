@@ -135,17 +135,19 @@ export function parseLeagueGuide(
 
 		const { difficulty, category, timeInvestment, calculator, videoUrl } =
 			section.meta;
-		if (!difficulty || !category || !timeInvestment) {
+		// Category and time can come later: a rating alone is already useful
+		// for sorting, and the badge falls back to a time estimate from it.
+		if (!difficulty) {
 			throw new Error(
-				`${leagueId}.md: "${section.heading}" needs difficulty, category, and timeInvestment`,
+				`${leagueId}.md: "${section.heading}" needs a difficulty`,
 			);
 		}
 
 		return {
 			challengeId,
 			difficulty,
-			category,
-			timeInvestment,
+			...(category ? { category } : {}),
+			...(timeInvestment ? { timeInvestment } : {}),
 			tips: section.body,
 			...(calculator ? { calculator: parseCalculator(calculator) } : {}),
 			...(videoUrl ? { videoUrl } : {}),
